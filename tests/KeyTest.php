@@ -11,18 +11,30 @@ class KeyTest extends BaseTestCase {
  * @return void
  */
   public function testGet() {
-    $m2x = new M2X('foo-bar');
-
-    $m2x->request = $this->getMockBuilder('Att\M2X\HttpRequest')
-               ->setMethods(array('request'))
-               ->getMock();
+    $m2x = $this->generateMockM2X();
 
     $m2x->request->method('request')
            ->with($this->equalTo('GET'), $this->equalTo('https://api-m2x.att.com/v2/keys/test-key'))
            ->willReturn(new Att\M2X\HttpResponse($this->_raw('keys_get_success')));
 
-    $result = Key::get($m2x, 'test-key');
-    $this->assertInstanceOf('Att\M2X\Key', $result);
+    $key = Key::get($m2x, 'test-key');
+    $this->assertInstanceOf('Att\M2X\Key', $key);
+
+    //Check the property values
+    $expected = array(
+      'name' => 'Raspberry PI',
+      'key' => 'test-key',
+      'master' => true,
+      'stream' => null,
+      'expires_at' => null,
+      'expired' => false,
+      'origin' => null,
+      'permissions' => array(
+        'GET', 'POST', 'DELETE'
+      ),
+      'device_access' => 'public'
+    );
+    $this->assertEquals($expected, $key->data());
   }
 
 /**
@@ -31,11 +43,7 @@ class KeyTest extends BaseTestCase {
  * @return void
  */
   public function testIndex() {
-    $m2x = new M2X('foo-bar');
-
-    $m2x->request = $this->getMockBuilder('Att\M2X\HttpRequest')
-               ->setMethods(array('request'))
-               ->getMock();
+    $m2x = $this->generateMockM2X();
 
     $m2x->request->method('request')
            ->with($this->equalTo('GET'), $this->equalTo('https://api-m2x.att.com/v2/keys'))

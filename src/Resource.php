@@ -12,7 +12,7 @@ abstract class Resource {
   protected static $path = '';
 
 /**
- * The resource properties with their default value
+ * The resource properties
  *
  * @var array
  */
@@ -87,8 +87,17 @@ abstract class Resource {
  * @return void
  */
   public function loadData($data) {
-    foreach (static::$properties as $name => $default) {
+    foreach (static::$properties as $name) {
       $this->data[$name] = $data->{$name};
     }
+  }
+
+/**
+ * Returns the data of the resource
+ *
+ * @return array
+ */
+  public function data() {
+    return $this->data;
   }
 }

@@ -12,14 +12,13 @@ class Key extends Resource {
   protected static $path = '/keys';
 
 /**
- * The Key resource properties with their default value
+ * The Key resource properties
  *
  * @var array
  */
   protected static $properties = array(
-    'name' => '',
-    'key' => '',
-    'master' => false
+    'name', 'key', 'master', 'stream', 'expires_at',
+    'expired', 'origin', 'permissions', 'device_access'
   );
 
 }
