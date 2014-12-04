@@ -12,6 +12,13 @@ class HttpRequest {
 	protected $request;
 
 /**
+ * List of headers to be sent
+ *
+ * @var array
+ */
+	protected $headers = array();
+
+/**
  * Performs a GET request
  *
  * @param $url
@@ -22,6 +29,17 @@ class HttpRequest {
 		return $this->request('GET', $url, $options);
 	}
 
+/**
+ * Add a header to the request
+ *
+ * @param string $key
+ * @param string $value
+ * @return HttpRequest
+ */
+	public function header($key, $value) {
+		$this->headers[$key] = $value;
+		return $this;
+	}
 /**
  * Executes a request
  *
@@ -79,5 +97,11 @@ class HttpRequest {
 		curl_setopt($this->request, CURLOPT_HEADER, true);
 		curl_setopt($this->request, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($this->request, CURLOPT_FOLLOWLOCATION, true);
+
+		$headers = array();
+		foreach ($this->headers as $key => $value) {
+			$headers[] = $key . ':' . $value;
+		}
+		curl_setopt($this->request, CURLOPT_HTTPHEADER, $headers);
 	}
 }

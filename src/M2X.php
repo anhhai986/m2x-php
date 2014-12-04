@@ -60,15 +60,26 @@ class M2X {
 /**
  * Returns the API status
  *
- * @return [type] [description]
+ * @return HttpResponse
  */
 	public function status() {
-		$data = $this->get('/status');
-		return $data;
+		return $this->get('/status');
+	}
+
+/**
+ * Retrieve a list of keys associated with the user account
+ *
+ * @return 
+ */
+	public function keys() {
+		return Key::index($this);
 	}
 
 	public function get($path) {
 		$request = $this->request();
+
+		$request->header('X-M2X-KEY', $this->apiKey);
+
 		return $request->get($this->endpoint . $path);
 	}
 
