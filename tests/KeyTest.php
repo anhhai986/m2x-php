@@ -55,4 +55,26 @@ class KeyTest extends BaseTestCase {
       $this->assertInstanceOf('Att\M2X\Key', $result);
     }
   }
+
+/**
+ * testCreateSuccess method
+ *
+ * @return void
+ */
+  public function testCreateSuccess() {
+    $m2x = $this->generateMockM2X();
+    $m2x->request->method('request')
+           ->with($this->equalTo('POST'), $this->equalTo('https://api-m2x.att.com/v2/keys'))
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('keys_post_success')));
+
+    $data = array(
+      'name' => 'Test Key',
+      'permissions' => array('GET'),
+      'feed' => null,
+      'stream' => null,
+      'expires_at' => null
+    );
+    $key = Key::create($m2x, $data);
+    $this->assertInstanceOf('Att\M2X\Key', $key);
+  }
 }

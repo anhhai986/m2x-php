@@ -96,6 +96,14 @@ class M2X {
     return $request->get($this->endpoint . $path);
   }
 
+  public function post($path, $vars) {
+    $request = $this->request();
+    $request->header('X-M2X-KEY', $this->apiKey)
+            ->header('Content-Type', 'application/json');
+
+    return $request->post($this->endpoint . $path, $vars);
+  }
+
 /**
  * Creates an instance of the HttpRequest if it doesnt exist yet
  *

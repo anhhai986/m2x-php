@@ -30,6 +30,17 @@ class HttpRequest {
   }
 
 /**
+ * Performs a POST request
+ *
+ * @param $url
+ * @param array $options
+ * @return HttpResponse
+ */
+  public function post($url, $vars = array()) {
+    return $this->request('POST', $url, $vars);
+  }
+
+/**
  * Add a header to the request
  *
  * @param string $key
@@ -97,6 +108,10 @@ class HttpRequest {
     curl_setopt($this->request, CURLOPT_HEADER, true);
     curl_setopt($this->request, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($this->request, CURLOPT_FOLLOWLOCATION, true);
+
+    if (!empty($vars)) {
+      curl_setopt($this->request, CURLOPT_POSTFIELDS, json_encode($vars));
+    }
 
     $headers = array();
     foreach ($this->headers as $key => $value) {

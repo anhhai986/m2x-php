@@ -38,4 +38,23 @@ class M2XTest extends BaseTestCase {
     $this->assertSame(200, $response->statusCode);
     $this->assertEquals($expected, $response->body);
   }
+
+/**
+ * testGet method
+ *
+ * @return void
+ */
+  public function testGet() {
+    $m2x = new M2X('abc123');
+
+    $m2x->request = $this->getMockBuilder('Att\M2X\HttpRequest')
+                         ->setMethods(array('header'))
+                         ->getMock();
+
+    $m2x->request->expects($this->once())
+                 ->method('header')
+                 ->with($this->equalTo('X-M2X-KEY'), $this->equalTo('abc123'));
+
+    $m2x->get('/status');
+  }
 }

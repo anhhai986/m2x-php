@@ -67,6 +67,21 @@ abstract class Resource {
     return new $class($client, $response->json());
   }
 
+/**
+ * Creates a new resource
+ *
+ * @param M2X $client
+ * @param array $data
+ * @return Resource
+ */
+  public static function create($client, $data) {
+    $response = $client->post(static::$path, $data);
+
+    if ($response->statusCode == 201) {
+      $class = get_called_class();
+      return new $class($client, $response->json());
+    }
+  }
 
 /**
  * Create object from API data
