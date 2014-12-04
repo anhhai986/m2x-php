@@ -5,6 +5,34 @@ namespace Att\M2X;
 abstract class Resource {
 
 /**
+ * REST path of the resource
+ *
+ * @var string
+ */
+	protected static $path = '';
+
+/**
+ * The resource properties with their default value
+ *
+ * @var array
+ */
+	protected static $properties = array();
+
+/**
+ * Holds the resource data properties
+ *
+ * @var array
+ */
+	protected $data = array();
+
+/**
+ * Holds the M2X Client instance
+ *
+ * @var M2X
+ */
+	protected $client;
+
+/**
  * Retrieves a list of resources
  *
  * @param M2X $client
@@ -37,5 +65,30 @@ abstract class Resource {
 
 		$class = get_called_class();
 		return new $class($client, $response->json());
+	}
+
+
+/**
+ * Create object from API data
+ *
+ * @param M2X $client
+ * @param stdClass $data
+ */
+	public function __construct($client, $data) {
+		$this->client = $client;
+		$this->loadData($data);
+	}
+
+/**
+ * Loads the properties into the resource data array
+ * from the API data.
+ *
+ * @param array $data
+ * @return void
+ */
+	public function loadData($data) {
+		foreach (static::$properties as $name => $default) {
+			$this->data[$name] = $data->{$name};
+		}
 	}
 }

@@ -5,34 +5,21 @@ namespace Att\M2X;
 class Key extends Resource {
 
 /**
- * REST path of this resource
+ * REST path of the resource
  *
  * @var string
  */
 	protected static $path = '/keys';
 
 /**
- * Name of the key
+ * The Key resource properties with their default value
  *
- * @var string
+ * @var array
  */
-	public $name;
+	protected static $properties = array(
+		'name' => '',
+		'key' => '',
+		'master' => false
+	);
 
-/**
- * Key of the key
- *
- * @var string
- */
-	public $key;
-
-/**
- * Create object from API data
- *
- * @param M2X $client
- * @param stdClass $data
- */
-	public function __construct($client, $data) {
-		$this->name = $data->name;
-		$this->key = $data->key;
-	}
 }

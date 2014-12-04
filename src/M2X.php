@@ -67,12 +67,25 @@ class M2X {
 	}
 
 /**
- * Retrieve a list of keys associated with the user account
+ * Retrieve a list of keys associated with the user account.
  *
  * @return 
  */
 	public function keys() {
 		return Key::index($this);
+	} 
+
+/**
+ * Retrieve a single key from the API.
+ *
+ * This method instantiates an instance of Key with
+ * all its attributes initialized.
+ * 
+ * @param string $key
+ * @return Key
+ */
+	public function key($key) {
+		return Key::get($key);
 	}
 
 	public function get($path) {
