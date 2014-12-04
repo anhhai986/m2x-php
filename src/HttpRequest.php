@@ -9,14 +9,14 @@ class HttpRequest {
  *
  * @var resource
  */
-	protected $request;
+  protected $request;
 
 /**
  * List of headers to be sent
  *
  * @var array
  */
-	protected $headers = array();
+  protected $headers = array();
 
 /**
  * Performs a GET request
@@ -25,9 +25,9 @@ class HttpRequest {
  * @param array  $options
  * @return HttpResponse
  */
-	public function get($url, $options = array()) {
-		return $this->request('GET', $url, $options);
-	}
+  public function get($url, $options = array()) {
+    return $this->request('GET', $url, $options);
+  }
 
 /**
  * Add a header to the request
@@ -36,10 +36,10 @@ class HttpRequest {
  * @param string $value
  * @return HttpRequest
  */
-	public function header($key, $value) {
-		$this->headers[$key] = $value;
-		return $this;
-	}
+  public function header($key, $value) {
+    $this->headers[$key] = $value;
+    return $this;
+  }
 /**
  * Executes a request
  *
@@ -48,20 +48,20 @@ class HttpRequest {
  * @param array $vars
  * @return HttpResponse
  */
-	public function request($method, $url, $vars = array()) {
-		$this->request = curl_init();
+  public function request($method, $url, $vars = array()) {
+    $this->request = curl_init();
 
-		$this->setRequestMethod($method);
-		$this->setOptions($url, $vars);
+    $this->setRequestMethod($method);
+    $this->setOptions($url, $vars);
 
-		$data = curl_exec($this->request);
+    $data = curl_exec($this->request);
 
-		$response = new HttpResponse($data);
+    $response = new HttpResponse($data);
 
-		curl_close($this->request);
+    curl_close($this->request);
 
-		return $response;
-	}
+    return $response;
+  }
 
 /**
  * Set the associated CURL options for a request method
@@ -69,21 +69,21 @@ class HttpRequest {
  * @param string $method
  * @return void
  */
-	protected function setRequestMethod($method) {
-		switch (strtoupper($method)) {
-			case 'HEAD':
-				curl_setopt($this->request, CURLOPT_NOBODY, true);
-				break;
-			case 'GET':
-				curl_setopt($this->request, CURLOPT_HTTPGET, true);
-				break;
-			case 'POST':
-				curl_setopt($this->request, CURLOPT_POST, true);
-				break;
-			default:
-				curl_setopt($this->request, CURLOPT_CUSTOMREQUEST, $method);
-		}
-	}
+  protected function setRequestMethod($method) {
+    switch (strtoupper($method)) {
+      case 'HEAD':
+        curl_setopt($this->request, CURLOPT_NOBODY, true);
+        break;
+      case 'GET':
+        curl_setopt($this->request, CURLOPT_HTTPGET, true);
+        break;
+      case 'POST':
+        curl_setopt($this->request, CURLOPT_POST, true);
+        break;
+      default:
+        curl_setopt($this->request, CURLOPT_CUSTOMREQUEST, $method);
+    }
+  }
 
 /**
  * Set the CURL options
@@ -92,16 +92,16 @@ class HttpRequest {
  * @param array $vars
  * @return void
  */
-	protected function setOptions($url, $vars) {
-		curl_setopt($this->request, CURLOPT_URL, $url);
-		curl_setopt($this->request, CURLOPT_HEADER, true);
-		curl_setopt($this->request, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($this->request, CURLOPT_FOLLOWLOCATION, true);
+  protected function setOptions($url, $vars) {
+    curl_setopt($this->request, CURLOPT_URL, $url);
+    curl_setopt($this->request, CURLOPT_HEADER, true);
+    curl_setopt($this->request, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($this->request, CURLOPT_FOLLOWLOCATION, true);
 
-		$headers = array();
-		foreach ($this->headers as $key => $value) {
-			$headers[] = $key . ':' . $value;
-		}
-		curl_setopt($this->request, CURLOPT_HTTPHEADER, $headers);
-	}
+    $headers = array();
+    foreach ($this->headers as $key => $value) {
+      $headers[] = $key . ':' . $value;
+    }
+    curl_setopt($this->request, CURLOPT_HTTPHEADER, $headers);
+  }
 }

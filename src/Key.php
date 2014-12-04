@@ -9,17 +9,17 @@ class Key extends Resource {
  *
  * @var string
  */
-	protected static $path = '/keys';
+  protected static $path = '/keys';
 
 /**
  * The Key resource properties with their default value
  *
  * @var array
  */
-	protected static $properties = array(
-		'name' => '',
-		'key' => '',
-		'master' => false
-	);
+  protected static $properties = array(
+    'name' => '',
+    'key' => '',
+    'master' => false
+  );
 
 }

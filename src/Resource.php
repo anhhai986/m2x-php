@@ -9,28 +9,28 @@ abstract class Resource {
  *
  * @var string
  */
-	protected static $path = '';
+  protected static $path = '';
 
 /**
  * The resource properties with their default value
  *
  * @var array
  */
-	protected static $properties = array();
+  protected static $properties = array();
 
 /**
  * Holds the resource data properties
  *
  * @var array
  */
-	protected $data = array();
+  protected $data = array();
 
 /**
  * Holds the M2X Client instance
  *
  * @var M2X
  */
-	protected $client;
+  protected $client;
 
 /**
  * Retrieves a list of resources
@@ -38,20 +38,20 @@ abstract class Resource {
  * @param M2X $client
  * @return array
  */
-	public static function index($client) {
-		$response = $client->get(static::$path);
+  public static function index($client) {
+    $response = $client->get(static::$path);
 
-		$data = (array) $response->json();
+    $data = (array) $response->json();
 
-		$class = get_called_class();
+    $class = get_called_class();
 
-		$resources = array();
-		foreach (array_shift($data) as $resourceData) {
-			$resources[] = new $class($client, $resourceData);
-		}
+    $resources = array();
+    foreach (array_shift($data) as $resourceData) {
+      $resources[] = new $class($client, $resourceData);
+    }
 
-		return $resources;
-	}
+    return $resources;
+  }
 
 /**
  * Retrieves a single resource
@@ -60,12 +60,12 @@ abstract class Resource {
  * @param string $id
  * @return Resource
  */
-	public static function get($client, $id) {
-		$response = $client->get(static::$path . '/' . $id);
+  public static function get($client, $id) {
+    $response = $client->get(static::$path . '/' . $id);
 
-		$class = get_called_class();
-		return new $class($client, $response->json());
-	}
+    $class = get_called_class();
+    return new $class($client, $response->json());
+  }
 
 
 /**
@@ -74,10 +74,10 @@ abstract class Resource {
  * @param M2X $client
  * @param stdClass $data
  */
-	public function __construct($client, $data) {
-		$this->client = $client;
-		$this->loadData($data);
-	}
+  public function __construct($client, $data) {
+    $this->client = $client;
+    $this->loadData($data);
+  }
 
 /**
  * Loads the properties into the resource data array
@@ -86,9 +86,9 @@ abstract class Resource {
  * @param array $data
  * @return void
  */
-	public function loadData($data) {
-		foreach (static::$properties as $name => $default) {
-			$this->data[$name] = $data->{$name};
-		}
-	}
+  public function loadData($data) {
+    foreach (static::$properties as $name => $default) {
+      $this->data[$name] = $data->{$name};
+    }
+  }
 }
