@@ -21,22 +21,31 @@ class M2XTest extends PHPUnit_Framework_TestCase {
  * testStatus method
  *
  * @return void
- * @todo Create mock
  */
  	public function testStatusSuccess() {
 		$m2x = new M2X('foo-bar');
 
-		$stub = $this->getMockBuilder('Att\M2X\HttpRequest')
-					 ->setMethods(array('request'))
-					 ->getMock();
+		$m2x->request = $this->getMockBuilder('Att\M2X\HttpRequest')
+							 ->setMethods(array('request'))
+							 ->getMock();
 
-		$raw = file_get_contents(__DIR__ . '/responses/status_success.txt');
-		$stub->method('request')->willReturn(new Att\M2X\HttpResponse($raw));
-		$m2x->request = $stub;
+		$m2x->request->method('request')
+					 ->with($this->equalTo('GET'), $this->equalTo('https://api-m2x.att.com/v2/status'))
+					 ->willReturn(new Att\M2X\HttpResponse($this->__raw('status_success')));
 
 		$response = $m2x->status();
 		$expected = '{"api":"OK","triggers":"OK"}';
 		$this->assertSame(200, $response->statusCode);
 		$this->assertEquals($expected, $response->body);
+	}
+
+/**
+ * Returns a raw mock response
+ *
+ * @param string $name
+ * @return string
+ */
+	private function __raw($name) {
+		return file_get_contents(__DIR__ . '/responses/' . $name . '.txt');
 	}
 }
