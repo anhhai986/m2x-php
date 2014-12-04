@@ -26,7 +26,7 @@ class M2X {
  *
  * @var HttpRequest
  */
-	public $HttpRequest;
+	public $request;
 
 /**
  * Contructor
@@ -78,7 +78,7 @@ class M2X {
  * @return HttpRequest
  */
 	private function request() {
-		if (!$this->HttpRequest) {
+		if (!$this->request) {
 			$this->request = new HttpRequest();
 		}
 
