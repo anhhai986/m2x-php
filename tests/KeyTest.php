@@ -35,6 +35,7 @@ class KeyTest extends BaseTestCase {
       'device_access' => 'public'
     );
     $this->assertEquals($expected, $key->data());
+    $this->assertEquals('Raspberry PI', $key->name);
   }
 
 /**

@@ -115,4 +115,32 @@ abstract class Resource {
   public function data() {
     return $this->data;
   }
+
+/**
+ * Magic method for accessing resource data properties directly
+ *
+ * @param string $name
+ * @return mixed
+ */
+  public function __get($name) {
+    if (array_key_exists($name, $this->data)) {
+      return $this->data[$name];
+    }
+
+    return null;
+  }
+
+/**
+ * Magic method for setting resource data properties
+ *
+ * @param string $name
+ * @param mixed $value
+ */
+  public function __set($name, $value) {
+    if (array_key_exists($name, $this->data)) {
+      $this->data[$name] = $value;
+    } else {
+      $this->{$name} = $value;
+    }
+  }
 }
