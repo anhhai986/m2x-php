@@ -2,6 +2,8 @@
 
 namespace Att\M2X;
 
+use Att\M2X\Error\M2XException;
+
 class M2X {
 
   const DEFAULT_API_BASE = 'https://api-m2x.att.com';
@@ -88,6 +90,16 @@ class M2X {
     return Key::get($key);
   }
 
+/**
+ * Create a new API key.
+ *
+ * @param  $data
+ * @return Key
+ */
+  public function createKey($data) {
+    return Key::create($this, $data);
+  }
+
   public function get($path) {
     $request = $this->request();
 
@@ -101,8 +113,15 @@ class M2X {
     $request->header('X-M2X-KEY', $this->apiKey)
             ->header('Content-Type', 'application/json');
 
-    return $request->post($this->endpoint . $path, $vars);
+    $response = $request->post($this->endpoint . $path, $vars);
+
+    if (!in_array($response->statusCode, array(200, 201, 202, 204))) {
+      throw new M2XException($response);
+    }
+
+    return $response;
   }
+
 
 /**
  * Creates an instance of the HttpRequest if it doesnt exist yet

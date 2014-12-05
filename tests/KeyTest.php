@@ -78,4 +78,25 @@ class KeyTest extends BaseTestCase {
     $key = Key::create($m2x, $data);
     $this->assertInstanceOf('Att\M2X\Key', $key);
   }
+
+/**
+ * testCreateValidationError method
+ *
+ * @expectedException Att\M2X\Error\M2XException
+ * @expectedExceptionMessage Validation Failed
+ *
+ * @return void
+ */
+  public function testCreateValidationError() {
+    $m2x = $this->generateMockM2X();
+    $m2x->request->method('request')
+           ->with($this->equalTo('POST'), $this->equalTo('https://api-m2x.att.com/v2/keys'))
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('keys_post_validation')));
+
+    $data = array(
+      'name' => 'Missing Permissions'
+    );
+
+    $key = Key::create($m2x, $data);
+  }
 }
