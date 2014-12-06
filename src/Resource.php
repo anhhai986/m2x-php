@@ -33,6 +33,13 @@ abstract class Resource {
   protected $client;
 
 /**
+ * The primary identifier for the REST URL
+ *
+ * @return string
+ */
+  abstract public function id();
+
+/**
  * Retrieves a list of resources
  *
  * @param M2X $client
@@ -91,20 +98,7 @@ abstract class Resource {
  */
   public function __construct($client, $data) {
     $this->client = $client;
-    $this->loadData($data);
-  }
-
-/**
- * Loads the properties into the resource data array
- * from the API data.
- *
- * @param array $data
- * @return void
- */
-  public function loadData($data) {
-    foreach (static::$properties as $name) {
-      $this->data[$name] = $data->{$name};
-    }
+    $this->data = $data;
   }
 
 /**
@@ -117,6 +111,27 @@ abstract class Resource {
   }
 
 /**
+ * Update a resource
+ *
+ * @param array $data
+ * @return Resource
+ */
+  public function update($data = array()) {
+    foreach ($data as $key => $value) {
+      $this->{$key} = $value;
+    }
+
+    $postData = array();
+    foreach (static::$properties as $name) {
+      $postData[$name] = $this->data[$name];
+    }
+
+    $response = $this->client->put(static::$path . '/' . $this->id(), $postData);
+
+    return $this;
+  }
+
+/**
  * Magic method for accessing resource data properties directly
  *
  * @param string $name
@@ -126,8 +141,6 @@ abstract class Resource {
     if (array_key_exists($name, $this->data)) {
       return $this->data[$name];
     }
-
-    return null;
   }
 
 /**
@@ -137,10 +150,8 @@ abstract class Resource {
  * @param mixed $value
  */
   public function __set($name, $value) {
-    if (array_key_exists($name, $this->data)) {
+    if (in_array($name, static::$properties)) {
       $this->data[$name] = $value;
-    } else {
-      $this->{$name} = $value;
     }
   }
 }

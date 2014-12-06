@@ -41,6 +41,17 @@ class HttpRequest {
   }
 
 /**
+ * Performs a PUT request
+ *
+ * @param $url
+ * @param array $options
+ * @return HttpResponse
+ */
+  public function put($url, $vars = array()) {
+    return $this->request('PUT', $url, $vars);
+  }
+
+/**
  * Add a header to the request
  *
  * @param string $key
@@ -110,13 +121,21 @@ class HttpRequest {
     curl_setopt($this->request, CURLOPT_FOLLOWLOCATION, true);
 
     if (!empty($vars)) {
-      curl_setopt($this->request, CURLOPT_POSTFIELDS, json_encode($vars));
+      $data = json_encode($vars);
+      $this->headers['Content-Type'] = 'application/json';
+      $this->headers['Content-Length'] = strlen($data);
+      curl_setopt($this->request, CURLOPT_POSTFIELDS, $data);
     }
 
     $headers = array();
     foreach ($this->headers as $key => $value) {
       $headers[] = $key . ':' . $value;
     }
+
     curl_setopt($this->request, CURLOPT_HTTPHEADER, $headers);
+
+    //curl_setopt($this->request, CURLOPT_VERBOSE, true);
+    //$verbose = fopen('/tmp/curl.log', 'rw+');
+    //curl_setopt($this->request, CURLOPT_STDERR, $verbose);
   }
 }

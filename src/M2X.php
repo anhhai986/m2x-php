@@ -75,7 +75,7 @@ class M2X {
  */
   public function keys() {
     return Key::index($this);
-  } 
+  }
 
 /**
  * Retrieve a single key from the API.
@@ -87,7 +87,7 @@ class M2X {
  * @return Key
  */
   public function key($key) {
-    return Key::get($key);
+    return Key::get($this, $key);
   }
 
 /**
@@ -100,28 +100,46 @@ class M2X {
     return Key::create($this, $data);
   }
 
-  public function get($path) {
-    $request = $this->request();
-
-    $request->header('X-M2X-KEY', $this->apiKey);
-
-    return $request->get($this->endpoint . $path);
+/**
+ * Retrieve a list of devices associated with the user account.
+ *
+ * @return 
+ */
+  public function devices() {
+    return Device::index($this);
   }
 
-  public function post($path, $vars) {
+  public function get($path) {
     $request = $this->request();
-    $request->header('X-M2X-KEY', $this->apiKey)
-            ->header('Content-Type', 'application/json');
+    $request->header('X-M2X-KEY', $this->apiKey);
+
+    $response = $request->get($this->endpoint . $path);
+    return $this->handleResponse($response);
+  }
+
+  public function post($path, $vars = array()) {
+    $request = $this->request();
+    $request->header('X-M2X-KEY', $this->apiKey);
 
     $response = $request->post($this->endpoint . $path, $vars);
+    return $this->handleResponse($response);
+  }
 
+  public function put($path, $vars = array()) {
+    $request = $this->request();
+    $request->header('X-M2X-KEY', $this->apiKey);
+
+    $response = $request->put($this->endpoint . $path, $vars);
+    return $this->handleResponse($response);
+  }
+
+  protected function handleResponse(HttpResponse $response) {
     if (!in_array($response->statusCode, array(200, 201, 202, 204))) {
       throw new M2XException($response);
     }
 
     return $response;
   }
-
 
 /**
  * Creates an instance of the HttpRequest if it doesnt exist yet

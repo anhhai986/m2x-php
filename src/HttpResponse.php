@@ -26,11 +26,19 @@ class HttpResponse {
   public $body = '';
 
 /**
+ * The full raw response
+ *
+ * @var string
+ */
+  public $raw = '';
+
+/**
  * Parse the CURL response data
  *
  * @param string $response
  */
   public function __construct($response) {
+    $this->raw = $response;
     $pattern = '#HTTP/\d\.\d.*?$.*?\r\n\r\n#ims';
 
     preg_match_all($pattern, $response, $matches);
@@ -55,6 +63,6 @@ class HttpResponse {
  * @return object
  */
   public function json() {
-    return json_decode($this->body);
+    return json_decode($this->body, true);
   }
 }

@@ -26,6 +26,23 @@ class MockResource extends Resource {
   );
 
 /**
+ * Used for testing the magic __GET and __SET methods
+ *
+ * @var string
+ */
+  public $testVar = 'foobar';
+
+
+/**
+ * The resource id for the REST URL
+ *
+ * @return string
+ */
+  public function id() {
+    return $this->id;
+  }
+
+/**
  * Helper method to retrieve a protected instance variable
  *
  * @param string $name
@@ -46,11 +63,13 @@ class ResourceTest extends BaseTestCase {
   public function testMagicMethods() {
     $m2x = $this->generateMockM2X();
 
-    $data = new stdClass();
-    $data->name = 'Test Resource';
-    $data->description = 'Foo Description';
-    $data->foo = 'abc123';
-    $data->bar = 10005;
+    $data = array(
+      'name' => 'Test Resource',
+      'description' => 'Foo Description',
+      'foo' => 'abc123',
+      'bar' => 10005,
+      'readonly' => 'foobar'
+    );
 
     $resource = new MockResource($m2x, $data);
 
@@ -61,5 +80,75 @@ class ResourceTest extends BaseTestCase {
     $result = $resource->getProtected('data');
     $this->assertEquals('Edited Name', $result['name']);
     $this->assertEquals('Edited Name', $resource->name);
+
+    $resource->testVar = 'changed';
+    $this->assertEquals('changed', $resource->testVar);
+    $result = $resource->getProtected('data');
+    $this->assertArrayNotHasKey('testVar', $result);
+
+    //Test read only property
+    $this->assertEquals('foobar', $resource->readonly);
+    $resource->readonly = 'modified';
+    $this->assertEquals('foobar', $resource->readonly);
+    $result = $resource->getProtected('data');
+    $this->assertEquals('foobar', $result['readonly']);
+  }
+
+/**
+ * testData method
+ *
+ * @return void
+ */
+  public function testData() {
+    $m2x = $this->generateMockM2X();
+
+    $data = array(
+      'name' => 'Test Resource',
+      'description' => 'Foo Description',
+      'foo' => 'abc123',
+      'bar' => 10005,
+      'readonly' => 'foobar'
+    );
+
+    $resource = new MockResource($m2x, $data);
+    $result = $resource->data();
+    $this->assertEquals($data, $result);
+  }
+
+/**
+ * testUpdate method
+ *
+ * @return void
+ */
+  public function testUpdate() {
+    $client = $this->getMockBuilder('Att\M2X\M2X')
+                   ->setConstructorArgs(array('foobar'))
+                   ->setMethods(array('put'))
+                   ->getMock();
+
+    $expectedPost = array(
+      'name' => 'Original Name',
+      'description' => 'Updated Description',
+      'foo' => 'abc123',
+      'bar' => 10005
+    );
+    $client->expects($this->once())->method('put')
+           ->with($this->equalTo('/foo/112233'), $this->equalTo($expectedPost));
+
+    $data = array(
+      'id' => '112233',
+      'name' => 'Original Name',
+      'description' => 'Original Description',
+      'foo' => 'abc123',
+      'bar' => 10005,
+      'readonly' => 'Original Readonly'
+    );
+
+    $resource = new MockResource($client, $data);
+    $update = array(
+      'description' => 'Updated Description',
+      'readonly' => 'Updated Readonly' //Check private property
+    );
+    $resource->update($update);
   }
 }

@@ -17,8 +17,26 @@ class Key extends Resource {
  * @var array
  */
   protected static $properties = array(
-    'name', 'key', 'master', 'stream', 'expires_at',
-    'expired', 'origin', 'permissions', 'device_access'
+    'name', 'stream', 'expires_at', 'origin',
+    'permissions', 'device_access'
   );
 
+/**
+ * The resource id for the REST URL
+ *
+ * @return string
+ */
+  public function id() {
+  	return $this->key;
+  }
+
+/**
+ * Regenerate an existing key
+ *
+ * @return Key
+ */
+  public function regenerate() {
+  	$response = $this->client->post(self::$path . '/' . $this->key . '/regenerate');
+  	return $this;
+  }
 }

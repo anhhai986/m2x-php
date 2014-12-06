@@ -21,6 +21,6 @@ class M2XException extends \Exception {
 	public function __construct(HttpResponse $response) {
 		$data = $response->json();
 		$this->response = $response;
-		parent::__construct($data->message, $response->statusCode);
+		parent::__construct($data['message'], $response->statusCode);
 	}
 }
