@@ -14,7 +14,7 @@ class MockResource extends Resource {
  *
  * @var string
  */
-  protected static $path = '/foo';
+  public static $path = '/foo';
 
 /**
  * Resource properties

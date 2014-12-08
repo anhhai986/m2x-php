@@ -9,7 +9,7 @@ class Key extends Resource {
  *
  * @var string
  */
-  protected static $path = '/keys';
+  public static $path = '/keys';
 
 /**
  * The Key resource properties

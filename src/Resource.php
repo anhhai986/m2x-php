@@ -9,7 +9,7 @@ abstract class Resource {
  *
  * @var string
  */
-  protected static $path = '';
+  public static $path = '';
 
 /**
  * The resource properties
@@ -138,6 +138,15 @@ abstract class Resource {
     $this->client->put(static::$path . '/' . $this->id(), $postData);
 
     return $this;
+  }
+
+/**
+ * Deletes a resource
+ *
+ * @return void
+ */
+  public function delete() {
+    $this->client->delete(static::$path . '/' . $this->id());
   }
 
 /**

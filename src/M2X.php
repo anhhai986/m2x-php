@@ -101,19 +101,29 @@ class M2X {
   }
 
 /**
- * Retrieve a list of devices associated with the user account.
+ * Retrieve a list of distributions associated with the user account.
  *
  * @return 
  */
-  public function devices() {
-    return Device::index($this);
+  public function distributions() {
+    return Distribution::index($this);
   }
 
-  public function get($path) {
+
+/**
+ * Retrieve a list of devices associated with the user account.
+ *
+ * @return DeviceCollection
+ */
+  public function devices() {
+    return new DeviceCollection($this);
+  }
+
+  public function get($path, $params = array()) {
     $request = $this->request();
     $request->header('X-M2X-KEY', $this->apiKey);
 
-    $response = $request->get($this->endpoint . $path);
+    $response = $request->get($this->endpoint . $path, $params);
     return $this->handleResponse($response);
   }
 
@@ -130,6 +140,14 @@ class M2X {
     $request->header('X-M2X-KEY', $this->apiKey);
 
     $response = $request->put($this->endpoint . $path, $vars);
+    return $this->handleResponse($response);
+  }
+
+  public function delete($path, $vars = array()) {
+    $request = $this->request();
+    $request->header('X-M2X-KEY', $this->apiKey);
+
+    $response = $request->delete($this->endpoint . $path, $vars);
     return $this->handleResponse($response);
   }
 
