@@ -126,22 +126,25 @@ class HttpRequest {
  * @return void
  */
   protected function setOptions($url, $method, $vars) {
+    if($method == 'GET' && !empty($vars)) {
+      $url = $url . "?" . http_build_query($vars); 
+    }
+
     curl_setopt($this->request, CURLOPT_URL, $url);
     curl_setopt($this->request, CURLOPT_HEADER, true);
     curl_setopt($this->request, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($this->request, CURLOPT_FOLLOWLOCATION, true);
 
-    if ($method == 'POST' && empty($vars)) {
+    if (in_array($method, array('POST', 'PUT'))) {
       $this->headers['Content-Type'] = 'application/json';
       $this->headers['Content-Length'] = 0;
       $this->headers['Expect'] = '';
-    }
 
-    if (!empty($vars)) {
-      $data = json_encode($vars);
-      $this->headers['Content-Type'] = 'application/json';
-      $this->headers['Content-Length'] = strlen($data);
-      curl_setopt($this->request, CURLOPT_POSTFIELDS, $data);
+      if (!empty($vars)) {
+        $data = json_encode($vars);
+        $this->headers['Content-Length'] = strlen($data);
+        curl_setopt($this->request, CURLOPT_POSTFIELDS, $data);
+      }
     }
 
     $headers = array();

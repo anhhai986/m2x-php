@@ -115,8 +115,8 @@ class M2X {
  *
  * @return DeviceCollection
  */
-  public function devices() {
-    return new DeviceCollection($this);
+  public function devices($params = array()) {
+    return new DeviceCollection($this, $params);
   }
 
   public function get($path, $params = array()) {
