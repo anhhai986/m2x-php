@@ -74,7 +74,7 @@ class HttpRequest {
     $this->request = curl_init();
 
     $this->setRequestMethod($method);
-    $this->setOptions($url, $vars);
+    $this->setOptions($url, $method, $vars);
 
     $data = curl_exec($this->request);
 
@@ -114,11 +114,17 @@ class HttpRequest {
  * @param array $vars
  * @return void
  */
-  protected function setOptions($url, $vars) {
+  protected function setOptions($url, $method, $vars) {
     curl_setopt($this->request, CURLOPT_URL, $url);
     curl_setopt($this->request, CURLOPT_HEADER, true);
     curl_setopt($this->request, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($this->request, CURLOPT_FOLLOWLOCATION, true);
+
+    if ($method == 'POST' && empty($vars)) {
+      $this->headers['Content-Type'] = 'application/json';
+      $this->headers['Content-Length'] = 0;
+      $this->headers['Expect'] = '';
+    }
 
     if (!empty($vars)) {
       $data = json_encode($vars);

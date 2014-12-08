@@ -98,7 +98,7 @@ abstract class Resource {
  */
   public function __construct($client, $data) {
     $this->client = $client;
-    $this->data = $data;
+    $this->setData($data);
   }
 
 /**
@@ -108,6 +108,15 @@ abstract class Resource {
  */
   public function data() {
     return $this->data;
+  }
+
+/**
+ * Set the resource data properties
+ *
+ * @param array $data
+ */
+  protected function setData($data) {
+    $this->data = $data;
   }
 
 /**
@@ -126,7 +135,7 @@ abstract class Resource {
       $postData[$name] = $this->data[$name];
     }
 
-    $response = $this->client->put(static::$path . '/' . $this->id(), $postData);
+    $this->client->put(static::$path . '/' . $this->id(), $postData);
 
     return $this;
   }

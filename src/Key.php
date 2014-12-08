@@ -36,7 +36,8 @@ class Key extends Resource {
  * @return Key
  */
   public function regenerate() {
-  	$response = $this->client->post(self::$path . '/' . $this->key . '/regenerate');
-  	return $this;
+    $response = $this->client->post(self::$path . '/' . $this->key . '/regenerate');
+    $this->setData($response->json());
+    return $this;
   }
 }

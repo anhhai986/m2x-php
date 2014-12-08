@@ -36,6 +36,8 @@ class KeyTest extends BaseTestCase {
     );
     $this->assertEquals($expected, $key->data());
     $this->assertEquals('Raspberry PI', $key->name);
+
+    $this->assertEquals('test-key', $key->id());
   }
 
 /**
@@ -98,5 +100,30 @@ class KeyTest extends BaseTestCase {
     );
 
     $key = Key::create($m2x, $data);
+  }
+
+/**
+ * testRegenerate method
+ *
+ * @return void
+ */
+  public function testRegenerate() {
+    $m2x = $this->generateMockM2X();
+    $m2x->request->method('request')
+           ->with($this->equalTo('POST'), $this->equalTo('https://api-m2x.att.com/v2/keys/foobar/regenerate'))
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('keys_regenerate_success')));
+
+    $data = array(
+      'key' => 'foobar',
+      'name' => 'Test Bar',
+      'permissions' => array('GET'),
+      'feed' => null,
+      'stream' => null,
+      'expires_at' => null
+    );
+    $key = new Key($m2x, $data);
+    $result = $key->regenerate();
+    $this->assertSame($key, $result);
+    $this->assertEquals('regenerated-key', $result->key);
   }
 }
