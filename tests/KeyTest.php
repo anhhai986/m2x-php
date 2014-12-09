@@ -17,7 +17,7 @@ class KeyTest extends BaseTestCase {
            ->with($this->equalTo('GET'), $this->equalTo('https://api-m2x.att.com/v2/keys/test-key'))
            ->willReturn(new Att\M2X\HttpResponse($this->_raw('keys_get_success')));
 
-    $key = Key::get($m2x, 'test-key');
+    $key = $m2x->key('test-key');
     $this->assertInstanceOf('Att\M2X\Key', $key);
 
     //Check the property values
@@ -52,7 +52,7 @@ class KeyTest extends BaseTestCase {
            ->with($this->equalTo('GET'), $this->equalTo('https://api-m2x.att.com/v2/keys'))
            ->willReturn(new Att\M2X\HttpResponse($this->_raw('keys_index_success')));
 
-    $results = Key::index($m2x);
+    $results = $m2x->keys();
     $this->assertCount(2, $results);
     foreach ($results as $result) {
       $this->assertInstanceOf('Att\M2X\Key', $result);
@@ -77,7 +77,7 @@ class KeyTest extends BaseTestCase {
       'stream' => null,
       'expires_at' => null
     );
-    $key = Key::create($m2x, $data);
+    $key = $m2x->createKey($data);
     $this->assertInstanceOf('Att\M2X\Key', $key);
   }
 

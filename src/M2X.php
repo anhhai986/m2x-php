@@ -131,6 +131,16 @@ class M2X {
     return Device::get($this, $id);
   }
 
+/**
+ * Create a new device.
+ *
+ * @param  $data
+ * @return Device
+ */
+  public function createDevice($data) {
+    return Device::create($this, $data);
+  }
+
   public function get($path, $params = array()) {
     $request = $this->request();
     $request->header('X-M2X-KEY', $this->apiKey);

@@ -80,4 +80,45 @@ class DeviceTest extends BaseTestCase {
     $this->assertNotEmpty($location);
     $this->assertEquals('Storage Room', $location['name']);
   }
+
+/**
+ * testUpdateLocation method
+ *
+ * @return void
+ */
+  public function testUpdateLocation() {
+    $data = array('name' => 'foo', 'latitude' => 51.178844, 'longitude' => -1.826189);
+
+    $m2x = $this->generateMockM2X();
+
+    $m2x->request->expects($this->once())->method('request')
+           ->with($this->equalTo('PUT'), $this->equalTo('https://api-m2x.att.com/v2/devices/foobar/location'), $this->equalTo($data))
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('devices_update_location_success')));
+
+
+    $device = new Device($m2x, array('id' => 'foobar'));
+    $result = $device->updateLocation($data);
+    $this->assertSame($device, $result);
+  }
+
+/**
+ * testCreate method
+ *
+ * @return void
+ */
+  public function testCreate() {
+    $data = array(
+      'name' => 'Foo Bar',
+      'visibility' => 'public'
+    );
+
+    $m2x = $this->generateMockM2X();
+
+    $m2x->request->expects($this->once())->method('request')
+           ->with($this->equalTo('POST'), $this->equalTo('https://api-m2x.att.com/v2/devices'), $this->equalTo($data))
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('devices_post_success')));
+
+    $result = $m2x->createDevice($data);
+    $this->assertInstanceOf('Att\M2X\Device', $result);
+  }
 }

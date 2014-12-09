@@ -45,4 +45,15 @@ class Device extends Resource {
 
   	return $response->json();
   }
+
+/**
+ * Update the current location of the specified device.
+ *
+ * @param array $data
+ * @return Device
+ */
+  public function updateLocation($data) {
+    $response = $this->client->put(self::$path . '/' . $this->id . '/location', $data);
+    return $this;
+  }
 }
