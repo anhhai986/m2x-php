@@ -44,4 +44,14 @@ class StreamCollection extends ResourceCollection {
     $class = static::$resourceClass;
     return str_replace(':device', $this->device->id(), $class::$path);
   }
+
+/**
+ * Initialize and add a resource to the collection
+ *
+ * @param integer $i
+ * @param array $data
+ */
+  protected function setResource($i, $data) {
+    $this->resources[$i] = new static::$resourceClass($this->client, $this->device, $data);
+  }
 }

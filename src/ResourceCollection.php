@@ -108,6 +108,12 @@ abstract class ResourceCollection implements \Iterator, \Countable {
     }
   }
 
+/**
+ * Initialize and add a resource to the collection
+ *
+ * @param integer $i
+ * @param array $data
+ */
   protected function setResource($i, $data) {
     $this->resources[$i] = new static::$resourceClass($this->client, $data);
   }
@@ -169,7 +175,16 @@ abstract class ResourceCollection implements \Iterator, \Countable {
     public function next() {
       ++$this->position;
     }
- 
+
+/**
+ * Returns the current page number
+ *
+ * @return integer
+ */
+    public function page() {
+      return $this->currentPage;
+    }
+
  /**
   * Returns a boolean indicating if there is a resource
   * at the current position in the dataset

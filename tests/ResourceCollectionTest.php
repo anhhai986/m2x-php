@@ -228,9 +228,11 @@ class ResourceCollectionTest extends BaseTestCase {
     $this->assertEquals(5, count($collection));
 
     //Move pointer to the second page
+    $this->assertEquals(1, $collection->page());
     $collection->next();
     $collection->next();
     $result = $collection->current();
+    $this->assertEquals(2, $collection->page());
     $this->assertEquals('Third', $result->title);
 
     //Move pointer to the third page

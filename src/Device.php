@@ -67,4 +67,13 @@ class Device extends Resource {
   public function streams() {
     return new StreamCollection($this->client, $this);
   }
+
+/**
+ * Get details of a specific data Stream associated with the device
+ * @param string $name
+ * @return Stream
+ */
+  public function stream($name) {
+    return Stream::getStream($this->client, $this, $name);
+  }
 }
