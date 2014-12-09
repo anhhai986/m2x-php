@@ -11,6 +11,7 @@ class DeviceTest extends BaseTestCase {
  * @return void
  */
   public function testIndex() {
+  	$this->markTestIncomplete('Needs to test integration with the collection');
     $m2x = $this->generateMockM2X();
 
     $m2x->request->method('request')

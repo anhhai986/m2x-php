@@ -35,7 +35,7 @@ class DeviceCollectionTest extends BaseTestCase {
     $m2x = $this->generateMockM2X();
 
     $m2x->request->method('request')
-           ->with($this->equalTo('GET'), $this->equalTo('https://api-m2x.att.com/v2/devices'), $this->equalTo(array('q' => 'Foo')))
+           ->with($this->equalTo('GET'), $this->equalTo('https://api-m2x.att.com/v2/devices'), $this->equalTo(array('q' => 'Foo', 'page' => 1)))
            ->willReturn(new Att\M2X\HttpResponse($this->_raw('devices_index_success')));
     $params = array('q' => 'Foo');
     $collection = new DeviceCollection($m2x, $params);

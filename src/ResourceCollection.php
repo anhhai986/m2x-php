@@ -82,8 +82,8 @@ abstract class ResourceCollection implements \Iterator {
     $this->pages = $data['pages'];
     $this->limit = $data['limit'];
     $this->currentPage = $data['current_page'];
-
-    foreach ($data['devices'] as $i => $deviceData) {
+    end($data);
+    foreach (current($data) as $i => $deviceData) {
       $position = $i + ($this->currentPage - 1) * $this->limit;
       $this->setResource($position, $deviceData);
     }
@@ -124,6 +124,7 @@ abstract class ResourceCollection implements \Iterator {
   * @return void
   */
     public function current() {
+      $this->preloadPage();
       return $this->resources[$this->position];
     }
  
@@ -155,12 +156,13 @@ abstract class ResourceCollection implements \Iterator {
       if (isset($this->resources[$this->position])) {
         return true;
       }
-
-      if ($this->position >= $this->total) {
-        return false;
-      }
-
-      $this->fetch($this->currentPage + 1);
+      $this->preloadPage();
       return isset($this->resources[$this->position]);
+    }
+
+    protected function preloadPage() {
+      if ($this->position < $this->total && !isset($this->resources[$this->position])) {
+        $this->fetch($this->currentPage + 1);
+      }
     }
 }
