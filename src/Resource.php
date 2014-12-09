@@ -150,6 +150,15 @@ abstract class Resource {
   }
 
 /**
+ * Returns the path to the resource
+ *
+ * @return string
+ */
+  public function path() {
+    return static::$path . '/' . $this->id();
+  }
+
+/**
  * Magic method for accessing resource data properties directly
  *
  * @param string $name

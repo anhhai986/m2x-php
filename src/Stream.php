@@ -105,4 +105,71 @@ class Stream extends Resource {
   public function id() {
   	return $this->name;
   }
+
+/**
+ * Returns the path to the resource
+ *
+ * @return string
+ */
+  public function path() {
+    return str_replace(':device', $this->device->id(), self::$path) . '/' . $this->id();
+  }
+
+/**
+ * Update the current value of the stream. The timestamp is optional.
+ * If ommited, the current server time will be used.
+ *
+ * @param string $value
+ * @param string $timestamp
+ * @return void
+ */
+  public function updateValue($value, $timestamp = null) {
+    $data = array('value' => $value);
+
+    if ($timestamp) {
+      $data['at'] = $timestamp;
+    }
+
+    $this->client->put($this->path() . '/value', $data);
+  }
+
+/**
+ * List values from the stream, sorted in reverse chronological order
+ * (most recent value first).
+ *
+ * @param array $params
+ * @return array
+ */
+  public function values($params = array()) {
+    $response = $this->client->get($this->path() . '/values', $params);
+    return $response->json();
+  }
+
+/**
+ * Sample values from the stream, sorted in reverse chronological order
+ * (most recent values first).
+ *
+ * This method only work for numeric streams
+ *
+ * @param array $params
+ * @return array
+ */
+  public function sampling($params = array()) {
+    $response = $this->client->get($this->path() . '/sampling', $params);
+    return $response->json();
+  }
+
+/**
+ * Return count, min, max, average and standard deviation stats for the
+ * values of the stream.
+ *
+ * This method only works for numeric stream
+ *
+ * @param array $params
+ * @return array
+ */
+  public function stats($params = array()) {
+    $response = $this->client->get($this->path() . '/stats', $params);
+    return $response->json();
+  }
 }

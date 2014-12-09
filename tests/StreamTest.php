@@ -95,4 +95,64 @@ class StreamTest extends BaseTestCase {
     $this->assertInstanceOf('Att\M2X\Stream', $result);
     $this->assertSame($device, $result->device);
   }
+
+/**
+ * testUpdateValue method
+ *
+ * @return void
+ */
+  public function testUpdateValue() {
+    $m2x = $this->generateMockM2X();
+
+    $m2x->request->expects($this->at(0))->method('request')
+           ->with($this->equalTo('PUT'), $this->equalTo('https://api-m2x.att.com/v2/devices/c2b83dcb796230906c70854a57b66b0a/streams/stream_foo/value'), $this->equalTo(array('value' => 1234)))
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('streams_update_value_success')));
+
+    $m2x->request->expects($this->at(1))->method('request')
+           ->with($this->equalTo('PUT'), $this->equalTo('https://api-m2x.att.com/v2/devices/c2b83dcb796230906c70854a57b66b0a/streams/stream_foo/value'), $this->equalTo(array('value' => 1123, 'at' => '2014-10-01T12:00:00Z')))
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('streams_update_value_success')));
+
+    $device = new Device($m2x, array('id' => 'c2b83dcb796230906c70854a57b66b0a'));
+    $stream = new Stream($m2x, $device, array('name' => 'stream_foo'));
+    $stream->updateValue(1234);
+    $stream->updateValue(1123, '2014-10-01T12:00:00Z');
+  }
+
+/**
+ * testValues method
+ *
+ * @return void
+ */
+  public function testValues() {
+    $m2x = $this->generateMockM2X();
+
+    $m2x->request->expects($this->once())->method('request')
+           ->with($this->equalTo('GET'), $this->equalTo('https://api-m2x.att.com/v2/devices/c2b83dcb796230906c70854a57b66b0a/streams/stream_foo/values')) 
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('streams_values_get_success')));
+
+    $device = new Device($m2x, array('id' => 'c2b83dcb796230906c70854a57b66b0a'));
+    $stream = new Stream($m2x, $device, array('name' => 'stream_foo'));
+    $result = $stream->values();
+    $expected = array('limit', 'end', 'values');
+    $this->assertEquals($expected, array_keys($result));
+  }
+
+/**
+ * testStats method
+ *
+ * @return void
+ */
+  public function testStats() {
+    $m2x = $this->generateMockM2X();
+
+    $m2x->request->expects($this->once())->method('request')
+           ->with($this->equalTo('GET'), $this->equalTo('https://api-m2x.att.com/v2/devices/c2b83dcb796230906c70854a57b66b0a/streams/stream_foo/stats')) 
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('streams_stats_success')));
+
+    $device = new Device($m2x, array('id' => 'c2b83dcb796230906c70854a57b66b0a'));
+    $stream = new Stream($m2x, $device, array('name' => 'stream_foo'));
+    $result = $stream->stats();
+    $expected = array('end', 'stats');
+    $this->assertEquals($expected, array_keys($result));
+  }
 }
