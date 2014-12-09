@@ -109,7 +109,6 @@ class M2X {
     return Distribution::index($this);
   }
 
-
 /**
  * Retrieve a list of devices associated with the user account.
  *
@@ -117,6 +116,19 @@ class M2X {
  */
   public function devices($params = array()) {
     return new DeviceCollection($this, $params);
+  }
+
+/**
+ * Retrieve a single device from the API.
+ *
+ * This method instantiates an instance of Device
+ * with all its attributes initialized.
+ *
+ * @param string $key
+ * @return Key
+ */
+  public function device($id) {
+    return Device::get($this, $id);
   }
 
   public function get($path, $params = array()) {

@@ -20,4 +20,64 @@ class DeviceTest extends BaseTestCase {
 
     $results = Device::index($m2x);
   }
+
+/**
+ * testGet method
+ *
+ * @return void
+ */
+  public function testGet() {
+    $m2x = $this->generateMockM2X();
+
+    $m2x->request->expects($this->once())->method('request')
+           ->with($this->equalTo('GET'), $this->equalTo('https://api-m2x.att.com/v2/devices/2dd1c43521cef93109a3e8a75d4d5a88'))
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('devices_get_success')));
+
+    $result = $m2x->device('2dd1c43521cef93109a3e8a75d4d5a88');
+
+    $this->assertEquals('2dd1c43521cef93109a3e8a75d4d5a88', $result->id());
+    $this->assertEquals('Test Blueprint', $result->name);
+  }
+
+/**
+ * testLocationNoData method
+ *
+ * @return void
+ */
+  public function testLocationNoData() {
+    $m2x = $this->generateMockM2X();
+
+    $m2x->request->expects($this->at(0))->method('request')
+           ->with($this->equalTo('GET'), $this->equalTo('https://api-m2x.att.com/v2/devices/2dd1c43521cef93109a3e8a75d4d5a88'))
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('devices_get_success')));
+
+    $m2x->request->expects($this->at(1))->method('request')
+           ->with($this->equalTo('GET'), $this->equalTo('https://api-m2x.att.com/v2/devices/2dd1c43521cef93109a3e8a75d4d5a88/location'))
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('devices_location_get_no_data')));
+
+    $result = $m2x->device('2dd1c43521cef93109a3e8a75d4d5a88');
+    $this->assertFalse($result->location());
+  }
+
+/**
+ * testLocationSuccess method
+ *
+ * @return void
+ */
+  public function testLocationSuccess() {
+    $m2x = $this->generateMockM2X();
+
+    $m2x->request->expects($this->at(0))->method('request')
+           ->with($this->equalTo('GET'), $this->equalTo('https://api-m2x.att.com/v2/devices/2dd1c43521cef93109a3e8a75d4d5a88'))
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('devices_get_success')));
+
+    $m2x->request->expects($this->at(1))->method('request')
+           ->with($this->equalTo('GET'), $this->equalTo('https://api-m2x.att.com/v2/devices/2dd1c43521cef93109a3e8a75d4d5a88/location'))
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('devices_location_get_success')));
+
+    $device = $m2x->device('2dd1c43521cef93109a3e8a75d4d5a88');
+    $location = $device->location();
+    $this->assertNotEmpty($location);
+    $this->assertEquals('Storage Room', $location['name']);
+  }
 }

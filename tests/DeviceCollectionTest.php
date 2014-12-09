@@ -19,7 +19,7 @@ class DeviceCollectionTest extends BaseTestCase {
            ->willReturn(new Att\M2X\HttpResponse($this->_raw('devices_index_success')));
 
     $collection = new DeviceCollection($m2x);
-    $this->assertEquals(3, $collection->total());
+    $this->assertCount(3, $collection);
 
     foreach ($collection as $resource) {
     	$this->assertInstanceOf('Att\M2X\Device', $resource);
