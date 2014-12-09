@@ -7,7 +7,7 @@ use Att\M2X\Stream;
 
 class StreamCollection extends ResourceCollection {
 
-	protected static $resourceClass = 'Att\M2X\Stream';
+  protected static $resourceClass = 'Att\M2X\Stream';
 
 /**
  * Boolean flag to define if the resource collection
@@ -15,7 +15,7 @@ class StreamCollection extends ResourceCollection {
  *
  * @var boolean
  */
-	protected $paginate = false;
+  protected $paginate = false;
 
 /**
  * The device resource that this collection belongs to
