@@ -61,6 +61,14 @@ abstract class ResourceCollection implements \Iterator, \Countable {
   protected $position = 0;
 
 /**
+ * Boolean flag to define if the resource collection
+ * is paginated or not.
+ *
+ * @var boolean
+ */
+  protected $paginate = true;
+
+/**
  * Resource collection constructor
  *
  * @param M2X $client
@@ -73,19 +81,30 @@ abstract class ResourceCollection implements \Iterator, \Countable {
   }
 
   public function fetch($page = 1) {
-    $params = array_merge($this->params, array('page' => $page));
+    $params = $this->params;
+    if ($this->paginate) {
+      $params = array_merge($params, array('page' => $page));
+    }
 
     $response = $this->client->get($this->path(), $params);
     $data = $response->json();
 
-    $this->total = $data['total'];
-    $this->pages = $data['pages'];
-    $this->limit = $data['limit'];
-    $this->currentPage = $data['current_page'];
-    end($data);
-    foreach (current($data) as $i => $deviceData) {
-      $position = $i + ($this->currentPage - 1) * $this->limit;
-      $this->setResource($position, $deviceData);
+    if ($this->paginate) {
+      $this->total = $data['total'];
+      $this->pages = $data['pages'];
+      $this->limit = $data['limit'];
+      $this->currentPage = $data['current_page'];
+      end($data);
+      foreach (current($data) as $i => $deviceData) {
+        $position = $i + ($this->currentPage - 1) * $this->limit;
+        $this->setResource($position, $deviceData);
+      }
+    } else {
+      $data = current($data);
+      $this->total = count($data);
+      foreach ($data as $i => $deviceData) {
+        $this->setResource($i, $deviceData);
+      }
     }
   }
 
@@ -166,7 +185,7 @@ abstract class ResourceCollection implements \Iterator, \Countable {
     }
 
     protected function preloadPage() {
-      if ($this->position < $this->total && !isset($this->resources[$this->position])) {
+      if ($this->paginate && $this->position < $this->total && !isset($this->resources[$this->position])) {
         $this->fetch($this->currentPage + 1);
       }
     }

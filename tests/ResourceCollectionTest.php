@@ -61,6 +61,65 @@ class PostResourceCollection extends ResourceCollection {
   }
 }
 
+/**
+ * Test class for unit testing non paginated resources
+ *
+ */
+class CategoryResource extends Resource {
+
+/**
+ * Path of the resource
+ *
+ * @var string
+ */
+  public static $path = '/categories';
+
+/**
+ * Resource properties
+ *
+ * @var array
+ */
+  protected static $properties = array(
+    'name'
+  );
+
+/**
+ * The resource id for the REST URL
+ *
+ * @return string
+ */
+  public function id() {
+    return $this->id;
+  }
+
+/**
+ * Helper method to retrieve a protected instance variable
+ *
+ * @param string $name
+ * @return mied
+ */
+  public function getProtected($name) {
+    return $this->{$name};
+  }
+}
+
+class CategoryResourceCollection extends ResourceCollection {
+
+  static protected $resourceClass = 'CategoryResource';
+
+  public $paginate = false;
+
+/**
+ * Helper method to retrieve a protected instance variable
+ *
+ * @param string $name
+ * @return mied
+ */
+  public function getProtected($name) {
+    return $this->{$name};
+  }
+}
+
 class ResourceCollectionTest extends BaseTestCase {
 
 /**
@@ -181,6 +240,32 @@ class ResourceCollectionTest extends BaseTestCase {
 
     $collection->next();
     $this->assertFalse($collection->valid());
+  }
+
+/**
+ * testNonPaginated method
+ *
+ * @return void
+ */
+  public function testNonPaginated() {
+    $m2x = $this->generateMockM2X();
+
+    $return = array('categories' => array(
+      array('id' => '1', 'name' => 'Foo'),
+      array('id' => '2', 'name' => 'Bar'),
+      array('id' => '3', 'name' => 'Hardware')
+    ));
+
+    $m2x->request->expects($this->once())->method('request')
+        ->with($this->equalTo('GET'), $this->equalTo('https://api-m2x.att.com/v2/categories'))
+        ->willReturn(new Att\M2X\HttpResponse($this->_responseFromData($return)));
+
+    $collection = new CategoryResourceCollection($m2x);
+    $this->assertCount(3, $collection);
+
+    foreach ($collection as $result) {
+      $this->assertInstanceOf('CategoryResource', $result);
+    }
   }
 
 /**

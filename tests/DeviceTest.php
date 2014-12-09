@@ -121,4 +121,28 @@ class DeviceTest extends BaseTestCase {
     $result = $m2x->createDevice($data);
     $this->assertInstanceOf('Att\M2X\Device', $result);
   }
+
+/**
+ * testStreams method
+ *
+ * @return void
+ */
+  public function testStreams() {
+    $m2x = $this->generateMockM2X();
+
+    $m2x->request->expects($this->once())->method('request')
+           ->with($this->equalTo('GET'), $this->equalTo('https://api-m2x.att.com/v2/devices/c2b83dcb796230906c70854a57b66b0a/streams'))
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('streams_index_success')));
+
+    $device = new Device($m2x, array('id' => 'c2b83dcb796230906c70854a57b66b0a'));
+
+    $streams = $device->streams();
+    $this->assertCount(3, $streams);
+
+    $result = $streams->current();
+    $this->assertEquals('stream_one', $result->name);
+    $streams->next();
+    $result = $streams->current();
+    $this->assertEquals('stream_two', $result->name);
+  }
 }

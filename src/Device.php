@@ -2,6 +2,8 @@
 
 namespace Att\M2X;
 
+use Att\M2X\StreamCollection;
+
 class Device extends Resource {
 
 /**
@@ -55,5 +57,14 @@ class Device extends Resource {
   public function updateLocation($data) {
     $response = $this->client->put(self::$path . '/' . $this->id . '/location', $data);
     return $this;
+  }
+
+/**
+ * Retrieve list of data streams associated with the device
+ *
+ * @return StreamCollection
+ */
+  public function streams() {
+    return new StreamCollection($this->client, $this);
   }
 }
