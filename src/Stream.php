@@ -37,7 +37,18 @@ class Stream extends Resource {
  * @return void
  */
   public static function get($client, $id) {
-  	throw new \BadMethodCallException('Not implemented, use Stream::getStream() instead.');
+    throw new \BadMethodCallException('Not implemented, use Stream::getStream() instead.');
+  }
+
+/**
+ * Disable the original POST factory
+ *
+ * @param M2X $client
+ * @param string $id
+ * @return void
+ */
+  public static function create($client, $data = array()) {
+    throw new \BadMethodCallException('Not implemented, use Stream::createStream() instead.');
   }
 
 /**
@@ -52,6 +63,26 @@ class Stream extends Resource {
 
     $class = get_called_class();
     return new $class($client, $device, $response->json());
+  }
+
+/**
+ * Create or update a stream resource
+ *
+ * @param M2X $client
+ * @param Device $device
+ * @param string $name
+ * @param array $data
+ * @return Stream
+ */
+  public static function createStream(M2X $client, Device $device, $name, $data) {
+    $path = str_replace(':device', $device->id(), static::$path) . '/' . $name;
+    $response = $client->put($path, $data);
+
+    if ($response->statusCode == 204) {
+      return self::getStream($client, $device, $name);
+    }
+
+    return new self($client, $device, $response->json());
   }
 
 /**

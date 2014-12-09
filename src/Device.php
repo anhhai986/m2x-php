@@ -76,4 +76,16 @@ class Device extends Resource {
   public function stream($name) {
     return Stream::getStream($this->client, $this, $name);
   }
+
+/**
+ * Update a data stream associated with the Device, if a
+ * stream with this name does not exist it gets created.
+ *
+ * @param string $name
+ * @param array $data
+ * @return Stream
+ */
+  public function updateStream($name, $data = array()) {
+    return Stream::createStream($this->client, $this, $name, $data);
+  }
 }
