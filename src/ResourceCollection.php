@@ -2,7 +2,7 @@
 
 namespace Att\M2X;
 
-abstract class ResourceCollection implements \Iterator {
+abstract class ResourceCollection implements \Iterator, \Countable {
 
 /**
  * Holds the instances of the resources 
@@ -103,7 +103,12 @@ abstract class ResourceCollection implements \Iterator {
     return $class::$path;
   }
 
-  public function total() {
+/**
+ * Number of resources in the dataset
+ *
+ * @return integer
+ */
+  public function count() {
     return $this->total;
   }
 

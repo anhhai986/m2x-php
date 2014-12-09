@@ -92,7 +92,7 @@ class ResourceCollectionTest extends BaseTestCase {
     $this->assertEquals(1, $collection->getProtected('pages'));
     $this->assertEquals(1, $collection->getProtected('currentPage'));
 
-    $this->assertEquals(3, $collection->total());
+    $this->assertEquals(3, count($collection));
 
     //Test iteration
     $result = $collection->current();
@@ -165,6 +165,8 @@ class ResourceCollectionTest extends BaseTestCase {
     }
 
     $collection = new PostResourceCollection($m2x);
+
+    $this->assertEquals(5, count($collection));
 
     //Move pointer to the second page
     $collection->next();
