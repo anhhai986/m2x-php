@@ -14,11 +14,24 @@ Getting Started
 
 Please consult the [M2X glossary](https://m2x.att.com/developer/documentation/glossary) if you have questions about any M2X specific terms.
 
+## Installation
+
+Simply add a dependency on attm2x/m2x-php to your project's composer.json file if you use Composer to manage the dependencies of your project.
+
+```json
+{
+	"require": {
+		"attm2x/m2x-php": "2.0.0"
+	}
+}
+```
+
 ## Using the lib and creating the instance ##
+
 
 ```php
 <?php
-include_once "lib/m2x.php";
+use Att\M2X\M2X;
 
 $api_key = "<API KEY HERE>";
 $feed_id = "<FEED>";
