@@ -17,7 +17,7 @@ class Distribution extends Resource {
  * @var array
  */
   protected static $properties = array(
-  	'name'
+  	'name', 'description', 'visibility'
   );
 
 /**

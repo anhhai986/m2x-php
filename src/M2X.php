@@ -111,6 +111,29 @@ class M2X {
   }
 
 /**
+ * Retrieve a single distribution from the API.
+ *
+ * This method instantiates an instance of Distribution
+ * with all its attributes initialized.
+ *
+ * @param string $id
+ * @return Key
+ */
+  public function distribution($id) {
+    return Distribution::get($this, $id);
+  }
+
+/**
+ * Create a new distribution.
+ *
+ * @param  $data
+ * @return Device
+ */
+  public function createDistribution($data) {
+    return Distribution::create($this, $data);
+  }
+
+/**
  * Retrieve a list of devices associated with the user account.
  *
  * @param $params

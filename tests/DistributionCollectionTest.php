@@ -18,8 +18,7 @@ class DistributionCollectionTest extends BaseTestCase {
            ->with($this->equalTo('GET'), $this->equalTo('https://api-m2x.att.com/v2/distributions'))
            ->willReturn(new Att\M2X\HttpResponse($this->_raw('distributions_index_success')));
 
-    $collection = $m2x->distribution('ce21d58783bd50c4e4dc04919d01e81b');
-    
+    $collection = $m2x->distributions();
     
     foreach ($collection as $resource) {
     	$this->assertInstanceOf('Att\M2X\Distribution', $resource);
