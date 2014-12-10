@@ -121,4 +121,15 @@ class Device extends Resource {
   public function createTrigger($data = array()) {
     return Trigger::createTrigger($this->client, $this, $data);
   }
+
+/**
+ * Retrieve list of HTTP requests received lately by the specified
+ * device (up to 100 entries).
+ *
+ * @return array
+ */
+  public function log() {
+    $response = $this->client->get($this->path() . '/log');
+    return current($response->json());
+  }
 }

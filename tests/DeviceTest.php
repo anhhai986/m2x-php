@@ -169,4 +169,21 @@ class DeviceTest extends BaseTestCase {
     $result = $triggers->current();
     $this->assertEquals('Second Trigger', $result->name);
   }
+
+/**
+ * testLog method
+ *
+ * @return void
+ */
+  public function testLog() {
+    $m2x = $this->generateMockM2X();
+
+    $m2x->request->expects($this->once())->method('request')
+           ->with($this->equalTo('GET'), $this->equalTo('https://api-m2x.att.com/v2/devices/1dd9df902428a73669da52e94a9604b5/log'))
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('devices_log_success')));
+
+    $device = new Device($m2x, array('id' => '1dd9df902428a73669da52e94a9604b5'));
+    $result = $device->log();
+    $this->assertCount(22, $result);
+  }
 }
