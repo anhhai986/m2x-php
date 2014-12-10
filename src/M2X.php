@@ -103,15 +103,17 @@ class M2X {
 /**
  * Retrieve a list of distributions associated with the user account.
  *
- * @return 
+ * @param $params
+ * @return DistributionCollection
  */
-  public function distributions() {
-    return Distribution::index($this);
+  public function distributions($params = array()) {
+    return new DistributionCollection($this, $params);
   }
 
 /**
  * Retrieve a list of devices associated with the user account.
  *
+ * @param $params
  * @return DeviceCollection
  */
   public function devices($params = array()) {
