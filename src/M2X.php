@@ -144,6 +144,17 @@ class M2X {
   }
 
 /**
+ * Retrieve the list of devices accessible by the authenticated
+ * API key that meet the search criteria.
+ *
+ * @param array $params
+ * @return DeviceCollection
+ */
+  public function deviceCatalog($params = array()) {
+    return new DeviceCollection($this, $params, true);
+  }
+
+/**
  * Retrieve a single device from the API.
  *
  * This method instantiates an instance of Device

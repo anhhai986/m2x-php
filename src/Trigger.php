@@ -109,4 +109,15 @@ class Trigger extends Resource {
   public function path() {
     return str_replace(':parent_path', $this->parent->path(), self::$path) . '/' . $this->id();
   }
+
+/**
+ * Test the specified trigger by firing it with a fake value.
+ * This method can be used by developers of client applications
+ * to test the way their apps receive and handle M2X notifications.
+ *
+ * @return array
+ */
+  public function test() {
+    $this->client->post($this->path() . '/test');
+  }
 }
