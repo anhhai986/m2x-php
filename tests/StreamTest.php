@@ -155,4 +155,27 @@ class StreamTest extends BaseTestCase {
     $expected = array('end', 'stats');
     $this->assertEquals($expected, array_keys($result));
   }
+
+/**
+ * testPostValues method
+ *
+ * @return void
+ */
+  public function testPostValues() {
+    $data = array(
+      array('timestamp' => '2013-12-10T07:48:20+00:00', 'value' => 5002),
+      array('timestamp' => '2013-12-12T07:48:20+00:00', 'value' => 5059)
+    );
+    $expectedParam = array('values' => $data);
+    $m2x = $this->generateMockM2X();
+
+    $m2x->request->expects($this->once())->method('request')
+           ->with($this->equalTo('POST'), $this->equalTo('https://api-m2x.att.com/v2/devices/c2b83dcb796230906c70854a57b66b0a/streams/stream_foo/values')) 
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('streams_post_values_success')));
+
+    $device = new Device($m2x, array('id' => 'c2b83dcb796230906c70854a57b66b0a'));
+    $stream = new Stream($m2x, $device, array('name' => 'stream_foo'));
+
+    $stream->postValues($data);
+  }
 }

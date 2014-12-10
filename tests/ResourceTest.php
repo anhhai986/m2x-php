@@ -151,4 +151,24 @@ class ResourceTest extends BaseTestCase {
     );
     $resource->update($update);
   }
+
+/**
+ * testPath method
+ *
+ * @return void
+ */
+  public function testPath() {
+    $client = $this->getMockBuilder('Att\M2X\M2X');
+
+    $data = array(
+      'id' => '150034',
+      'name' => 'Original Name',
+      'description' => 'Original Description',
+      'foo' => 'abc123',
+      'bar' => 10005
+    );
+
+    $resource = new MockResource($client, $data);
+    $this->assertEquals('/foo/150034', $resource->path());
+  }
 }

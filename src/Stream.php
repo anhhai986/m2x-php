@@ -172,4 +172,22 @@ class Stream extends Resource {
     $response = $this->client->get($this->path() . '/stats', $params);
     return $response->json();
   }
+
+/**
+ * Post multiple values to the stream
+ *
+ * The `values` parameter is an array with the following format:
+ *
+ * array(
+ *   array('timestamp' => <Time in ISO8601>, 'value' => x),
+ *   array('timestamp' => <Time in ISO8601>, 'value' => y)
+ * )
+ *
+ * @param array $data
+ * @return void
+ */
+  public function postValues($values) {
+    $data = array('values' => $values);
+    $response = $this->client->post($this->path() . '/values', $data);
+  }
 }
