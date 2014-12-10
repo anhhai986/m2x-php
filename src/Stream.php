@@ -12,14 +12,14 @@ class Stream extends Resource {
  *
  * @var string
  */
-  public static $path = '/devices/:device/streams';
+  public static $path = ':parent_path/streams';
 
 /**
- * The device resource that this stream belongs to
+ * The parent resource that this stream belongs to
  *
- * @var Device
+ * @var Resource
  */
-  public $device = null;
+  public $parent = null;
 /**
  * The Stream resource properties
  *
@@ -54,35 +54,35 @@ class Stream extends Resource {
 /**
  * Retrieves a single resource
  *
- * @param Device $device
+ * @param Resource $parent
  * @param string $id
  * @return Resource
  */
-  public static function getStream(M2X $client, Device $device, $id) {
-    $response = $client->get(str_replace(':device', $device->id(), static::$path) . '/' . $id);
+  public static function getStream(M2X $client, Resource $parent, $id) {
+    $response = $client->get(str_replace(':parent_path', $parent->path(), static::$path) . '/' . $id);
 
     $class = get_called_class();
-    return new $class($client, $device, $response->json());
+    return new $class($client, $parent, $response->json());
   }
 
 /**
  * Create or update a stream resource
  *
  * @param M2X $client
- * @param Device $device
+ * @param Resource $parent
  * @param string $name
  * @param array $data
  * @return Stream
  */
-  public static function createStream(M2X $client, Device $device, $name, $data) {
-    $path = str_replace(':device', $device->id(), static::$path) . '/' . $name;
+  public static function createStream(M2X $client, Resource $parent, $name, $data) {
+    $path = str_replace(':parent_path', $parent->path(), static::$path) . '/' . $name;
     $response = $client->put($path, $data);
 
     if ($response->statusCode == 204) {
-      return self::getStream($client, $device, $name);
+      return self::getStream($client, $parent, $name);
     }
 
-    return new self($client, $device, $response->json());
+    return new self($client, $parent, $response->json());
   }
 
 /**
@@ -92,8 +92,8 @@ class Stream extends Resource {
  * @param Device $device
  * @param stdClass $data
  */
-  public function __construct(M2X $client, Device $device, $data) {
-    $this->device = $device;
+  public function __construct(M2X $client, Resource $parent, $data) {
+    $this->parent = $parent;
     parent::__construct($client, $data);
   }
 
@@ -112,7 +112,7 @@ class Stream extends Resource {
  * @return string
  */
   public function path() {
-    return str_replace(':device', $this->device->id(), self::$path) . '/' . $this->id();
+    return str_replace(':parent_path', $this->parent->path(), self::$path) . '/' . $this->id();
   }
 
 /**

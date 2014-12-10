@@ -18,19 +18,19 @@ class StreamCollection extends ResourceCollection {
   protected $paginate = false;
 
 /**
- * The device resource that this collection belongs to
+ * The parent resource that this collection belongs to
  *
- * @var Device
+ * @var Resource
  */
-	public $device = null;
+	public $parent = null;
 
 /**
  * Resource collection constructor
  *
  * @param M2X $client
  */
-  public function __construct(M2X $client, Device $device, $params = array()) {
-    $this->device = $device;
+  public function __construct(M2X $client, Resource $parent, $params = array()) {
+    $this->parent = $parent;
 
     parent::__construct($client, $params);
   }
@@ -42,7 +42,7 @@ class StreamCollection extends ResourceCollection {
  */
   protected function path() {
     $class = static::$resourceClass;
-    return str_replace(':device', $this->device->id(), $class::$path);
+    return str_replace(':parent_path', $this->parent->path(), $class::$path);
   }
 
 /**
@@ -52,6 +52,6 @@ class StreamCollection extends ResourceCollection {
  * @param array $data
  */
   protected function setResource($i, $data) {
-    $this->resources[$i] = new static::$resourceClass($this->client, $this->device, $data);
+    $this->resources[$i] = new static::$resourceClass($this->client, $this->parent, $data);
   }
 }

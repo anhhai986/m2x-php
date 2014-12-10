@@ -46,7 +46,7 @@ class StreamTest extends BaseTestCase {
     $result = $device->stream('stream_one');
 
     $this->assertEquals('stream_one', $result->name);
-    $this->assertSame($device, $result->device);
+    $this->assertSame($device, $result->parent);
     $this->assertEquals('stream_one', $result->id());
   }
 
@@ -68,7 +68,7 @@ class StreamTest extends BaseTestCase {
 
     $result = $device->updateStream('stream_foo', $data);
     $this->assertInstanceOf('Att\M2X\Stream', $result);
-    $this->assertSame($device, $result->device);
+    $this->assertSame($device, $result->parent);
   }
 
 /**
@@ -93,7 +93,7 @@ class StreamTest extends BaseTestCase {
 
     $result = $device->updateStream('stream_foo', $data);
     $this->assertInstanceOf('Att\M2X\Stream', $result);
-    $this->assertSame($device, $result->device);
+    $this->assertSame($device, $result->parent);
   }
 
 /**
