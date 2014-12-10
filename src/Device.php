@@ -2,7 +2,10 @@
 
 namespace Att\M2X;
 
+use Att\M2X\Stream;
 use Att\M2X\StreamCollection;
+use Att\M2X\Trigger;
+use Att\M2X\TriggerCollection;
 
 class Device extends Resource {
 
@@ -70,6 +73,7 @@ class Device extends Resource {
 
 /**
  * Get details of a specific data Stream associated with the device
+ *
  * @param string $name
  * @return Stream
  */
@@ -87,5 +91,34 @@ class Device extends Resource {
  */
   public function updateStream($name, $data = array()) {
     return Stream::createStream($this->client, $this, $name, $data);
+  }
+
+/**
+ * Retrieve list of triggers associated with the device
+ *
+ * @return TriggerCollection
+ */
+  public function triggers() {
+    return new TriggerCollection($this->client, $this);
+  }
+
+/**
+ * Get details of a specific trigger associated with the device
+ *
+ * @param string $id
+ * @return Trigger
+ */
+  public function trigger($id) {
+    return Trigger::getTrigger($this->client, $this, $id);
+  }
+
+/**
+ * Create a trigger associated with the Device.
+ *
+ * @param array $data
+ * @return Stream
+ */
+  public function createTrigger($data = array()) {
+    return Trigger::createTrigger($this->client, $this, $data);
   }
 }
