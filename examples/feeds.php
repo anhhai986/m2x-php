@@ -1,51 +1,51 @@
 <?php
 
-include_once "lib/m2x.php";
+use Att\M2X\M2X;
+use Att\M2X\Error\M2XException;
 
 $api_key = "<API KEY HERE>";
-$feed_id = "<FEED>";
+$device_id = "<DEVICE>";
 $stream  = "<STREAM NAME>";
 
 $m2x = new M2X($api_key);
 
-// View Feed
-$response = $m2x->feeds()->view($feed_id);
+try {
+  // View Device
+  $device = $m2x->device($device_id);
 
-// Create/Update Stream
-$data = array(
-  "value" => 1.23,
-  "unit"  => array("label" => "Celsius")
-);
-$response = $m2x->feeds()->update_stream($feed_id, $stream, $data);
+  // Create/Update Stream
+  $data = array(
+    "type" => "numeric",
+    "unit"  => array("label" => "Celsius")
+  );
+  $stream = $device->updateStream($stream, $data);
 
-// List Streams
-$response = $m2x->feeds()->streams($feed_id);
+  // List Streams
+  $streams = $device->streams();
 
-// Get Details From Existing Stream
-$response = $m2x->feeds()->stream($feed_id, $stream);
+  // Get Details From Existing Stream
+  $stream = $device->stream($stream);
 
-// Read Values From Existing Stream
-$response = $m2x->feeds()->stream_values($feed_id, $stream);
+  // Read Values From Existing Stream
+  $values = $stream->values();
 
-// Post Multiple Values To Stream
-$response = $m2x->feeds()->add_stream_values($feed_id, $stream, array(
-  array("value" => 456),
-  array("value" => 789),
-  array("value" => 123.145)
-));
+  // Post Multiple Values To Stream
+  $stream->postValues(array(
+    array("value" => 456),
+    array("value" => 789),
+    array("value" => 123.145)
+  ));
 
-// Read Location Information
-$response = $m2x->feeds()->location($feed_id);
+  // Read Location Information
+  $info = $device->location();
 
-// Update Location Information
-$response = $m2x->feeds()->update_location($feed_id, array(
-  "name"      => "Seattle",
-  "latitude"  => 47.6097,
-  "longitude" => 122.3331
-));
-
-// Response Object
-$code   = $response->code();    // HTTP Status Code
-$header = $response->headers(); // Response Header
-$raw    = $response->raw();     // Raw Body
-$json   = $response->json();    // Parsed Body
+  // Update Location Information
+  $device->updateLocation(array(
+    "name"      => "Seattle",
+    "latitude"  => 47.6097,
+    "longitude" => 122.3331
+  ));
+} catch (M2XException $ex) {
+  echo $ex->getMessage();
+  echo $ex->response->raw;
+}
