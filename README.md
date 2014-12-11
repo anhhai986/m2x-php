@@ -1,9 +1,8 @@
-PHP M2X API Client
-========================
+# AT&T's M2X PHP Client
 
-The AT&T M2X API provides all the needed operations to connect your device to AT&T's [M2X](http://m2x.att.com) service. 
+[AT&T’s M2X](https://m2x.att.com/) is a cloud-based fully managed data storage service for network connected machine-to-machine (M2M) devices. From trucks and turbines to vending machines and freight containers, M2X enables the devices that power your business to connect and share valuable data.
 
-This client provides an easy to use interface for your favorite language, PHP.
+This library aims to provide a simple wrapper to interact with the [AT&T M2X API](https://m2x.att.com/developer/documentation/overview). Refer to the [Glossary of Terms](https://m2x.att.com/developer/documentation/glossary) to understand the nomenclature used throughout this documentation.
 
 
 Getting Started
@@ -13,150 +12,73 @@ Getting Started
 2. Create your first [Device](https://m2x.att.com/devices) and copy its _Device ID_.
 3. Review the [M2X API Documentation](https://m2x.att.com/developer/documentation/overview).
 
-Please consult the [M2X glossary](https://m2x.att.com/developer/documentation/glossary) if you have questions about any M2X specific terms.
-
 ## Installation
 
 Simply add a dependency on attm2x/m2x-php to your project's composer.json file if you use Composer to manage the dependencies of your project.
 
 ```json
 {
-	"require": {
-		"attm2x/m2x-php": "2.0.0"
-	}
+  "require": {
+    "attm2x/m2x-php": "~2.0"
+  }
 }
 ```
 
-## Using the lib and creating the instance ##
+## Usage
 
+In order to communicate with the M2X API, you need an instance of [M2X:](src//M2X.php). You need to pass your API key in the constructor to access your data.
 
 ```php
-<?php
 use Att\M2X\M2X;
 
-$api_key = "<API KEY HERE>";
-$feed_id = "<FEED>";
-
-$m2x = new M2X($api_key);
+$m2x = new M2X("<YOUR-API-KEY>"");
 ```
 
-## Endpoints ##
+This provides an interface to your data in M2X
 
-### List/Search Feeds ###
-Reference: https://m2x.att.com/developer/documentation/v2/device#List-Search-Devices
+- [Distribution](src/Distribution.php)
+  ```php
+  $distribution = $m2x->distribution("<DISTRIBUTION-ID>");
 
-```php
-<?php
-$m2x = new M2X($api_key);
+  $distributions = $m2x->distributions();
+  ```
 
-$response = $m2x->feeds()->all();
-```
+- [Device](src/Device.rb)
+  ```php
+  $device = $m2x->device("<DEVICE-ID>");
 
-### Get details of an existing feed ###
-Reference: https://m2x.att.com/developer/documentation/v2/device#View-Device-Details
+  $devices = $m2x->devices();
+  ```
 
-```php
-<?php
-$m2x = new M2X($api_key);
+- [Key](src/Key.rb)
+  ```ruby
+  $key = $m2x->key("<KEY-TOKEN>");
 
-$response = $m2x->feeds()->view('<FEED-ID>');
-```
+  $keys = $m2x->keys();
+  ```
 
-### View Request Log ###
-Reference: https://m2x.att.com/developer/documentation/v2/device#View-Request-Log
+Refer to the documentation on each class for further usage instructions.
 
-```php
-<?php
-$m2x = new M2X($api_key);
+## Example
 
-$response = $m2x->feeds()->log('<FEED-ID>');
-```
+In order to run this example, you will need a `Device ID` and `API Key`. If you don't have any, access your M2X account, create a new [Device](https://m2x.att.com/devices), and copy the `Device ID` and `API Key` values. The following script will send your CPU load average to three different streams named `load_1m`, `load_5m` and `load_15`. Check that there's no need to create a stream in order to write values into it.
 
-### Read Device Location ###
-Reference: https://m2x.att.com/developer/documentation/v2/device#Read-Device-Location
+In order to execute this script, run:
 
-```php
-<?php
-$m2x = new M2X($api_key);
+TODO: Write the uptime.php example script.
 
-$response = $m2x->feeds()->location('<FEED-ID>');
-```
+## Versioning
 
-### List Data Streams ###
-Reference: https://m2x.att.com/developer/documentation/v2/device#List-Data-Streams
+This lib aims to adhere to [Semantic Versioning 2.0.0](http://semver.org/). As a summary, given a version number `MAJOR.MINOR.PATCH`:
 
-```php
-<?php
-$m2x = new M2X($api_key);
+1. `MAJOR` will increment when backwards-incompatible changes are introduced to the client.
+2. `MINOR` will increment when backwards-compatible functionality is added.
+3. `PATCH` will increment with backwards-compatible bug fixes.
 
-$response = $m2x->feeds()->streams('<FEED-ID>');
-```
+Additional labels for pre-release and build metadata are available as extensions to the `MAJOR.MINOR.PATCH` format.
 
-### View Data Stream ###
-Reference: https://m2x.att.com/developer/documentation/v2/device#View-Data-Stream
+**Note**: the client version does not necessarily reflect the version used in the AT&T M2X API.
 
-```php
-<?php
-$m2x = new M2X($api_key);
+## License
 
-$response = $m2x->feeds()->stream('<FEED-ID>', $stream);
-```
-
-### Create/Update Data Stream ###
-Reference: https://m2x.att.com/developer/documentation/v2/device#Create-Update-Data-Stream
-
-```php
-<?php
-$m2x = new M2X($api_key);
-
-$data = array(
-  'value' => 1.23,
-  'unit'  => array('label' => 'Celsius')
-);
-$response = $m2x->feeds()->update_stream('<FEED-ID>', $stream, $data);
-```
-
-### Update Device Location ###
-Reference: https://m2x.att.com/developer/documentation/v2/device#Update-Device-Location
-
-```php
-<?php
-$m2x = new M2X($api_key);
-
-$data = array(
-  'name'      => 'Seattle',
-  'latitude'  => 47.6097,
-  'longitude' => 122.3331
-);
-$response = $m2x->feeds()->update_location('<FEED-ID>', $data);
-```
-
-### List Data Stream Values ###
-Reference: https://m2x.att.com/developer/documentation/v2/device#List-Data-Stream-Values
-
-```php
-<?php
-$m2x = new M2X($api_key);
-
-$response = $m2x->feeds()->stream_values('<FEED-ID>', $stream);
-```
-
-### Post Data Stream Values ###
-Reference: https://m2x.att.com/developer/documentation/v2/device#Post-Data-Stream-Values
-
-```php
-<?php
-$m2x = new M2X($api_key);
-
-$data = array(
-  array('value' => 456),
-  array('value' => 789),
-  array('value' => 123.145)
-);
-$response = $m2x->feeds()->add_stream_values('<FEED-ID>', $stream, $data);
-```
-
-License
-=======
-
-This library is released under the MIT license. See [`LICENSE`](LICENSE) for the terms.
+This lib is provided under the MIT license. See [LICENSE](LICENSE) for applicable terms.
