@@ -39,6 +39,8 @@ class Device extends Resource {
  * location details are available. Otherwise it will return
  * an array with the details.
  *
+ * @link https://m2x.att.com/developer/documentation/v2/device#Read-Device-Location
+ *
  * @return array|boolean
  */
   public function location() {
@@ -54,6 +56,8 @@ class Device extends Resource {
 /**
  * Update the current location of the specified device.
  *
+ * @link https://m2x.att.com/developer/documentation/v2/device#Update-Device-Location
+ *
  * @param array $data
  * @return Device
  */
@@ -65,6 +69,8 @@ class Device extends Resource {
 /**
  * Retrieve list of data streams associated with the device
  *
+ * @link https://m2x.att.com/developer/documentation/v2/device#List-Data-Streams
+ *
  * @return StreamCollection
  */
   public function streams() {
@@ -73,6 +79,8 @@ class Device extends Resource {
 
 /**
  * Get details of a specific data Stream associated with the device
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/device#View-Data-Stream
  *
  * @param string $name
  * @return Stream
@@ -84,6 +92,8 @@ class Device extends Resource {
 /**
  * Update a data stream associated with the Device, if a
  * stream with this name does not exist it gets created.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/device#Create-Update-Data-Stream
  *
  * @param string $name
  * @param array $data
@@ -125,6 +135,8 @@ class Device extends Resource {
 /**
  * Retrieve list of HTTP requests received lately by the specified
  * device (up to 100 entries).
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/device#View-Request-Log
  *
  * @return array
  */

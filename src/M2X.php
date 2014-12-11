@@ -7,7 +7,7 @@ use Att\M2X\Error\M2XException;
 class M2X {
 
   const DEFAULT_API_BASE = 'https://api-m2x.att.com';
-    const DEFAULT_API_VERSION = 'v2';
+  const DEFAULT_API_VERSION = 'v2';
 
 /**
  * The full URI to the M2X API
@@ -51,7 +51,7 @@ class M2X {
   }
 
 /**
- * Returns the full URI to the M2X API
+ * Returns the full URI to the M2X API.
  *
  * @return string
  */
@@ -60,7 +60,7 @@ class M2X {
   }
 
 /**
- * Returns the API status
+ * Returns the API status.
  *
  * @return HttpResponse
  */
@@ -71,7 +71,9 @@ class M2X {
 /**
  * Retrieve a list of keys associated with the user account.
  *
- * @return 
+ * https://m2x.att.com/developer/documentation/v2/keys#List-Keys
+ *
+ * @return array
  */
   public function keys() {
     return Key::index($this);
@@ -91,7 +93,9 @@ class M2X {
   }
 
 /**
- * Create a new API key.
+ * Create a new account key.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/keys#Create-Key
  *
  * @param  $data
  * @return Key
@@ -177,6 +181,14 @@ class M2X {
     return Device::create($this, $data);
   }
 
+/**
+ * Perform a GET request to the API.
+ *
+ * @param string $path
+ * @param array $params
+ * @return HttpResponse
+ * @throws M2XException
+ */
   public function get($path, $params = array()) {
     $request = $this->request();
     $request->header('X-M2X-KEY', $this->apiKey);
@@ -185,6 +197,14 @@ class M2X {
     return $this->handleResponse($response);
   }
 
+/**
+ * Perform a POST request to the API.
+ *
+ * @param string $path
+ * @param array $vars
+ * @return HttpResponse
+ * @throws M2XException
+ */
   public function post($path, $vars = array()) {
     $request = $this->request();
     $request->header('X-M2X-KEY', $this->apiKey);
@@ -193,6 +213,14 @@ class M2X {
     return $this->handleResponse($response);
   }
 
+/**
+ * Perform a PUT request to the API.
+ *
+ * @param string $path
+ * @param array $vars
+ * @return HttpResponse
+ * @throws M2XException
+ */
   public function put($path, $vars = array()) {
     $request = $this->request();
     $request->header('X-M2X-KEY', $this->apiKey);
@@ -201,6 +229,14 @@ class M2X {
     return $this->handleResponse($response);
   }
 
+/**
+ * Perform a DELETE request to the API.
+ *
+ * @param string $path
+ * @param array $vars
+ * @return HttpResponse
+ * @throws M2XException
+ */
   public function delete($path, $vars = array()) {
     $request = $this->request();
     $request->header('X-M2X-KEY', $this->apiKey);
@@ -209,6 +245,14 @@ class M2X {
     return $this->handleResponse($response);
   }
 
+/**
+ * Checks the HttpResponse for errors and throws an exception, if
+ * no errors are encountered, the httpResponse is returned.
+ *
+ * @param HttpResponse $response
+ * @return HttpResponse
+ * @throws M2XException
+ */
   protected function handleResponse(HttpResponse $response) {
     if (!in_array($response->statusCode, array(200, 201, 202, 204))) {
       throw new M2XException($response);
@@ -218,7 +262,7 @@ class M2X {
   }
 
 /**
- * Creates an instance of the HttpRequest if it doesnt exist yet
+ * Creates an instance of the HttpRequest if it doesnt exist yet.
  *
  * @return HttpRequest
  */

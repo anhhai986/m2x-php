@@ -60,7 +60,7 @@ class HttpResponse {
 /**
  * Returns the json encoded data object
  *
- * @return object
+ * @return array
  */
   public function json() {
     return json_decode($this->body, true);

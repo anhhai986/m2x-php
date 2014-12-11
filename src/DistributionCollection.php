@@ -8,5 +8,4 @@ class DistributionCollection extends ResourceCollection {
 
 	protected static $resourceClass = 'Att\M2X\Distribution';
 
-	
 }

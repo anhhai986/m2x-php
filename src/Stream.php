@@ -119,6 +119,8 @@ class Stream extends Resource {
  * Update the current value of the stream. The timestamp is optional.
  * If ommited, the current server time will be used.
  *
+ * @link https://m2x.att.com/developer/documentation/v2/device#Update-Data-Stream-Value
+ *
  * @param string $value
  * @param string $timestamp
  * @return void
@@ -137,6 +139,8 @@ class Stream extends Resource {
  * List values from the stream, sorted in reverse chronological order
  * (most recent value first).
  *
+ * @link https://m2x.att.com/developer/documentation/v2/device#List-Data-Stream-Values
+ *
  * @param array $params
  * @return array
  */
@@ -151,6 +155,8 @@ class Stream extends Resource {
  *
  * This method only work for numeric streams
  *
+ * @link https://m2x.att.com/developer/documentation/v2/device#Data-Stream-Sampling
+ *
  * @param array $params
  * @return array
  */
@@ -164,6 +170,8 @@ class Stream extends Resource {
  * values of the stream.
  *
  * This method only works for numeric stream
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/device#Data-Stream-Stats
  *
  * @param array $params
  * @return array
@@ -182,6 +190,8 @@ class Stream extends Resource {
  *   array('timestamp' => <Time in ISO8601>, 'value' => x),
  *   array('timestamp' => <Time in ISO8601>, 'value' => y)
  * )
+ *
+ * https://m2x.att.com/developer/documentation/v2/device#Post-Data-Stream-Values
  *
  * @param array $data
  * @return void

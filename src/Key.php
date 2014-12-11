@@ -33,6 +33,8 @@ class Key extends Resource {
 /**
  * Regenerate an existing key
  *
+ * @link https://m2x.att.com/developer/documentation/v2/keys#Regenerate-Key
+ *
  * @return Key
  */
   public function regenerate() {
