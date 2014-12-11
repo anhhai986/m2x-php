@@ -26,7 +26,7 @@ class Trigger extends Resource {
  * @var array
  */
   protected static $properties = array(
-  	'name', 'stream', 'condition', 'value',
+    'name', 'stream', 'condition', 'value',
     'callback_url', 'status', 'send_location'
   );
 
@@ -98,7 +98,7 @@ class Trigger extends Resource {
  * @return string
  */
   public function id() {
-  	return $this->id;
+    return $this->id;
   }
 
 /**

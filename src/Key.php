@@ -27,7 +27,7 @@ class Key extends Resource {
  * @return string
  */
   public function id() {
-  	return $this->key;
+    return $this->key;
   }
 
 /**

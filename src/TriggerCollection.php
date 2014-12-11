@@ -22,7 +22,7 @@ class TriggerCollection extends ResourceCollection {
  *
  * @var Resource
  */
-	public $parent = null;
+  public $parent = null;
 
 /**
  * Resource collection constructor

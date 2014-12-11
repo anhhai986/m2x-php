@@ -76,8 +76,8 @@ class DistributionTest extends BaseTestCase {
     $distribution = new Distribution($m2x, $data);
 
     $data = array(
-    	'name' => 'Updated',
-    	'serial' => 'Foo'
+      'name' => 'Updated',
+      'serial' => 'Foo'
     );
     $result = $distribution->update($data);
     $this->assertSame($distribution, $result);

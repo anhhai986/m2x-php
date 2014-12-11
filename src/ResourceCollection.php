@@ -143,9 +143,9 @@ abstract class ResourceCollection implements \Iterator, \Countable {
  *
  * @return void
  */
-    public function rewind() {
-      $this->position = 0;
-    }
+  public function rewind() {
+    $this->position = 0;
+  }
  
  /**
   * This method returns the resource at the current
@@ -153,37 +153,37 @@ abstract class ResourceCollection implements \Iterator, \Countable {
   *
   * @return void
   */
-    public function current() {
-      $this->preloadPage();
-      return $this->resources[$this->position];
-    }
+  public function current() {
+    $this->preloadPage();
+    return $this->resources[$this->position];
+  }
  
  /**
   * Returns the current value of the pointer
   *
   * @return integer
   */
-    public function key() {
-      return $this->position;
-    }
+  public function key() {
+    return $this->position;
+  }
  
  /**
   * Moves the pointer to the next resource in the dataset
   *
   * @return void
   */
-    public function next() {
-      ++$this->position;
-    }
+  public function next() {
+    ++$this->position;
+  }
 
 /**
  * Returns the current page number
  *
  * @return integer
  */
-    public function page() {
-      return $this->currentPage;
-    }
+  public function page() {
+    return $this->currentPage;
+  }
 
  /**
   * Returns a boolean indicating if there is a resource
@@ -191,17 +191,17 @@ abstract class ResourceCollection implements \Iterator, \Countable {
   *
   * @return boolean
   */
-    public function valid() {
-      if (isset($this->resources[$this->position])) {
-        return true;
-      }
-      $this->preloadPage();
-      return isset($this->resources[$this->position]);
+  public function valid() {
+    if (isset($this->resources[$this->position])) {
+      return true;
     }
+    $this->preloadPage();
+    return isset($this->resources[$this->position]);
+  }
 
-    protected function preloadPage() {
-      if ($this->paginate && $this->position < $this->total && !isset($this->resources[$this->position])) {
-        $this->fetch($this->currentPage + 1);
-      }
+  protected function preloadPage() {
+    if ($this->paginate && $this->position < $this->total && !isset($this->resources[$this->position])) {
+      $this->fetch($this->currentPage + 1);
     }
+  }
 }

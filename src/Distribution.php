@@ -17,7 +17,7 @@ class Distribution extends Resource {
  * @var array
  */
   protected static $properties = array(
-  	'name', 'description', 'visibility'
+    'name', 'description', 'visibility'
   );
 
 /**
@@ -26,7 +26,7 @@ class Distribution extends Resource {
  * @return string
  */
   public function id() {
-  	return $this->id;
+    return $this->id;
   }
 
 /**

@@ -22,7 +22,7 @@ class Device extends Resource {
  * @var array
  */
   protected static $properties = array(
-  	'name', 'description', 'visibility', 'groups'
+    'name', 'description', 'visibility', 'groups'
   );
 
 /**
@@ -31,7 +31,7 @@ class Device extends Resource {
  * @return string
  */
   public function id() {
-  	return $this->id;
+    return $this->id;
   }
 
 /**
@@ -44,13 +44,13 @@ class Device extends Resource {
  * @return array|boolean
  */
   public function location() {
-  	$response = $this->client->get(self::$path . '/' . $this->id . '/location');
-  	
-  	if ($response->statusCode == 204) {
-  		return False;
-  	}
+    $response = $this->client->get(self::$path . '/' . $this->id . '/location');
+    
+    if ($response->statusCode == 204) {
+      return False;
+    }
 
-  	return $response->json();
+    return $response->json();
   }
 
 /**

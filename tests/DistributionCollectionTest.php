@@ -21,7 +21,7 @@ class DistributionCollectionTest extends BaseTestCase {
     $collection = $m2x->distributions();
     
     foreach ($collection as $resource) {
-    	$this->assertInstanceOf('Att\M2X\Distribution', $resource);
+      $this->assertInstanceOf('Att\M2X\Distribution', $resource);
     }
   }
 }

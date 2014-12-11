@@ -22,7 +22,7 @@ class DeviceCollectionTest extends BaseTestCase {
     $this->assertCount(3, $collection);
 
     foreach ($collection as $resource) {
-    	$this->assertInstanceOf('Att\M2X\Device', $resource);
+      $this->assertInstanceOf('Att\M2X\Device', $resource);
     }
   }
 

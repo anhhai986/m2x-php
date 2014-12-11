@@ -153,9 +153,5 @@ class HttpRequest {
     }
 
     curl_setopt($this->request, CURLOPT_HTTPHEADER, $headers);
-
-    //curl_setopt($this->request, CURLOPT_VERBOSE, true);
-    //$verbose = fopen('/tmp/curl.log', 'rw+');
-    //curl_setopt($this->request, CURLOPT_STDERR, $verbose);
   }
 }

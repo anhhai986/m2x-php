@@ -6,9 +6,9 @@ use Att\M2X\Device;
 
 class DeviceCollection extends ResourceCollection {
 
-	protected static $resourceClass = 'Att\M2X\Device';
+  protected static $resourceClass = 'Att\M2X\Device';
 
-	protected $catalog = false;
+  protected $catalog = false;
 
 /**
  * Device collection constructor
@@ -18,7 +18,7 @@ class DeviceCollection extends ResourceCollection {
  * @param boolean $catalog Search in the catalog
  */
   public function __construct(M2X $client, $params = array(), $catalog = false) {
-  	$this->catalog = $catalog;
+    $this->catalog = $catalog;
     parent::__construct($client, $params);
   }
 
@@ -31,7 +31,7 @@ class DeviceCollection extends ResourceCollection {
     $class = static::$resourceClass;
     $path = $class::$path;
     if ($this->catalog) {
-    	$path .= '/catalog';
+      $path .= '/catalog';
     }
     return $path;
   }

@@ -26,7 +26,7 @@ class Stream extends Resource {
  * @var array
  */
   protected static $properties = array(
-  	'name', 'unit', 'type'
+    'name', 'unit', 'type'
   );
 
 /**
@@ -103,7 +103,7 @@ class Stream extends Resource {
  * @return string
  */
   public function id() {
-  	return $this->name;
+    return $this->name;
   }
 
 /**

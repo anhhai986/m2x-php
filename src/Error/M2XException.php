@@ -11,16 +11,16 @@ class M2XException extends \Exception {
  *
  * @var HttpResponse
  */
-	public $response = null;
+  public $response = null;
 
 /**
  * Create the exception from a HttpResponse object
  *
  * @param HttpResponse $response
  */
-	public function __construct(HttpResponse $response) {
-		$data = $response->json();
-		$this->response = $response;
-		parent::__construct($data['message'], $response->statusCode);
-	}
+  public function __construct(HttpResponse $response) {
+    $data = $response->json();
+    $this->response = $response;
+    parent::__construct($data['message'], $response->statusCode);
+  }
 }
