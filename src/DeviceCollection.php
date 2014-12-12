@@ -10,6 +10,14 @@ class DeviceCollection extends ResourceCollection {
 
   protected $catalog = false;
 
+ 
+/**
+ * The parent resource that this collection belongs to
+ *
+ * @var Resource
+ */
+  public $parent = null;
+
 /**
  * Device collection constructor
  *
@@ -17,8 +25,14 @@ class DeviceCollection extends ResourceCollection {
  * @param array $params
  * @param boolean $catalog Search in the catalog
  */
-  public function __construct(M2X $client, $params = array(), $catalog = false) {
+  public function __construct(M2X $client, $params = array(), $catalog = false, $parent = null) {
     $this->catalog = $catalog;
+
+    if ($parent) {
+      $this->parent = $parent;
+      $this->catalog = false;
+    }
+
     parent::__construct($client, $params);
   }
 
@@ -28,6 +42,10 @@ class DeviceCollection extends ResourceCollection {
  * @return void
  */
   protected function path() {
+    if ($this->parent) {
+      return $this->parent->path() . '/devices';
+    }
+
     $class = static::$resourceClass;
     $path = $class::$path;
     if ($this->catalog) {

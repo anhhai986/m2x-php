@@ -103,4 +103,44 @@ class DistributionTest extends BaseTestCase {
     $distribution = new Distribution($m2x, $data);
     $distribution->delete();
   }
+
+/**
+ * testDevices method
+ *
+ * @return void
+ */
+  public function testDevices() {
+    $m2x = $this->generateMockM2X();
+
+    $m2x->request->expects($this->once())->method('request')
+           ->with($this->equalTo('GET'), $this->equalTo('https://api-m2x.att.com/v2/distributions/ce21d58783bd50c4e4dc04919d01e81b/devices'))
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('distributions_devices_success')));
+
+    $distribution = new Distribution($m2x, array('id' => 'ce21d58783bd50c4e4dc04919d01e81b'));
+
+    $result = $distribution->devices();
+    $this->assertInstanceOf('\Att\M2X\DeviceCollection', $result);
+    $this->assertCount(2, $result);
+    $this->assertSame($distribution, $result->parent);
+  }
+
+/**
+ * testAddDevice method
+ *
+ * @return void
+ */
+  public function testAddDevice() {
+    $m2x = $this->generateMockM2X();
+
+    $m2x->request->expects($this->once())->method('request')
+           ->with($this->equalTo('POST'), $this->equalTo('https://api-m2x.att.com/v2/distributions/ce21d58783bd50c4e4dc04919d01e81b/devices'), $this->equalTo(array('serial' => 'foobar')))
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('distributions_add_device_success')));
+
+    $distribution = new Distribution($m2x, array('id' => 'ce21d58783bd50c4e4dc04919d01e81b'));
+
+    $result = $distribution->addDevice('foobar');
+    $this->assertInstanceOf('\Att\M2X\Device', $result);
+    $this->assertEquals('foobar', $result->serial);
+
+  }
 }

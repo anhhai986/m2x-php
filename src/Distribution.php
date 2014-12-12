@@ -30,6 +30,31 @@ class Distribution extends Resource {
   }
 
 /**
+ * Retrieve a list of devices associated with the distribution.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/distribution#list-devices-from-an-existing-distribution
+ *
+ * @return DeviceCollection
+ */
+  public function devices() {
+    return new DeviceCollection($this->client, array(), false, $this);
+  }
+
+/**
+ * Add a new device to an existing distribution.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/distribution#add-device-to-an-existing-distribution
+ *
+ * @param string $serial
+ * @return Device
+ */
+  public function addDevice($serial) {
+    $data = array('serial' => $serial);
+    $response = $this->client->post($this->path() . '/devices', $data);
+    return new Device($this->client, $response->json());
+  }
+
+/**
  * Retrieve list of data streams associated with the distribution
  *
  * @return StreamCollection
