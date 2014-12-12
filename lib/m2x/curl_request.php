@@ -112,6 +112,10 @@ class CurlRequest {
 
     $method = strtoupper($method);
 
+    if($method == 'GET' && !empty($vars)) {
+      $url = $url . "?" . http_build_query($vars); 
+    }
+
     // set url and agent
     curl_setopt($this->request, CURLOPT_URL, $this->endpoint . $url); 
     curl_setopt($this->request, CURLOPT_USERAGENT, "M2X/" . self::VERSION . " (PHP curl)");

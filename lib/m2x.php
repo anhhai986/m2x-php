@@ -4,6 +4,9 @@ require_once 'm2x'.DIRECTORY_SEPARATOR.'response.php';
 require_once 'm2x'.DIRECTORY_SEPARATOR.'curl_exception.php';
 require_once 'm2x'.DIRECTORY_SEPARATOR.'curl_request.php';
 require_once 'm2x'.DIRECTORY_SEPARATOR.'feeds.php';
+require_once 'm2x'.DIRECTORY_SEPARATOR.'blueprints.php';
+require_once 'm2x'.DIRECTORY_SEPARATOR.'batches.php';
+require_once 'm2x'.DIRECTORY_SEPARATOR.'datasources.php';
 
 class M2X {
 
@@ -59,5 +62,32 @@ class M2X {
  */
   public function feeds() {
     return new Feeds($this->endpoint, $this->api_key);
+  }
+
+/**
+ * Creates an API instance object for the Batch resource
+ *
+ * @return Batches
+ */
+  public function batches() {
+    return new Batches($this->endpoint, $this->api_key);
+  }
+
+/**
+ * Creates an API instance object for the Blueprint resource
+ *
+ * @return Blueprints
+ */
+  public function blueprints() {
+    return new Blueprints($this->endpoint, $this->api_key);
+  }
+
+/**
+ * Creates an API instance object for the Datasource resource
+ *
+ * @return Blueprints
+ */
+  public function datasources() {
+    return new Datasources($this->endpoint, $this->api_key);
   }
 } 

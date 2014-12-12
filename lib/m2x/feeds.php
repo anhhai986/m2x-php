@@ -24,6 +24,20 @@ class Feeds extends CurlRequest {
   }
 
 /**
+ * Retrieve the list of feeds accessible by the authenticated API key that meet the search criteria.
+ *
+ * @param $query is Text to search (optional)
+ * @param $filters
+ * @return Response
+ */
+  public function search($query = null, $filters = array()) {
+    if(!is_null($query)) {
+      $filters['q'] = $query;
+    }
+    return $this->get(self::RESOURCE_BASE, $filters);
+  }
+
+/**
  * View the feed details
  *
  * @param $id feed id
@@ -87,10 +101,19 @@ class Feeds extends CurlRequest {
  * List values from an existing data stream associated with a specific feed.
  *
  * @param $id feed id
+ * @param $name stream name
+ * @param $start optional start date
+ * @param $end optional end date
+ * @param $limit optional maximum values to return
  * @return Response
  */
-  public function stream_values($id, $name) {
-    return $this->get(self::RESOURCE_BASE . "/$id/streams/$name/values");
+  public function stream_values($id, $name, $start = null, $end = null, $limit = null) {
+    $params = array();
+    if(!is_null($start)) $params['start'] = $start;
+    if(!is_null($end)) $params['end'] = $end;
+    if(!is_null($limit)) $params['limit'] = $limit;
+
+    return $this->get(self::RESOURCE_BASE . "/$id/streams/$name/values", $params);
   }
 
 /**
@@ -115,5 +138,17 @@ class Feeds extends CurlRequest {
  */
   public function update_stream($id, $name, $params) {
     return $this->put(self::RESOURCE_BASE . "/$id/streams/$name", $params);
+  }
+
+/**
+ * Post values to multiple streams at once.
+ * 
+ * @param $id feed id
+ * @param $values is an object with one attribute per each stream to be updated.
+ * @return Response
+ */
+  public function post_multiple($id, $values = array()) {
+    $params = array("values" => $values);
+    return $this->post(self::RESOURCE_BASE . "/$id", $params);
   }
 }
