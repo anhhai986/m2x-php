@@ -6,11 +6,21 @@ use Att\M2X\Device;
 
 class DeviceCollection extends ResourceCollection {
 
+/**
+ * The resource class used in the collection
+ *
+ * @var string
+ */
   protected static $resourceClass = 'Att\M2X\Device';
 
+/**
+ * Holds the flag that decided if this collection is
+ * refering to the public devices or not.
+ *
+ * @var boolean
+ */
   protected $catalog = false;
 
- 
 /**
  * The parent resource that this collection belongs to
  *
