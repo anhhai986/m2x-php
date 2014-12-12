@@ -104,6 +104,32 @@ class Device extends Resource {
   }
 
 /**
+ * Post values to multiple streams for this device.
+ *
+ * The `values` parameter is an array with the following format:
+ *
+ * array(
+ *   'stream_a' => array(
+ *     array('timestamp' => <Time in ISO8601>, 'value' => x),
+ *     array('timestamp' => <Time in ISO8601>, 'value' => y)
+ *   ),
+ *   'stream_b' => array(
+ *     array('timestamp' => <Time in ISO8601>, 'value' => t),
+ *     array('timestamp' => <Time in ISO8601>, 'value' => g)
+ *   )
+ * )
+ * 
+ * @link https://m2x.att.com/developer/documentation/v2/device#Post-Device-Updates--Multiple-Values-to-Multiple-Streams
+ *
+ * @param array $values
+ * @return void
+ */
+  public function postUpdates($values) {
+    $data = array('values' => $values);
+    $response = $this->client->post($this->path() . '/updates', $data);
+  }
+
+/**
  * Retrieve list of triggers associated with the device
  *
  * @return TriggerCollection
