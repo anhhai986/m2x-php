@@ -6,6 +6,7 @@ use Att\M2X\Error\M2XException;
 
 class M2X {
 
+  const VERSION = '2.0.0';
   const DEFAULT_API_BASE = 'https://api-m2x.att.com';
   const DEFAULT_API_VERSION = 'v2';
 
@@ -31,6 +32,13 @@ class M2X {
   public $request;
 
 /**
+ * Holds the user agent string
+ *
+ * @var string
+ */
+  protected $userAgent = '';
+
+/**
  * Contructor
  *
  * @param string $apiKey
@@ -39,6 +47,7 @@ class M2X {
   public function __construct($apiKey) {
     $this->apiKey = $apiKey;
     $this->endpoint = self::DEFAULT_API_BASE . '/' . self::DEFAULT_API_VERSION;
+    $this->userAgent = $this->userAgent();
   }
 
 /**
@@ -191,7 +200,7 @@ class M2X {
  */
   public function get($path, $params = array()) {
     $request = $this->request();
-    $request->header('X-M2X-KEY', $this->apiKey);
+    $request = $this->prepareRequest($request);
 
     $response = $request->get($this->endpoint . $path, $params);
     return $this->handleResponse($response);
@@ -207,7 +216,7 @@ class M2X {
  */
   public function post($path, $vars = array()) {
     $request = $this->request();
-    $request->header('X-M2X-KEY', $this->apiKey);
+    $request = $this->prepareRequest($request);
 
     $response = $request->post($this->endpoint . $path, $vars);
     return $this->handleResponse($response);
@@ -223,7 +232,7 @@ class M2X {
  */
   public function put($path, $vars = array()) {
     $request = $this->request();
-    $request->header('X-M2X-KEY', $this->apiKey);
+    $request = $this->prepareRequest($request);
 
     $response = $request->put($this->endpoint . $path, $vars);
     return $this->handleResponse($response);
@@ -238,10 +247,22 @@ class M2X {
  */
   public function delete($path) {
     $request = $this->request();
-    $request->header('X-M2X-KEY', $this->apiKey);
+    $request = $this->prepareRequest($request);
 
     $response = $request->delete($this->endpoint . $path);
     return $this->handleResponse($response);
+  }
+
+/**
+ * Sets the common headers for each request to the API.
+ *
+ * @param HttpRequest $request
+ * @return HttpRequest
+ */
+  protected function prepareRequest($request) {
+    $request->header('X-M2X-KEY', $this->apiKey);
+    $request->header('User-Agent', $this->userAgent);
+    return $request;
   }
 
 /**
@@ -258,6 +279,19 @@ class M2X {
     }
 
     return $response;
+  }
+
+/**
+ * Generate the user agent string
+ *
+ * @return string
+ */
+  public function userAgent() {
+    $version = self::VERSION;
+    $phpVersion = phpversion();
+    $os = php_uname();
+
+    return "M2X-PHP/{$version} PHP/{$phpVersion} ({$os})";
   }
 
 /**

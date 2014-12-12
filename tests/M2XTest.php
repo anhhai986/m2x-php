@@ -51,7 +51,7 @@ class M2XTest extends BaseTestCase {
                          ->setMethods(array('header'))
                          ->getMock();
 
-    $m2x->request->expects($this->once())
+    $m2x->request->expects($this->at(0))
                  ->method('header')
                  ->with($this->equalTo('X-M2X-KEY'), $this->equalTo('abc123'));
 
