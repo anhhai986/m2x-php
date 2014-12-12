@@ -191,6 +191,16 @@ class M2X {
   }
 
 /**
+ * Returns the device groups
+ *
+ * @return array
+ */
+  public function deviceGroups() {
+    $response = $this->get('/devices/groups');
+    return $response->json();
+  }
+
+/**
  * Perform a GET request to the API.
  *
  * @param string $path
