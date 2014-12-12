@@ -2,7 +2,18 @@
 	"name": "attm2x/m2x-php",
 	"description": "AT&T M2X PHP Library",
 	"type": "library",
+    "keywords": ["m2x", "att", "api"],
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Jelle Henkens",
+            "email": "jelle@citrusbyte.com"
+        },
+        {
+            "name": "Lautaro Orazi",
+            "email": "taro@citrusbyte.com"
+        }
+    ],
 	"require": {},
     "require-dev": {
         "phpunit/phpunit": "4.3.*"
