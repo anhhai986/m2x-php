@@ -13,7 +13,7 @@ class M2X {
 /**
  * Version of the API
  */
-  const VERSION = "0.0.1";
+  const VERSION = "1.0.0";
 
 /**
  * The default endpoint that will be used for all API calls
