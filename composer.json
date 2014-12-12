@@ -1,6 +1,6 @@
 {
 	"name": "attm2x/m2x-php",
-	"description": "AT&T M2X PHP Library",
+	"description": "AT&T’s M2X is a cloud-based fully managed data storage service for network connected machine-to-machine (M2M) devices. From trucks and turbines to vending machines and freight containers, M2X enables the devices that power your business to connect and share valuable data.",
 	"type": "library",
     "keywords": ["m2x", "att", "api"],
     "license": "MIT",
