@@ -39,6 +39,13 @@ class M2X {
   protected $userAgent = '';
 
 /**
+ * Holds a reference to the last received HttpResponse
+ *
+ * @var HttpResponse
+ */
+  protected $lastResponse = null;
+
+/**
  * Creates a new instance of the M2X API.
  *
  * Options:
@@ -287,13 +294,15 @@ class M2X {
 
 /**
  * Checks the HttpResponse for errors and throws an exception, if
- * no errors are encountered, the httpResponse is returned.
+ * no errors are encountered, the HttpResponse is returned.
  *
  * @param HttpResponse $response
  * @return HttpResponse
  * @throws M2XException
  */
   protected function handleResponse(HttpResponse $response) {
+    $this->lastResponse = $response;
+
     if ($response->statusCode >= 200 && $response->statusCode < 300) {
       return $response;
     }
@@ -325,5 +334,14 @@ class M2X {
     }
 
     return $this->request;
+  }
+
+/**
+ * The last received response
+ *
+ * @return HttpResponse
+ */
+  public function lastResponse() {
+    return $this->lastResponse;
   }
 }

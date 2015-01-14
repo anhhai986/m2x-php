@@ -61,4 +61,46 @@ class M2XTest extends BaseTestCase {
 
     $m2x->get('/status');
   }
+
+/**
+ * testLastResponse method
+ *
+ * @return void
+ */
+  public function testLastResponse() {
+    $m2x = $this->generateMockM2X();
+
+    $response = new Att\M2X\HttpResponse($this->_raw('distributions_index_success'));
+    $m2x->request->expects($this->at(0))->method('request')->willReturn($response);
+
+    $secondResponse = new Att\M2X\HttpResponse($this->_raw('devices_get_success'));
+    $m2x->request->expects($this->at(1))->method('request')->willReturn($secondResponse);
+
+    $m2x->distributions();
+    $this->assertSame($response, $m2x->lastResponse());
+
+    $m2x->device('2dd1c43521cef93109a3e8a75d4d5a88');
+    $this->assertSame($secondResponse, $m2x->lastResponse());
+  }
+
+/**
+ * testLastResponseWithException method
+ *
+ * @return void
+ */
+  public function testLastResponseWithException() {
+    $m2x = $this->generateMockM2X();
+
+    $response = new Att\M2X\HttpResponse($this->_raw('devices_get_not_found'));
+    $m2x->request->expects($this->once())->method('request')->willReturn($response);
+    $exception = null;
+    try {
+      $m2x->device('foo');
+    } catch (Exception $ex) {
+      $exception = $ex;
+    }
+
+    $this->assertEquals(404, $exception->getCode());
+    $this->assertSame($response, $m2x->lastResponse());
+  }
 }
