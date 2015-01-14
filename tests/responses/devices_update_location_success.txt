@@ -1,4 +1,4 @@
-location: HTTP/1.1 202 Accepted
+HTTP/1.1 202 Accepted
 Server: nginx
 Date: Tue, 09 Dec 2014 17:48:00 GMT
 Content-Type: application/json

@@ -303,7 +303,7 @@ class M2X {
   protected function handleResponse(HttpResponse $response) {
     $this->lastResponse = $response;
 
-    if ($response->statusCode >= 200 && $response->statusCode < 300) {
+    if ($response->success()) {
       return $response;
     }
 
