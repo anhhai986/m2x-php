@@ -294,11 +294,11 @@ class M2X {
  * @throws M2XException
  */
   protected function handleResponse(HttpResponse $response) {
-    if (!in_array($response->statusCode, array(200, 201, 202, 204))) {
-      throw new M2XException($response);
+    if ($response->statusCode >= 200 && $response->statusCode < 300) {
+      return $response;
     }
 
-    return $response;
+    throw new M2XException($response);
   }
 
 /**
