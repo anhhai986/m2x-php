@@ -15,6 +15,10 @@ class M2XTest extends BaseTestCase {
 
     $result = $m2x->endpoint();
     $this->assertEquals('https://api-m2x.att.com/v2', $result);
+
+    $m2x = new M2X('foo', array('endpoint' => 'http://foo.bar'));
+    $result = $m2x->endpoint();
+    $this->assertEquals('http://foo.bar', $result);
    }
 
 /**

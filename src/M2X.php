@@ -39,14 +39,24 @@ class M2X {
   protected $userAgent = '';
 
 /**
- * Contructor
+ * Creates a new instance of the M2X API.
+ *
+ * Options:
+ * - endpoint: Configure a custom endpoint (optional)
  *
  * @param string $apiKey
+ * @param array $options
  * @return void
  */
-  public function __construct($apiKey) {
+  public function __construct($apiKey, $options = array()) {
     $this->apiKey = $apiKey;
-    $this->endpoint = self::DEFAULT_API_BASE . '/' . self::DEFAULT_API_VERSION;
+
+    if (isset($options['endpoint'])) {
+      $this->endpoint = $options['endpoint'];
+    } else {
+      $this->endpoint = self::DEFAULT_API_BASE . '/' . self::DEFAULT_API_VERSION;
+    }
+    
     $this->userAgent = $this->userAgent();
   }
 
