@@ -1,3 +1,6 @@
+[![Latest Stable Version](https://poser.pugx.org/attm2x/m2x-php/v/stable.svg)](https://packagist.org/packages/attm2x/m2x-php)
+[![License](https://poser.pugx.org/attm2x/m2x-php/license.svg)](https://packagist.org/packages/attm2x/m2x-php)
+
 # AT&T's M2X PHP Client
 
 [AT&T’s M2X](https://m2x.att.com/) is a cloud-based fully managed data storage service for network connected machine-to-machine (M2M) devices. From trucks and turbines to vending machines and freight containers, M2X enables the devices that power your business to connect and share valuable data.
