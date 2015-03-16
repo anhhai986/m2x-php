@@ -109,7 +109,7 @@ class StreamTest extends BaseTestCase {
            ->willReturn(new Att\M2X\HttpResponse($this->_raw('streams_update_value_success')));
 
     $m2x->request->expects($this->at(1))->method('request')
-           ->with($this->equalTo('PUT'), $this->equalTo('https://api-m2x.att.com/v2/devices/c2b83dcb796230906c70854a57b66b0a/streams/stream_foo/value'), $this->equalTo(array('value' => 1123, 'at' => '2014-10-01T12:00:00Z')))
+           ->with($this->equalTo('PUT'), $this->equalTo('https://api-m2x.att.com/v2/devices/c2b83dcb796230906c70854a57b66b0a/streams/stream_foo/value'), $this->equalTo(array('value' => 1123, 'timestamp' => '2014-10-01T12:00:00Z')))
            ->willReturn(new Att\M2X\HttpResponse($this->_raw('streams_update_value_success')));
 
     $device = new Device($m2x, array('id' => 'c2b83dcb796230906c70854a57b66b0a'));

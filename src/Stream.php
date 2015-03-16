@@ -129,7 +129,7 @@ class Stream extends Resource {
     $data = array('value' => $value);
 
     if ($timestamp) {
-      $data['at'] = $timestamp;
+      $data['timestamp'] = $timestamp;
     }
 
     $this->client->put($this->path() . '/value', $data);
