@@ -210,6 +210,8 @@ class M2X {
 /**
  * Returns the device tags
  *
+ * @link https://m2x.att.com/developer/documentation/v2/device#List-Device-Tags
+ *
  * @return array
  */
   public function deviceTags() {
