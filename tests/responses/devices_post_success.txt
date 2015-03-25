@@ -9,4 +9,4 @@ X-M2X-VERSION: v2.3.2-alpha
 Vary: Accept-Encoding
 Vary: Accept
 
-{"url":"http://api-m2x.att.com/v2/devices/722014c0eac34261d89a707f911cfa92","name":"Foo Bar","status":"enabled","serial":null,"groups":null,"location":{},"visibility":"public","description":null,"created":"2014-12-09T17:26:36.504Z","updated":"2014-12-09T17:26:36.504Z","id":"722014c0eac34261d89a707f911cfa92","streams":{"count":0,"url":"http://api-m2x.att.com/v2/devices/722014c0eac34261d89a707f911cfa92/streams"}}
+{"url":"http://api-m2x.att.com/v2/devices/722014c0eac34261d89a707f911cfa92","name":"Foo Bar","status":"enabled","serial":null,"tags":null,"location":{},"visibility":"public","description":null,"created":"2014-12-09T17:26:36.504Z","updated":"2014-12-09T17:26:36.504Z","id":"722014c0eac34261d89a707f911cfa92","streams":{"count":0,"url":"http://api-m2x.att.com/v2/devices/722014c0eac34261d89a707f911cfa92/streams"}}

@@ -71,7 +71,7 @@ class DistributionTest extends BaseTestCase {
         'registered' => 0,
         'unregistered' => 0,
       ),
-      'groups' => array()
+      'tags' => array()
     );
     $distribution = new Distribution($m2x, $data);
 

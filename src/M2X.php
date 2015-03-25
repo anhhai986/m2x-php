@@ -208,12 +208,12 @@ class M2X {
   }
 
 /**
- * Returns the device groups
+ * Returns the device tags
  *
  * @return array
  */
-  public function deviceGroups() {
-    $response = $this->get('/devices/groups');
+  public function deviceTags() {
+    $response = $this->get('/devices/tags');
     return $response->json();
   }
 
