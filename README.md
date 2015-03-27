@@ -21,7 +21,7 @@ Simply add a dependency on attm2x/m2x-php to your project's composer.json file i
 ```json
 {
   "require": {
-    "attm2x/m2x-php": "~2.0"
+    "attm2x/m2x-php": "~3.0"
   }
 }
 ```
