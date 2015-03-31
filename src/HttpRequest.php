@@ -88,6 +88,10 @@ class HttpRequest {
 
     $data = curl_exec($this->request);
 
+    if ($data === false) {
+      throw new \Exception('Curl Error: ' . curl_error($this->request));
+    }
+
     $response = new HttpResponse($data);
 
     curl_close($this->request);
