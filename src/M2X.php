@@ -6,7 +6,7 @@ use Att\M2X\Error\M2XException;
 
 class M2X {
 
-  const VERSION = '2.0.2';
+  const VERSION = '3.0.1';
   const DEFAULT_API_BASE = 'https://api-m2x.att.com';
   const DEFAULT_API_VERSION = 'v2';
 
