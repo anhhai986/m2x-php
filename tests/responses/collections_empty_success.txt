@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Content-Type: application/json
+Date: Wed, 12 Aug 2015 03:38:35 GMT
+Server: nginx
+Status: 200 OK
+Vary: Accept-Encoding
+Vary: Accept
+X-M2x-Version: v2.42.0
+Content-Length: 18
+
+{"collections":[]}

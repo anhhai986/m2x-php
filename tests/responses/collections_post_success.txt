@@ -1,0 +1,12 @@
+HTTP/1.1 201 Created
+Content-Type: application/json
+Date: Wed, 12 Aug 2015 05:09:29 GMT
+Location: http://api-m2x.att.com/v2/collections/48550ddf5d5be3c9d75ff5d82a861164
+Server: nginx
+Status: 201 Created
+Vary: Accept-Encoding
+Vary: Accept
+X-M2x-Version: v2.43.0
+Content-Length: 252
+
+{"id":"48550ddf5d5be3c9d75ff5d82a861164","parent":null,"name":"Test Collection","description":null,"devices":0,"collections":0,"tags":[],"key":"08fd644ee9fc99bac89c44408e698c53","created":"2015-08-12T05:09:29.572Z","updated":"2015-08-12T05:09:29.572Z"}
