@@ -147,30 +147,6 @@ class DeviceTest extends BaseTestCase {
   }
 
 /**
- * testTriggers method
- *
- * @return void
- */
-  public function testTriggers() {
-    $m2x = $this->generateMockM2X();
-
-    $m2x->request->expects($this->once())->method('request')
-           ->with($this->equalTo('GET'), $this->equalTo('https://api-m2x.att.com/v2/devices/271b4b18b86a3d4d0cdcb9f41ca0ad46/triggers'))
-           ->willReturn(new Att\M2X\HttpResponse($this->_raw('devices_trigger_index_success')));
-
-    $device = new Device($m2x, array('id' => '271b4b18b86a3d4d0cdcb9f41ca0ad46'));
-
-    $triggers = $device->triggers();
-    $this->assertCount(2, $triggers);
-
-    $result = $triggers->current();
-    $this->assertEquals('Test Trigger', $result->name);
-    $triggers->next();
-    $result = $triggers->current();
-    $this->assertEquals('Second Trigger', $result->name);
-  }
-
-/**
  * testLog method
  *
  * @return void
