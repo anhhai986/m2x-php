@@ -94,8 +94,7 @@ abstract class ResourceCollection implements \Iterator, \Countable {
       $this->pages = $data['pages'];
       $this->limit = $data['limit'];
       $this->currentPage = $data['current_page'];
-      end($data);
-      foreach (current($data) as $i => $deviceData) {
+      foreach ($data[static::$name] as $i => $deviceData) {
         $position = $i + ($this->currentPage - 1) * $this->limit;
         $this->setResource($position, $deviceData);
       }

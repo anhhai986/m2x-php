@@ -8,6 +8,13 @@ use Att\M2X\Stream;
 class StreamCollection extends ResourceCollection {
 
 /**
+ * Name of the collection. This is used for the envelope key in the API.
+ *
+ * @var string
+ */
+  public static $name = 'streams';
+
+/**
  * The resource class used in the collection
  *
  * @var string
