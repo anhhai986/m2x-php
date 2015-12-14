@@ -7,6 +7,13 @@ use Att\M2X\Device;
 class DeviceCollection extends ResourceCollection {
 
 /**
+ * Name of the collection. This is used for the envelope key in the API.
+ *
+ * @var string
+ */
+  public static $name = 'devices';
+
+/**
  * The resource class used in the collection
  *
  * @var string

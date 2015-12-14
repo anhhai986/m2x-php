@@ -110,7 +110,9 @@ class M2X {
  *
  * This method instantiates an instance of Key with
  * all its attributes initialized.
- * 
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/keys#View-Key-Details
+ *
  * @param string $key
  * @return Key
  */
@@ -133,6 +135,8 @@ class M2X {
 /**
  * Retrieve a list of distributions associated with the user account.
  *
+ * @link https://m2x.att.com/developer/documentation/v2/distribution#List-Distributions
+ *
  * @param $params
  * @return DistributionCollection
  */
@@ -146,8 +150,10 @@ class M2X {
  * This method instantiates an instance of Distribution
  * with all its attributes initialized.
  *
+ * @link https://m2x.att.com/developer/documentation/v2/distribution#View-Distribution-Details
+ *
  * @param string $id
- * @return Key
+ * @return Distribution
  */
   public function distribution($id) {
     return Distribution::get($this, $id);
@@ -156,8 +162,10 @@ class M2X {
 /**
  * Create a new distribution.
  *
- * @param  $data
- * @return Device
+ * @link https://m2x.att.com/developer/documentation/v2/distribution#Create-Distribution
+ *
+ * @param array $data
+ * @return Distribution
  */
   public function createDistribution($data) {
     return Distribution::create($this, $data);
@@ -166,7 +174,9 @@ class M2X {
 /**
  * Retrieve a list of devices associated with the user account.
  *
- * @param $params
+ * @link https://m2x.att.com/developer/documentation/v2/device#List-Devices
+ *
+ * @param array $params
  * @return DeviceCollection
  */
   public function devices($params = array()) {
@@ -176,6 +186,8 @@ class M2X {
 /**
  * Retrieve the list of devices accessible by the authenticated
  * API key that meet the search criteria.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/device#List-Search-Public-Devices-Catalog
  *
  * @param array $params
  * @return DeviceCollection
@@ -190,8 +202,10 @@ class M2X {
  * This method instantiates an instance of Device
  * with all its attributes initialized.
  *
- * @param string $key
- * @return Key
+ * @link https://m2x.att.com/developer/documentation/v2/device#View-Device-Details
+ *
+ * @param string $id
+ * @return Device
  */
   public function device($id) {
     return Device::get($this, $id);
@@ -200,7 +214,9 @@ class M2X {
 /**
  * Create a new device.
  *
- * @param  $data
+ * @link https://m2x.att.com/developer/documentation/v2/device#Create-Device
+ *
+ * @param array $data
  * @return Device
  */
   public function createDevice($data) {
@@ -217,6 +233,45 @@ class M2X {
   public function deviceTags() {
     $response = $this->get('/devices/tags');
     return $response->json();
+  }
+
+/**
+ * Retrieve a list of collections associated with the user account.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/collections#List-collections
+ *
+ * @param $params
+ * @return CollectionCollection
+ */
+  public function collections($params = array()) {
+    return new CollectionCollection($this, $params);
+  }
+
+/**
+ * Retrieve a single collection from the API.
+ *
+ * This method instantiates an instance of Collection
+ * with all its attributes initialized.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/collections#View-Collection-Details
+ *
+ * @param string $id
+ * @return Collection
+ */
+  public function collection($id) {
+    return Collection::get($this, $id);
+  }
+
+/**
+ * Create a new collection.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/collections#Create-Collection
+ *
+ * @param array $data
+ * @return Device
+ */
+  public function createCollection($data) {
+    return Collection::create($this, $data);
   }
 
 /**

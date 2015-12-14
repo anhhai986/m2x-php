@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Content-Type: application/json
+Date: Wed, 12 Aug 2015 04:03:55 GMT
+Server: nginx
+Status: 200 OK
+Vary: Accept-Encoding
+Vary: Accept
+X-M2x-Version: v2.43.0
+Content-Length: 598
+
+{"collections":[{"id":"6ff63016978318b79631a3e7676e8423","parent":"80182f34f5eb5aeb75a7d82b92398715","name":"First Child Collection","description":null,"devices":1,"collections":0,"tags":[],"key":"e269f52e5b6df7c86688b3b4bac619e8","created":"2015-08-12T03:55:43.403Z","updated":"2015-08-12T03:56:19.813Z"},{"id":"774d67bcc45394d14c150574c209514a","parent":"80182f34f5eb5aeb75a7d82b92398715","name":"Second Child Collection","description":null,"devices":0,"collections":1,"tags":[],"key":"62ab02c56fe11cd3e337934a108d92f0","created":"2015-08-12T03:56:37.835Z","updated":"2015-08-12T03:56:37.835Z"}]}

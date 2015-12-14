@@ -15,7 +15,7 @@ class Device extends Resource {
   public static $path = '/devices';
 
 /**
- * The Key resource properties
+ * The Device resource properties
  *
  * @var array
  */

@@ -48,6 +48,8 @@ class PostResource extends Resource {
 
 class PostResourceCollection extends ResourceCollection {
 
+  static protected $name = 'posts';
+
   static protected $resourceClass = 'PostResource';
 
 /**
