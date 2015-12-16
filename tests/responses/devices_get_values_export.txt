@@ -1,0 +1,11 @@
+HTTP/1.1 202 Accepted
+Content-Type: application/json
+Date: Wed, 16 Dec 2015 07:55:08 GMT
+Location: http://api-m2x.att.com/v2/jobs/201512b934abb4fc68dedbc05ef052c6cff8f0
+Server: nginx
+Status: 202 Accepted
+Vary: Accept-Encoding
+X-M2x-Version: v2.64.0
+Content-Length: 21
+
+{"status":"accepted"}string(21) "{"status":"accepted"}"

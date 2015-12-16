@@ -37,7 +37,10 @@ class DistributionTest extends BaseTestCase {
     $m2x = $this->generateMockM2X();
 
     $m2x->request->expects($this->once())->method('request')
-           ->with($this->equalTo('POST'), $this->equalTo('https://api-m2x.att.com/v2/distributions'), $this->equalTo($data))
+           ->with($this->equalTo('POST'),
+                  $this->equalTo('https://api-m2x.att.com/v2/distributions'),
+                  $this->equalTo(array()),
+                  $this->equalTo($data))
            ->willReturn(new Att\M2X\HttpResponse($this->_raw('distributions_post_success')));
 
     $result = $m2x->createDistribution($data);
@@ -53,7 +56,10 @@ class DistributionTest extends BaseTestCase {
     $m2x = $this->generateMockM2X();
 
     $m2x->request->expects($this->once())->method('request')
-           ->with($this->equalTo('PUT'), $this->equalTo('https://api-m2x.att.com/v2/distributions/d447a2c499bc009d96a7d693a2e5b909'), $this->equalTo(array('name' => 'Updated', 'description' => '', 'visibility' => 'private')))
+           ->with($this->equalTo('PUT'),
+                  $this->equalTo('https://api-m2x.att.com/v2/distributions/d447a2c499bc009d96a7d693a2e5b909'),
+                  $this->equalTo(array()),
+                  $this->equalTo(array('name' => 'Updated', 'description' => '', 'visibility' => 'private')))
            ->willReturn(new Att\M2X\HttpResponse($this->_raw('distributions_put_success')));
 
     $data = array(
@@ -133,7 +139,10 @@ class DistributionTest extends BaseTestCase {
     $m2x = $this->generateMockM2X();
 
     $m2x->request->expects($this->once())->method('request')
-           ->with($this->equalTo('POST'), $this->equalTo('https://api-m2x.att.com/v2/distributions/ce21d58783bd50c4e4dc04919d01e81b/devices'), $this->equalTo(array('serial' => 'foobar')))
+           ->with($this->equalTo('POST'),
+                  $this->equalTo('https://api-m2x.att.com/v2/distributions/ce21d58783bd50c4e4dc04919d01e81b/devices'),
+                  $this->equalTo(array()),
+                  $this->equalTo(array('serial' => 'foobar')))
            ->willReturn(new Att\M2X\HttpResponse($this->_raw('distributions_add_device_success')));
 
     $distribution = new Distribution($m2x, array('id' => 'ce21d58783bd50c4e4dc04919d01e81b'));

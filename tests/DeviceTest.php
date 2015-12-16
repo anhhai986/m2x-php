@@ -92,7 +92,10 @@ class DeviceTest extends BaseTestCase {
     $m2x = $this->generateMockM2X();
 
     $m2x->request->expects($this->once())->method('request')
-           ->with($this->equalTo('PUT'), $this->equalTo('https://api-m2x.att.com/v2/devices/foobar/location'), $this->equalTo($data))
+           ->with($this->equalTo('PUT'),
+                  $this->equalTo('https://api-m2x.att.com/v2/devices/foobar/location'),
+                  $this->equalTo(array()),
+                  $this->equalTo($data))
            ->willReturn(new Att\M2X\HttpResponse($this->_raw('devices_update_location_success')));
 
 
@@ -115,7 +118,10 @@ class DeviceTest extends BaseTestCase {
     $m2x = $this->generateMockM2X();
 
     $m2x->request->expects($this->once())->method('request')
-           ->with($this->equalTo('POST'), $this->equalTo('https://api-m2x.att.com/v2/devices'), $this->equalTo($data))
+           ->with($this->equalTo('POST'),
+                  $this->equalTo('https://api-m2x.att.com/v2/devices'),
+                  $this->equalTo(array()),
+                  $this->equalTo($data))
            ->willReturn(new Att\M2X\HttpResponse($this->_raw('devices_post_success')));
 
     $result = $m2x->createDevice($data);
@@ -182,10 +188,36 @@ class DeviceTest extends BaseTestCase {
     $m2x = $this->generateMockM2X();
 
     $m2x->request->expects($this->once())->method('request')
-           ->with($this->equalTo('POST'), $this->equalTo('https://api-m2x.att.com/v2/devices/foo/updates'), $this->equalTo(array('values' => $data)))
+           ->with($this->equalTo('POST'),
+                  $this->equalTo('https://api-m2x.att.com/v2/devices/foo/updates'),
+                  $this->equalTo(array()),
+                  $this->equalTo(array('values' => $data)))
            ->willReturn(new Att\M2X\HttpResponse($this->_raw('device_updates_success')));
 
     $device = new Device($m2x, array('id' => 'foo'));
     $device->postUpdates($data);
+  }
+
+/**
+ * testValuesExport method
+ *
+ * @return void
+ */
+  public function testValuesExport() {
+    $m2x = $this->generateMockM2X();
+
+    $m2x->request->expects($this->once())->method('request')
+           ->with($this->equalTo('GET'),
+                  $this->equalTo('https://api-m2x.att.com/v2/devices/foo/values/export.csv'),
+                  $this->equalTo(array('streams' => 'foo,bar')))
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('devices_get_values_export')));
+
+    $device = new Device($m2x, array('id' => 'foo'));
+    $result = $device->valuesExport(array('streams' => 'foo,bar'));
+
+    $this->assertInstanceOf('Att\M2X\HttpResponse', $result);
+
+    $expected = 'http://api-m2x.att.com/v2/jobs/201512b934abb4fc68dedbc05ef052c6cff8f0';
+    $this->assertEquals($expected, $result->headers['Location']);
   }
 }

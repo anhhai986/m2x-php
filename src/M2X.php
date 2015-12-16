@@ -278,15 +278,16 @@ class M2X {
  * Perform a GET request to the API.
  *
  * @param string $path
- * @param array $params
+ * @param array $params query parameters
+ * @param array $vars request body
  * @return HttpResponse
  * @throws M2XException
  */
-  public function get($path, $params = array()) {
+  public function get($path, $params = array(), $vars = array()) {
     $request = $this->request();
     $request = $this->prepareRequest($request);
 
-    $response = $request->get($this->endpoint . $path, $params);
+    $response = $request->get($this->endpoint . $path, $params, $vars);
     return $this->handleResponse($response);
   }
 
