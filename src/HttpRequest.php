@@ -22,11 +22,12 @@ class HttpRequest {
  * Performs a GET request
  *
  * @param $url
- * @param array  $options
+ * @param array $params
+ * @param array $vars
  * @return HttpResponse
  */
-  public function get($url, $options = array()) {
-    return $this->request('GET', $url, $options);
+  public function get($url, $params = array(), $vars = array()) {
+    return $this->request('GET', $url, $params, $vars);
   }
 
 /**
@@ -37,7 +38,7 @@ class HttpRequest {
  * @return HttpResponse
  */
   public function post($url, $vars = array()) {
-    return $this->request('POST', $url, $vars);
+    return $this->request('POST', $url, array(), $vars);
   }
 
 /**
@@ -48,7 +49,7 @@ class HttpRequest {
  * @return HttpResponse
  */
   public function put($url, $vars = array()) {
-    return $this->request('PUT', $url, $vars);
+    return $this->request('PUT', $url, array(), $vars);
   }
 
 /**
@@ -80,11 +81,11 @@ class HttpRequest {
  * @param array $vars
  * @return HttpResponse
  */
-  public function request($method, $url, $vars = array()) {
+  public function request($method, $url, $params = array(), $vars = array()) {
     $this->request = curl_init();
 
     $this->setRequestMethod($method);
-    $this->setOptions($url, $method, $vars);
+    $this->setOptions($url, $method, $params, $vars);
 
     $data = curl_exec($this->request);
 
@@ -111,7 +112,9 @@ class HttpRequest {
         curl_setopt($this->request, CURLOPT_NOBODY, true);
         break;
       case 'GET':
-        curl_setopt($this->request, CURLOPT_HTTPGET, true);
+        # Hack to allow a request body to be set via CURLOPT_POSTFIELDS
+        # for GET requests.
+        curl_setopt($this->request, CURLOPT_CUSTOMREQUEST, 'GET');
         break;
       case 'POST':
         curl_setopt($this->request, CURLOPT_POST, true);
@@ -125,12 +128,13 @@ class HttpRequest {
  * Set the CURL options
  *
  * @param string $url
+ * @param array $params
  * @param array $vars
  * @return void
  */
-  protected function setOptions($url, $method, $vars) {
-    if($method == 'GET' && !empty($vars)) {
-      $url = $url . "?" . http_build_query($vars); 
+  protected function setOptions($url, $method, $params, $vars) {
+    if(!empty($params)) {
+      $url = $url . "?" . http_build_query($params);
     }
 
     curl_setopt($this->request, CURLOPT_URL, $url);
@@ -138,16 +142,8 @@ class HttpRequest {
     curl_setopt($this->request, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($this->request, CURLOPT_FOLLOWLOCATION, true);
 
-    if (in_array($method, array('POST', 'PUT'))) {
-      $this->headers['Content-Type'] = 'application/json';
-      $this->headers['Content-Length'] = 0;
-      $this->headers['Expect'] = '';
-
-      if (!empty($vars)) {
-        $data = json_encode($vars);
-        $this->headers['Content-Length'] = strlen($data);
-        curl_setopt($this->request, CURLOPT_POSTFIELDS, $data);
-      }
+    if (in_array($method, array('POST', 'PUT')) || ($method == 'GET' && !empty($vars))) {
+      $this->setJSONPayload($vars);
     }
 
     $headers = array();
@@ -156,5 +152,17 @@ class HttpRequest {
     }
 
     curl_setopt($this->request, CURLOPT_HTTPHEADER, $headers);
+  }
+
+  protected function setJSONPayload($vars) {
+    $this->headers['Content-Type'] = 'application/json';
+    $this->headers['Content-Length'] = 0;
+    $this->headers['Expect'] = '';
+
+    if (!empty($vars)) {
+      $data = json_encode($vars);
+      $this->headers['Content-Length'] = strlen($data);
+      curl_setopt($this->request, CURLOPT_POSTFIELDS, $data);
+    }
   }
 }

@@ -39,6 +39,7 @@ class CollectionTest extends BaseTestCase {
     $m2x->request->expects($this->once())->method('request')
            ->with($this->equalTo('POST'),
                   $this->equalTo('https://api-m2x.att.com/v2/collections'),
+                  $this->equalTo(array()),
                   $this->equalTo($data))
            ->willReturn(new Att\M2X\HttpResponse($this->_raw('collections_post_success')));
 

@@ -33,7 +33,7 @@ class Device extends Resource {
   }
 
 /**
- * Get location details of the device, will return False if no 
+ * Get location details of the device, will return False if no
  * location details are available. Otherwise it will return
  * an array with the details.
  *
@@ -125,6 +125,45 @@ class Device extends Resource {
   public function postUpdates($values) {
     $data = array('values' => $values);
     $response = $this->client->post($this->path() . '/updates', $data);
+  }
+
+
+/**
+ * List Values from all Data Streams of a Device
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/device#List-Values-from-all-Data-Streams-of-a-Device
+ *
+ * @param array $params
+ * @return array
+ */
+  public function values($params = array()) {
+    $response = $this->client->get($this->path() . '/values', $params);
+    return $response->json();
+  }
+
+/**
+ * Export Values from all Data Streams of a Device
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/device#Export-Values-from-all-Data-Streams-of-a-Device
+ *
+ * @param array $params
+ * @return HttResponse
+ */
+  public function valuesExport($params = array()) {
+    return $this->client->get($this->path() . '/values/export.csv', $params);
+  }
+
+/**
+ * Search Values from all Data Streams of a Device
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/device#Search-Values-from-all-Data-Streams-of-a-Device
+ *
+ * @param array $params
+ * @return array
+ */
+  public function valuesSearch($params) {
+    $response = $this->client->get($this->path() . '/values/search', array(), $params);
+    return $response->json();
   }
 
 /**
