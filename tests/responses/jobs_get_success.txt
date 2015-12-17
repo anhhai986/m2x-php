@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Content-Type: application/json
+Date: Thu, 17 Dec 2015 07:53:31 GMT
+Server: nginx
+Status: 200 OK
+Vary: Accept-Encoding
+Vary: Accept
+X-M2x-Version: v2.65.1
+Content-Length: 349
+
+{"id":"201512b934abb4fc68dedbc05ef052c6cff8f0","state":"complete","output":null,"errors":null,"started":"2015-12-16T07:55:09.328Z","finished":"2015-12-16T07:55:11.629Z","created":"2015-12-16T07:55:08.504Z","updated":"2015-12-16T07:55:11.629Z","result":{"url":"http://export.m2x.sl.attcompute.com/values-export-145025250920151216-31196-1r95xgo.csv"}}

@@ -263,6 +263,32 @@ class M2X {
   }
 
 /**
+ * Retrieve the list of the most recent jobs that belong to the authenticated user.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/jobs#List-Jobs
+ *
+ * @param $params
+ * @return CollectionCollection
+ */
+  public function jobs($params = array()) {
+    return new JobCollection($this, $params);
+  }
+
+/**
+ * Retrieve a single job from the API.
+ *
+ * This method instantiates an instance of Job with all its attributes initialized.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/jobs#View-Job-Details
+ *
+ * @param string $id
+ * @return Job
+ */
+  public function job($id) {
+    return Job::get($this, $id);
+  }
+
+/**
  * Create a new collection.
  *
  * @link https://m2x.att.com/developer/documentation/v2/collections#Create-Collection
