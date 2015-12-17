@@ -1,0 +1,13 @@
+HTTP/1.1 200 OK
+Content-Type: application/json
+Date: Thu, 17 Dec 2015 07:51:11 GMT
+Link: <http://api-m2x.att.com/v2/jobs?&page=1>; rel="first"
+Link: <http://api-m2x.att.com/v2/jobs?&page=1>; rel="last"
+Server: nginx
+Status: 200 OK
+Vary: Accept-Encoding
+Vary: Accept
+X-M2x-Version: v2.65.1
+Content-Length: 757
+
+{"jobs":[{"id":"201512b934abb4fc68dedbc05ef052c6cff8f0","state":"complete","output":null,"errors":null,"started":"2015-12-16T07:55:09.328Z","finished":"2015-12-16T07:55:11.629Z","created":"2015-12-16T07:55:08.504Z","updated":"2015-12-16T07:55:11.629Z","result":{"url":"http://export.m2x.sl.attcompute.com/values-export-145025250920151216-31196-1r95xgo.csv"}},{"id":"2015128a76ab8f76b1410512c740ea569f71b7","state":"complete","output":null,"errors":null,"started":"2015-12-16T07:52:13.921Z","finished":"2015-12-16T07:52:16.395Z","created":"2015-12-16T07:52:12.732Z","updated":"2015-12-16T07:52:16.395Z","result":{"url":"http://export.m2x.sl.attcompute.com/values-export-145025233420151216-7395-129cu5d.csv"}}],"total":2,"pages":1,"limit":10,"current_page":1}
