@@ -195,7 +195,35 @@ class DeviceTest extends BaseTestCase {
            ->willReturn(new Att\M2X\HttpResponse($this->_raw('device_updates_success')));
 
     $device = new Device($m2x, array('id' => 'foo'));
-    $device->postUpdates($data);
+    $result = $device->postUpdates($data);
+
+    $this->assertInstanceOf('\Att\M2X\HttpResponse', $result);
+  }
+
+/**
+ * testPostUpdate method
+ *
+ * @return void
+ */
+  public function testPostUpdate() {
+    $data = array(
+      'values' => array(
+        'radioactivity' => 5
+      )
+    );
+    $m2x = $this->generateMockM2X();
+
+    $m2x->request->expects($this->once())->method('request')
+           ->with($this->equalTo('POST'),
+                  $this->equalTo('https://api-m2x.att.com/v2/devices/foobar/update'),
+                  $this->equalTo(array()),
+                  $this->equalTo($data))
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('devices_post_update')));
+
+    $device = new Device($m2x, array('id' => 'foobar'));
+    $result = $device->postUpdate($data);
+
+    $this->assertInstanceOf('\Att\M2X\HttpResponse', $result);
   }
 
 /**
