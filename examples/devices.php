@@ -47,6 +47,13 @@ try {
     "latitude"  => 47.6097,
     "longitude" => 122.3331
   ));
+
+  // Delete Location History
+  $device->deleteLocationHistory(array(
+    "from"  =>  "2016-08-09T15:15:00.000Z",
+    "end"   =>  "2016-08-31T22:15:00.000Z"
+  ));
+
 } catch (M2XException $ex) {
   echo $ex->getMessage();
   echo $ex->response->raw;

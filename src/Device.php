@@ -65,6 +65,19 @@ class Device extends Resource {
   }
 
 /**
+ * Delete the location history of the specified device.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/device#Delete-Location-History
+ *
+ * @param array $data
+ * @return Device
+ */
+  public function deleteLocationHistory($data) {
+    $response = $this->client->delete(self::$path . '/' . $this->id . '/location/waypoints', $data);
+    return $this;
+  }
+
+/**
  * Retrieve list of data streams associated with the device
  *
  * @link https://m2x.att.com/developer/documentation/v2/device#List-Data-Streams
