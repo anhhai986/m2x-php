@@ -56,10 +56,11 @@ class HttpRequest {
  * Performs a DELETE request
  *
  * @param $url
+ * @param array $params
  * @return HttpResponse
  */
-  public function delete($url) {
-    return $this->request('DELETE', $url);
+  public function delete($url, $params = array()) {
+    return $this->request('DELETE', $url, $params, array());
   }
 
 /**

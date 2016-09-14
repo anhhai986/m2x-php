@@ -353,14 +353,15 @@ class M2X {
  * Perform a DELETE request to the API.
  *
  * @param string $path
+ * @param array $params
  * @return HttpResponse
  * @throws M2XException
  */
-  public function delete($path) {
+  public function delete($path, $params = array()) {
     $request = $this->request();
     $request = $this->prepareRequest($request);
 
-    $response = $request->delete($this->endpoint . $path);
+    $response = $request->delete($this->endpoint . $path, $params);
     return $this->handleResponse($response);
   }
 
