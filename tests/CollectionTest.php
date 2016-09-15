@@ -47,4 +47,42 @@ class CollectionTest extends BaseTestCase {
     $this->assertInstanceOf('Att\M2X\Collection', $result);
     $this->assertEquals('Test Collection', $result->name);
   }
+
+/**
+ * testAddDevice method
+ *
+ * @return void
+ */
+  public function testAddDevice() {
+    $m2x = $this->generateMockM2X();
+
+    $m2x->request->expects($this->once())->method('request')
+           ->with($this->equalTo('PUT'),
+                  $this->equalTo('https://api-m2x.att.com/v2/collections/d447a2c499bc009d96a7d693a2e5b909/devices/12f74d5878561bf1c19ea8942515c466'),
+                  $this->equalTo(array()))
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('collections_add_device_success')));
+
+    $collection = new Collection($m2x, array('id' => 'd447a2c499bc009d96a7d693a2e5b909'));
+    $result = $collection->addDevice('12f74d5878561bf1c19ea8942515c466');
+    $this->assertInstanceOf('Att\M2X\HttpResponse', $result);
+  }
+
+/**
+ * testRemoveDevice method
+ *
+ * @return void
+ */
+  public function testRemoveDevice() {
+    $m2x = $this->generateMockM2X();
+
+    $m2x->request->expects($this->once())->method('request')
+           ->with($this->equalTo('DELETE'),
+                  $this->equalTo('https://api-m2x.att.com/v2/collections/d447a2c499bc009d96a7d693a2e5b909/devices/12f74d5878561bf1c19ea8942515c466'),
+                  $this->equalTo(array()))
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('collections_remove_device_success')));
+
+    $collection = new Collection($m2x, array('id' => 'd447a2c499bc009d96a7d693a2e5b909'));
+    $result = $collection->removeDevice('12f74d5878561bf1c19ea8942515c466');
+    $this->assertInstanceOf('Att\M2X\HttpResponse', $result);
+  }
 }

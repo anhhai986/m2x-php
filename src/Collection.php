@@ -41,6 +41,30 @@ class Collection extends Resource {
   }
 
 /**
+ * Add the device to the collection.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/collections#Add-device-to-collection
+ *
+ * @param string $device_id
+ * @return HttpResponse
+ */
+  public function addDevice($device_id) {
+    return $this->client->put($this->path() . '/devices/' . $device_id);
+  }
+
+/**
+ * Remove the device from the collection.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/collections#Remove-device-from-collection
+ *
+ * @param string $device_id
+ * @return HttpResponse
+ */
+  public function removeDevice($device_id) {
+    return $this->client->delete($this->path() . '/devices/' . $device_id);
+  }
+
+/**
  * Get custom metadata of an existing Collection.
  *
  * @link https://m2x.att.com/developer/documentation/v2/collections#Read-Collection-Metadata-Field
