@@ -43,7 +43,7 @@ class Device extends Resource {
  */
   public function location() {
     $response = $this->client->get(self::$path . '/' . $this->id . '/location');
-    
+
     if ($response->statusCode == 204) {
       return False;
     }
@@ -62,6 +62,19 @@ class Device extends Resource {
   public function updateLocation($data) {
     $response = $this->client->put(self::$path . '/' . $this->id . '/location', $data);
     return $this;
+  }
+
+/**
+ * Read the location history of the specified device.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/device#Read-Device-Location-History
+ *
+ * @param  $data optional
+ * @return array
+ */
+  public function locationHistory($data) {
+    $response = $this->client->get(self::$path . '/' . $this->id . '/location/waypoints', $data);
+    return $response->json();
   }
 
 /**

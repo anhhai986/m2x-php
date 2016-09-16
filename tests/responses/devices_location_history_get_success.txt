@@ -1,0 +1,16 @@
+HTTP/1.1 200 OK
+Server: nginx
+Date: Tue, 09 Sep 2016 04:34:01 GMT
+Content-Type: application/json
+Content-Length: 303
+Status: 200 OK
+X-M2X-VERSION: v2.3.2-alpha
+Vary: Accept-Encoding
+Vary: Accept
+
+{ "waypoints": [
+  { "name": "Server Room",
+    "latitude": -37.9788423562422,
+    "longitude": -57.5478776916862,
+    "elevation": 5,
+    "timestamp": "2014-09-10T19:20:00.756Z" } ] }
