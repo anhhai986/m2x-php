@@ -6,7 +6,7 @@ use Att\M2X\Error\M2XException;
 
 class M2X {
 
-  const VERSION = '4.0.0';
+  const VERSION = '4.1.0';
   const DEFAULT_API_BASE = 'https://api-m2x.att.com';
   const DEFAULT_API_VERSION = 'v2';
 
@@ -63,7 +63,7 @@ class M2X {
     } else {
       $this->endpoint = self::DEFAULT_API_BASE . '/' . self::DEFAULT_API_VERSION;
     }
-    
+
     $this->userAgent = $this->userAgent();
   }
 
