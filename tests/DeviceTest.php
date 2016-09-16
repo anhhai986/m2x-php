@@ -105,6 +105,28 @@ class DeviceTest extends BaseTestCase {
   }
 
 /**
+ * testGetDeviceLocationHistory method
+ *
+ * @return void
+ */
+  public function testLocationHistory() {
+    $m2x = $this->generateMockM2X();
+
+    $m2x->request->method('request')
+           ->with($this->equalTo('GET'),
+                  $this->equalTo('https://api-m2x.att.com/v2/devices/foobar/location/waypoints'))
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('devices_location_history_get_success')));
+
+    $device = new Device($m2x, array('id' => 'foobar'));
+    $result = $device->locationHistory(array('limit' => 1000));
+    $waypoints = $result['waypoints'];
+    foreach ($waypoints as $waypoints => $value) {
+      $name =  $value["name"];
+    }
+    $this->assertEquals('Server Room', $name);
+  }
+
+/**
  * testDeleteLocationHistory method
  *
  * @return void
