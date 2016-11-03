@@ -275,6 +275,42 @@ class M2X {
   }
 
 /**
+ * Retrieve Command Details.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/commands#View-Command-Details
+ *
+ * @param string $id
+ * @return Command
+ */
+  public function viewCommandDetails($id) {
+    return Command::get($this, $id);
+  }
+
+/**
+ * Send a command to the target device.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/commands#Send-Command
+ *
+ * @param array $data
+ * @return HttpResponse
+ */
+  public function sendCommand($data = array()) {
+     return $this->post('/commands', $data);
+  }
+
+/**
+ * Retrieve a list of commands associated with the user account.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/commands#List-Sent-Commands
+ *
+ * @param array $params
+ * @return CommandCollection
+ */
+  public function commands($params = array()) {
+    return new CommandCollection($this, $params);
+ }
+
+/**
  * Retrieve a single job from the API.
  *
  * This method instantiates an instance of Job with all its attributes initialized.
