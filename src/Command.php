@@ -31,9 +31,12 @@ class Command extends Resource {
     return $this->id;
   }
 
+/**
+ * Refresh the Command Info
+ *
+ */
   public function refresh() {
     $response = $this->client->get($this->path());
     $this->setData($response->json());
   }
-
 }

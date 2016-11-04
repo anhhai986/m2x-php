@@ -27,7 +27,6 @@ function sendCommand() {
 
 function listCommands() {
   try {
-
     $m2x = new M2X(API_KEY);
     // Retrieve the list of recent commands sent by the current account.
     $commands = $m2x->commands(array('limit'=> 4));

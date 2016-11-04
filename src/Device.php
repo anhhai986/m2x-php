@@ -288,8 +288,8 @@ class Device extends Resource {
  *
  * @link https://m2x.att.com/developer/documentation/v2/commands#Device-Marks-a-Command-as-Processed
  *
- * @param array $data
  * @param Command $command
+ * @param array $data
  * @return HttpResponse
  */
  public function process($command, $data = null) {
