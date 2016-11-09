@@ -244,4 +244,56 @@ class Device extends Resource {
     $response = $this->client->get($this->path() . '/log');
     return current($response->json());
   }
+
+/**
+ * Retrieve a list of commands associated with this device.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/commands#Device-s-List-of-Received-Commands
+ *
+ * @param array $params
+ * @return CommandCollection
+ */
+  public function commands($params = array()) {
+  return new CommandCollection($this->client, $params, $this);
+  }
+
+/**
+ * Device view of command details.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/commands#Device-s-View-of-Command-Details
+ *
+ * @param string $id
+ * @return Command
+ */
+  public function command($id) {
+     return Command::get($this->client , $id);
+  }
+
+
+/**
+ * Device marks Command as rejected
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/commands#Device-Marks-a-Command-as-Rejected
+ *
+ * @param array $data
+ * @param Command $command
+ * @return HttpResponse
+ */
+  public function reject($command, $data = null) {
+     return $this->client->post($this->path() . $command->path() . '/reject', $data);
+  }
+
+/**
+ * Device marks Command as processed
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/commands#Device-Marks-a-Command-as-Processed
+ *
+ * @param Command $command
+ * @param array $data
+ * @return HttpResponse
+ */
+ public function process($command, $data = null) {
+     return $this->client->post($this->path() . $command->path() . '/process', $data);
+ }
+
 }
