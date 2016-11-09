@@ -67,24 +67,53 @@ class Collection extends Resource {
 /**
  * Get custom metadata of an existing Collection.
  *
- * @link https://m2x.att.com/developer/documentation/v2/collections#Read-Collection-Metadata-Field
+ * @link https://m2x.att.com/developer/documentation/v2/collections#Read-Collection-Metadata
  *
- * @return array
+ * @param array $params
+ * @return HttpResponse
  */
-  public function metadata() {
-    $response = $this->client->get($this->path() . '/metadata');
-    return $response->json();
+  public function metadata($params = array()) {
+    return $this->client->get($this->path() . '/metadata', $params);
   }
 
 /**
  * Update the custom metadata of the specified Collection.
  *
- * @link https://m2x.att.com/developer/documentation/v2/collections#Update-Collection-Metadata-Field
+ * @link https://m2x.att.com/developer/documentation/v2/collections#Update-Collection-Metadata
  *
  * @param array $data
  * @return HttpResponse
  */
-  public function updateMetadata($data) {
+  public function updateMetadata($data = array()) {
     return $this->client->put($this->path() . '/metadata', $data);
   }
+
+/**
+ * Get Collection Metadata Field.
+ *
+ * Get the value of a single custom metadata field from an existing Collection.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/collections#Read-Collection-Metadata-Field
+ *
+ * @param string $key
+ * @param array $params
+ * @return HttpResponse
+ */
+  public function metadataField($key, $params = array()) {
+    return $this->client->get($this->path() . '/metadata/' . $key, $params);
+  }
+
+/**
+ * Update Collection Metadata Field.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/collections#Update-Collection-Metadata-Field
+ *
+ * @param string $key
+ * @param string $value
+ * @return HttpResponse
+ */
+  public function updateMetadataField($key, $value) {
+      return $this->client->put($this->path() . '/metadata/' . $key , array('value' => $value));
+  }
+
 }
