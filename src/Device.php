@@ -296,4 +296,58 @@ class Device extends Resource {
      return $this->client->post($this->path() . $command->path() . '/process', $data);
  }
 
+/**
+ * Read Device Metadata.
+ *
+ * Get custom metadata of an existing Device.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/device#Read-Device-Metadata
+ *
+ * @param array $params
+ * @return HttpResponse
+ */
+  public function metadata($params = array()) {
+    return $this->client->get($this->path() . '/metadata', $params);
+  }
+
+/**
+ * Read Device Metadata Field.
+ *
+ * Get the value of a single custom metadata field from an existing Device.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/device#Read-Device-Metadata-Field
+ *
+ * @param string $key
+ * @param array $params
+ * @return HttpResponse
+ */
+  public function metadataField($key, $params = array()) {
+    return $this->client->get($this->path() . '/metadata/' . $key, $params);
+  }
+
+/**
+ * Update Device Metadata.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/device#Update-Device-Metadata
+ *
+ * @param array $params
+ * @return HttpResponse
+ */
+  public function updateMetadata($params = array()) {
+    return $this->client->put($this->path() . '/metadata', $params);
+  }
+
+/**
+ * Update Device Metadata Field.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/device#Update-Device-Metadata-Field
+ *
+ * @param string $key
+ * @param string $value
+ * @return HttpResponse
+ */
+  public function updateMetadataField($key, $value) {
+      return $this->client->put($this->path() . '/metadata/' . $key , array('value' => $value));
+  }
+
 }

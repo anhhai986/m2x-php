@@ -85,4 +85,55 @@ class Distribution extends Resource {
   public function updateStream($name, $data = array()) {
     return Stream::createStream($this->client, $this, $name, $data);
   }
+
+/**
+ * Get custom metadata of an existing Distribution Device.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/distribution#Read-Distribution-Metadata
+ *
+ * @param array $params
+ * @return HttpResponse
+ */
+  public function metadata($params = array()) {
+    return $this->client->get($this->path() . '/metadata', $params);
+  }
+
+/**
+ * Get the value of a single custom metadata field from an existing Distribution Device.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/distribution#Read-Distribution-Metadata-Field
+ *
+ * @param string $key
+ * @param array $params
+ * @return HttpResponse
+ */
+  public function metadataField($key, $params = array()) {
+    return $this->client->get($this->path() . '/metadata/' . $key, $params);
+  }
+
+/**
+ * Update metadata of a distribution device.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/distribution#Update-Distribution-Metadata
+ *
+ * @param array $params
+ * @return HttpResponse
+ */
+  public function updateMetadata($params = array()) {
+    return $this->client->put($this->path() . '/metadata', $params);
+  }
+
+/**
+ * Update distribution device metadata field.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/distribution#Update-Distribution-Metadata-Field
+ *
+ * @param string $key
+ * @param string $value
+ * @return HttpResponse
+ */
+  public function updateMetadataField($key, $value) {
+      return $this->client->put($this->path() . '/metadata/' . $key , array('value' => $value));
+  }
+
 }
