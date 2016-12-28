@@ -2,6 +2,10 @@
 
 If you would like to submit an issue or contribute to any M2X Client Library, please adhere to the contribution guidelines found here: https://github.com/attm2x/m2x-service/blob/master/CONTRIBUTING.md
 
+# Code Style Guidelines
+
+We follow the highly valued PSR guidelines: https://code.tutsplus.com/tutorials/psr-huh--net-29314
+
 # Creating a new library
 
 If you are creating a new client library, please adhere to the guidelines found here: https://github.com/attm2x/m2x-service/blob/master/CLIENT-CONTRIBUTIONS.md
