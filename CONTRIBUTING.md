@@ -8,7 +8,7 @@ We follow the highly valued PSR guidelines: https://code.tutsplus.com/tutorials/
 
 With the exceptions:
 
-- Ue 2 spaces instead of 4, for indentation.
+- Use 2 spaces instead of 4, for indentation.
 - Opening `{` brackets should go on the same line as the function 
 
 
