@@ -1,0 +1,13 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=UTF-8
+Date: Mon, 02 Jan 2017 13:02:00 GMT
+Link: <https://api-m2x.att.com/v2/devices/search?status=enabled&limit=1&page=1>; rel="first"
+Link: <https://api-m2x.att.com/v2/devices/search?status=enabled&limit=1&page=8>; rel="last"
+Link: <https://api-m2x.att.com/v2/devices/search?status=enabled&limit=1&page=2>; rel="next"
+Server: nginx
+Vary: Accept-Encoding
+Vary: Accept
+X-M2x-Version: v2.107.4
+Content-Length: 458
+
+{"devices":[{"url":"https://api-m2x.att.com/v2/devices/d29e5c98fe350818105b6ba4df82328b","name":"TestDeviceRed","status":"enabled","serial":null,"tags":[],"visibility":"private","description":null,"created":"2016-12-08T13:16:56.872Z","updated":"2017-01-02T09:05:59.228Z","last_activity":"2017-01-02T09:05:59.233Z","location":{},"id":"d29e5c98fe350818105b6ba4df82328b","key":"f1a028be45bdee8b99afeea7b7f3fa4c"}],"total":8,"pages":8,"limit":1,"current_page":1}
