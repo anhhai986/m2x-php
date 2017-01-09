@@ -350,4 +350,17 @@ class Device extends Resource {
       return $this->client->put($this->path() . '/metadata/' . $key , array('value' => $value));
   }
 
+/**
+ * Update Single Stream API.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/device#Update-Data-Stream-Values
+ *
+ * @param string $name
+ * @param array  $params
+ * @return HttpResponse
+ */
+  public function updateSingleStream($name, $params = array()) {
+    return $this->client->put($this->path() . '/streams/' . $name . '/value' , $params);
+  }
+
 }
