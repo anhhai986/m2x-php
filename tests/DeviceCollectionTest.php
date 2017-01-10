@@ -56,4 +56,26 @@ class DeviceCollectionTest extends BaseTestCase {
     $collection = $m2x->deviceCatalog(array('q' => 'CPU'));
     $this->assertCount(2, $collection);
   }
+
+/**
+ * testsearch method
+ *
+ * @return void
+ */
+  public function testdeviceSearch() {
+    $m2x = $this->generateMockM2X();
+    $data = array(
+      "status" => "enabled",
+      "limit" => "1"
+    );
+    $m2x->request->expects($this->once())->method('request')
+           ->with($this->equalTo('POST'),
+                  $this->equalTo('https://api-m2x.att.com/v2/devices/search'),
+                  $this->equalTo(array()),
+                  $this->equalTo($data))
+           ->willReturn(new Att\M2X\HttpResponse($this->_raw('search_device_success')));
+    $result = $m2x->searchDevices($data);
+    $devices = $result->json();
+    $this->assertEquals($data['status'], $devices['devices'][0]['status']);
+ }
 }

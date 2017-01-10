@@ -236,6 +236,19 @@ class M2X {
   }
 
 /**
+ * Retrieve the list of devices accessible by the authenticated API key that
+ * meet the search criteria.
+ *
+ * @link https://m2x.att.com/developer/documentation/v2/device#Search-Devices
+ *
+ * @param $data
+ * @return HttpResponse
+ */
+  public function searchDevices($data) {
+    return $this->post('/devices/search', $data);
+  }
+
+/**
  * Retrieve a list of collections associated with the user account.
  *
  * @link https://m2x.att.com/developer/documentation/v2/collections#List-collections
