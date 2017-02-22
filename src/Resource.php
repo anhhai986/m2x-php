@@ -2,6 +2,9 @@
 
 namespace Att\M2X;
 
+/**
+ * Generic methods for interacting with an M2X resource
+ */
 abstract class Resource {
 
 /**

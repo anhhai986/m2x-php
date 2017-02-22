@@ -5,6 +5,9 @@ namespace Att\M2X;
 use Att\M2X\M2X;
 use Att\M2X\Device;
 
+/**
+ * Methods for interacting M2X Device Streams
+ */
 class Stream extends Resource {
 
 /**
@@ -44,7 +47,7 @@ class Stream extends Resource {
  * Disable the original POST factory
  *
  * @param M2X $client
- * @param string $id
+ * @param array $data
  * @return void
  */
   public static function create($client, $data = array()) {
@@ -52,11 +55,12 @@ class Stream extends Resource {
   }
 
 /**
- * Retrieves a single resource
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#View-Data-Stream View Data Stream} endpoint.
  *
- * @param Resource $parent
- * @param string $id
- * @return Resource
+ * @param M2X $client Client API
+ * @param Resource $parent Parent resource that this collection belongs to
+ * @param string $id Stream ID to be retrieved
+ * @return Resource Stream retrieved
  */
   public static function getStream(M2X $client, Resource $parent, $id) {
     $response = $client->get(str_replace(':parent_path', $parent->path(), static::$path) . '/' . $id);
@@ -66,13 +70,13 @@ class Stream extends Resource {
   }
 
 /**
- * Create or update a stream resource
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#Create-Update-Data-Stream Create or update Data Stream} endpoint.
  *
- * @param M2X $client
- * @param Resource $parent
- * @param string $name
- * @param array $data
- * @return Stream
+ * @param M2X $client Client API
+ * @param Resource $parent Parent resource that this collection belongs to
+ * @param string $name Stream name to be created
+ * @param array $data Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return Stream The newly created stream
  */
   public static function createStream(M2X $client, Resource $parent, $name, $data) {
     $path = str_replace(':parent_path', $parent->path(), static::$path) . '/' . $name;
@@ -88,9 +92,9 @@ class Stream extends Resource {
 /**
  * Create object from API data
  *
- * @param M2X $client
- * @param Device $device
- * @param stdClass $data
+ * @param M2X $client Client API
+ * @param resource $parent Parent resource that this collection belongs to
+ * @param stdClass $data Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
  */
   public function __construct(M2X $client, Resource $parent, $data) {
     $this->parent = $parent;
@@ -109,20 +113,18 @@ class Stream extends Resource {
 /**
  * Returns the path to the resource
  *
- * @return string
+ * @return string Path
  */
   public function path() {
     return str_replace(':parent_path', $this->parent->path(), self::$path) . '/' . $this->id();
   }
 
 /**
- * Update the current value of the stream. The timestamp is optional.
- * If ommited, the current server time will be used.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#Update-Data-Stream-Value Update Data Stream Value} endpoint.
+ * The timestamp is optional. If ommited, the current server time will be used.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#Update-Data-Stream-Value
- *
- * @param string $value
- * @param string $timestamp
+ * @param string $value Value to be updated
+ * @param string $timestamp Current Timestamp
  * @return void
  */
   public function updateValue($value, $timestamp = null) {
@@ -136,13 +138,10 @@ class Stream extends Resource {
   }
 
 /**
- * List values from the stream, sorted in reverse chronological order
- * (most recent value first).
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#List-Data-Stream-Values List Data Stream Values} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#List-Data-Stream-Values
- *
- * @param array $params
- * @return array
+ * @param array $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return array List of values from the stream
  */
   public function values($params = array()) {
     $response = $this->client->get($this->path() . '/values', $params);
@@ -150,15 +149,13 @@ class Stream extends Resource {
   }
 
 /**
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#Data-Stream-Sampling Data Stream Sampling Values} endpoint.
  * Sample values from the stream, sorted in reverse chronological order
  * (most recent values first).
- *
  * This method only work for numeric streams
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#Data-Stream-Sampling
- *
- * @param array $params
- * @return array
+ * @param array $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return array List of sample values from the stream
  */
   public function sampling($params = array()) {
     $response = $this->client->get($this->path() . '/sampling', $params);
@@ -166,15 +163,13 @@ class Stream extends Resource {
   }
 
 /**
- * Return count, min, max, average and standard deviation stats for the
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#Data-Stream-Stats Data Stream Stats} endpoint.
+ * Returns count, min, max, average and standard deviation stats for the
  * values of the stream.
- *
  * This method only works for numeric stream
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#Data-Stream-Stats
- *
- * @param array $params
- * @return array
+ * @param array $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return array Stats of the stream
  */
   public function stats($params = array()) {
     $response = $this->client->get($this->path() . '/stats', $params);
@@ -182,18 +177,14 @@ class Stream extends Resource {
   }
 
 /**
- * Post multiple values to the stream
- *
+ * Method for({@link https://m2x.att.com/developer/documentation/v2/device#Post-Data-Stream-Values Post multiple values} endpoint.
  * The `values` parameter is an array with the following format:
- *
  * array(
  *   array('timestamp' => <Time in ISO8601>, 'value' => x),
  *   array('timestamp' => <Time in ISO8601>, 'value' => y)
  * )
  *
- * https://m2x.att.com/developer/documentation/v2/device#Post-Data-Stream-Values
- *
- * @param array $data
+ * @param array $values Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
  * @return void
  */
   public function postValues($values) {

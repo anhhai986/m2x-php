@@ -38,9 +38,10 @@ class DeviceCollection extends ResourceCollection {
 /**
  * Device collection constructor
  *
- * @param M2X $client
- * @param array $params
+ * @param M2X $client client api
+ * @param array $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
  * @param boolean $catalog Search in the catalog
+ * @param resource $parent Parent resource the device belongs to
  */
   public function __construct(M2X $client, $params = array(), $catalog = false, $parent = null) {
     $this->catalog = $catalog;

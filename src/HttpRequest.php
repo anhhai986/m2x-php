@@ -21,7 +21,7 @@ class HttpRequest {
 /**
  * Performs a GET request
  *
- * @param $url
+ * @param string $url
  * @param array $params
  * @param array $vars
  * @return HttpResponse
@@ -33,8 +33,8 @@ class HttpRequest {
 /**
  * Performs a POST request
  *
- * @param $url
- * @param array $options
+ * @param string $url
+ * @param array $vars
  * @return HttpResponse
  */
   public function post($url, $vars = array()) {
@@ -44,8 +44,8 @@ class HttpRequest {
 /**
  * Performs a PUT request
  *
- * @param $url
- * @param array $options
+ * @param string $url
+ * @param array $vars
  * @return HttpResponse
  */
   public function put($url, $vars = array()) {
@@ -55,7 +55,7 @@ class HttpRequest {
 /**
  * Performs a DELETE request
  *
- * @param $url
+ * @param string $url
  * @param array $params
  * @return HttpResponse
  */
@@ -79,6 +79,7 @@ class HttpRequest {
  *
  * @param string $method
  * @param string $url
+ * @param array $params
  * @param array $vars
  * @return HttpResponse
  */
@@ -129,6 +130,7 @@ class HttpRequest {
  * Set the CURL options
  *
  * @param string $url
+ * @param array $method
  * @param array $params
  * @param array $vars
  * @return void
@@ -155,6 +157,11 @@ class HttpRequest {
     curl_setopt($this->request, CURLOPT_HTTPHEADER, $headers);
   }
 
+/**
+ * Set the JSON payload
+ *
+ * @param array $vars
+ */
   protected function setJSONPayload($vars) {
     $this->headers['Content-Type'] = 'application/json';
     $this->headers['Content-Length'] = 0;

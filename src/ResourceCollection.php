@@ -72,6 +72,7 @@ abstract class ResourceCollection implements \Iterator, \Countable {
  * Resource collection constructor
  *
  * @param M2X $client
+ * @param array $params
  */
   public function __construct(M2X $client, $params = array()) {
     $this->client = $client;
@@ -80,6 +81,11 @@ abstract class ResourceCollection implements \Iterator, \Countable {
     $this->fetch();
   }
 
+/**
+ * Fetch resources
+ *
+ * @param integer $page
+ */
   public function fetch($page = 1) {
     $params = $this->params;
     if ($this->paginate) {
@@ -198,6 +204,9 @@ abstract class ResourceCollection implements \Iterator, \Countable {
     return isset($this->resources[$this->position]);
   }
 
+ /**
+  * Preloads a page
+  */
   protected function preloadPage() {
     if ($this->paginate && $this->position < $this->total && !isset($this->resources[$this->position])) {
       $this->fetch($this->currentPage + 1);

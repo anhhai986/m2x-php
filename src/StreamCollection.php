@@ -40,6 +40,8 @@ class StreamCollection extends ResourceCollection {
  * Resource collection constructor
  *
  * @param M2X $client
+ * @param resource $parent
+ * @param array $params
  */
   public function __construct(M2X $client, Resource $parent, $params = array()) {
     $this->parent = $parent;

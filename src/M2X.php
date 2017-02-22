@@ -51,8 +51,8 @@ class M2X {
  * Options:
  * - endpoint: Configure a custom endpoint (optional)
  *
- * @param string $apiKey
- * @param array $options
+ * @param string $apiKey Client API
+ * @param array $options Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
  * @return void
  */
   public function __construct($apiKey, $options = array()) {
@@ -70,7 +70,7 @@ class M2X {
 /**
  * Returns the API Key
  *
- * @return string
+ * @return string API key
  */
   public function apiKey() {
     return $this->apiKey;
@@ -79,7 +79,7 @@ class M2X {
 /**
  * Returns the full URI to the M2X API.
  *
- * @return string
+ * @return string URI to M2X API
  */
   public function endpoint() {
     return $this->endpoint;
@@ -88,147 +88,122 @@ class M2X {
 /**
  * Returns the API status.
  *
- * @return HttpResponse
+ * @return HttpResponse API status
  */
   public function status() {
     return $this->get('/status');
   }
 
 /**
- * Retrieve a list of keys associated with the user account.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/keys#List-Keys List Keys} endpoint.
  *
- * https://m2x.att.com/developer/documentation/v2/keys#List-Keys
- *
- * @return array
+ * @return array Keys associated with the user
  */
   public function keys() {
     return Key::index($this);
   }
 
 /**
- * Retrieve a single key from the API.
- *
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/keys#View-Key-Details View Key Details} endpoint.
  * This method instantiates an instance of Key with
  * all its attributes initialized.
  *
- * @link https://m2x.att.com/developer/documentation/v2/keys#View-Key-Details
- *
- * @param string $key
- * @return Key
+ * @param string $key Key to retrieve
+ * @return Key Instance of the key
  */
   public function key($key) {
     return Key::get($this, $key);
   }
 
 /**
- * Create a new account key.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/keys#Create-Key Create Key} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/keys#Create-Key
- *
- * @param  $data
- * @return Key
+ * @param  $data Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return Key The newly created Key
  */
   public function createKey($data) {
     return Key::create($this, $data);
   }
 
 /**
- * Retrieve a list of distributions associated with the user account.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/distribution#List-Distributions List Distributions} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/distribution#List-Distributions
- *
- * @param $params
- * @return DistributionCollection
+ * @param $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return DistributionCollection List of distributions
  */
   public function distributions($params = array()) {
     return new DistributionCollection($this, $params);
   }
 
 /**
- * Retrieve a single distribution from the API.
- *
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/distribution#View-Distribution-Details View Distribution Details} endpoint.
  * This method instantiates an instance of Distribution
  * with all its attributes initialized.
  *
- * @link https://m2x.att.com/developer/documentation/v2/distribution#View-Distribution-Details
- *
- * @param string $id
- * @return Distribution
+ * @param string $id Distribution ID to be retrieved
+ * @return Distribution Distribution retrieved
  */
   public function distribution($id) {
     return Distribution::get($this, $id);
   }
 
 /**
- * Create a new distribution.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/distribution#Create-Distribution Create Distribution} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/distribution#Create-Distribution
- *
- * @param array $data
- * @return Distribution
+ * @param array $data Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return Distribution The newly created Distribution
  */
   public function createDistribution($data) {
     return Distribution::create($this, $data);
   }
 
 /**
- * Retrieve a list of devices associated with the user account.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#List-Devices List Devices} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#List-Devices
- *
- * @param array $params
- * @return DeviceCollection
+ * @param array $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return DeviceCollection List of Devices
  */
   public function devices($params = array()) {
     return new DeviceCollection($this, $params);
   }
 
 /**
- * Retrieve the list of devices accessible by the authenticated
- * API key that meet the search criteria.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#List-Search-Public-Devices-Catalog List Public Devices Catalog} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#List-Search-Public-Devices-Catalog
- *
- * @param array $params
- * @return DeviceCollection
+ * @param array $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return DeviceCollection List of Devices that meet the search criteria
  */
   public function deviceCatalog($params = array()) {
     return new DeviceCollection($this, $params, true);
   }
 
 /**
- * Retrieve a single device from the API.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#View-Device-Details View Device Details} endpoint.
  *
  * This method instantiates an instance of Device
  * with all its attributes initialized.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#View-Device-Details
- *
- * @param string $id
- * @return Device
+ * @param string $id Device ID to be retrieved
+ * @return Device The Device retrieved
  */
   public function device($id) {
     return Device::get($this, $id);
   }
 
 /**
- * Create a new device.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#Create-Device Create Device} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#Create-Device
- *
- * @param array $data
- * @return Device
+ * @param array $data Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return Device The newly created Device
  */
   public function createDevice($data) {
     return Device::create($this, $data);
   }
 
 /**
- * Returns the device tags
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#List-Device-Tags List Device Tags} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#List-Device-Tags
- *
- * @return array
+ * @return array Device tags associated with your account
  */
   public function deviceTags() {
     $response = $this->get('/devices/tags');
@@ -236,114 +211,93 @@ class M2X {
   }
 
 /**
- * Retrieve the list of devices accessible by the authenticated API key that
- * meet the search criteria.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#Search-Devices Search Devices} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#Search-Devices
- *
- * @param $data
- * @return HttpResponse
+ * @param $data Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return HttpResponse List of Device objects
  */
   public function searchDevices($data) {
     return $this->post('/devices/search', $data);
   }
 
 /**
- * Retrieve a list of collections associated with the user account.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/collections#List-collections List Collections} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/collections#List-collections
- *
- * @param $params
- * @return CollectionCollection
+ * @param $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return CollectionCollection List of Collection objects
  */
   public function collections($params = array()) {
     return new CollectionCollection($this, $params);
   }
 
 /**
- * Retrieve a single collection from the API.
- *
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/collections#View-Collection-Details View Collection Details} endpoint.
  * This method instantiates an instance of Collection
  * with all its attributes initialized.
  *
- * @link https://m2x.att.com/developer/documentation/v2/collections#View-Collection-Details
- *
- * @param string $id
- * @return Collection
+ * @param string $id Collection ID to be retrieved
+ * @return Collection The retrieved Collection
  */
   public function collection($id) {
     return Collection::get($this, $id);
   }
 
 /**
- * Retrieve the list of the most recent jobs that belong to the authenticated user.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/jobs#List-Jobs List Jobs} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/jobs#List-Jobs
- *
- * @param $params
- * @return CollectionCollection
+ * @param $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return CollectionCollection List of jobs retrieved
  */
   public function jobs($params = array()) {
     return new JobCollection($this, $params);
   }
 
 /**
- * Retrieve Command Details.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/commands#View-Command-Details View Command Details} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/commands#View-Command-Details
- *
- * @param string $id
- * @return Command
+ * @param string $id Command ID
+ * @return Command The retrieved Command
  */
   public function viewCommandDetails($id) {
     return Command::get($this, $id);
   }
 
 /**
- * Send a command to the target device.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/commands#Send-Command Send Command} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/commands#Send-Command
- *
- * @param array $data
- * @return HttpResponse
+ * @param array $data Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return HttpResponse The Command that was just sent
  */
   public function sendCommand($data = array()) {
      return $this->post('/commands', $data);
   }
 
 /**
- * Retrieve a list of commands associated with the user account.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/commands#List-Sent-Commands List Sent Commands} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/commands#List-Sent-Commands
- *
- * @param array $params
- * @return CommandCollection
+ * @param array $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return CommandCollection List of Commands retrieved
  */
   public function commands($params = array()) {
     return new CommandCollection($this, $params);
  }
 
 /**
- * Retrieve a single job from the API.
- *
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/jobs#View-Job-Details View Job Details} endpoint.
  * This method instantiates an instance of Job with all its attributes initialized.
  *
- * @link https://m2x.att.com/developer/documentation/v2/jobs#View-Job-Details
- *
- * @param string $id
- * @return Job
+ * @param string $id ID of the Job to retrieve
+ * @return Job The matching Job
  */
   public function job($id) {
     return Job::get($this, $id);
   }
 
 /**
- * Create a new collection.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/collections#Create-Collection Create Collection} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/collections#Create-Collection
- *
- * @param array $data
- * @return Device
+ * @param array $data Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return Device The newly created Collection.
  */
   public function createCollection($data) {
     return Collection::create($this, $data);
