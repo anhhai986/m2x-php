@@ -2,6 +2,9 @@
 
 namespace Att\M2X;
 
+/**
+ * Wrapper for {@link https://m2x.att.com/developer/documentation/v2/collections M2X Collections} API 
+ */
 class Collection extends Resource {
 
 /**
@@ -23,94 +26,81 @@ class Collection extends Resource {
 /**
  * The resource id for the REST URL
  *
- * @return string
+ * @return string Collection ID
  */
   public function id() {
     return $this->id;
   }
 
 /**
- * Retrieve a list of devices assigned to the specified collection.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/collections#List-Devices-from-an-existing-Collection List Devices from an existing collection} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/collections#List-Devices-from-an-existing-Collection
- *
- * @return DeviceCollection
+ * @param array $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return DeviceCollection List of Device objects
  */
   public function devices($params = array()) {
     return new DeviceCollection($this->client, $params, true, $this);
   }
 
 /**
- * Add the device to the collection.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/collections#Add-device-to-collection Add a device to the collection} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/collections#Add-device-to-collection
- *
- * @param string $device_id
- * @return HttpResponse
+ * @param string $device_id ID of the Device being added to Collection
+ * @return HttpResponse The API response, see M2X API docs for details
  */
   public function addDevice($device_id) {
     return $this->client->put($this->path() . '/devices/' . $device_id);
   }
 
 /**
- * Remove the device from the collection.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/collections#Remove-device-from-collection Remove a device from the collection} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/collections#Remove-device-from-collection
- *
- * @param string $device_id
- * @return HttpResponse
+ * @param string $device_id ID of the Device being removed from Collection
+ * @return HttpResponse The API response, see M2X API docs for details
  */
   public function removeDevice($device_id) {
     return $this->client->delete($this->path() . '/devices/' . $device_id);
   }
 
 /**
- * Get custom metadata of an existing Collection.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/collections#Read-Collection-Metadata Read Collection metadata of a Collection} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/collections#Read-Collection-Metadata
- *
- * @param array $params
- * @return HttpResponse
+ * @param array $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return HttpResponse All of the user defined metadata associated with the resource
  */
   public function metadata($params = array()) {
     return $this->client->get($this->path() . '/metadata', $params);
   }
 
 /**
- * Update the custom metadata of the specified Collection.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/collections#Update-Collection-Metadata Update collection metadata of a Collection} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/collections#Update-Collection-Metadata
- *
- * @param array $data
- * @return HttpResponse
+ * @param array $data Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return HttpResponse The API response, see M2X API docs for details
  */
   public function updateMetadata($data = array()) {
     return $this->client->put($this->path() . '/metadata', $data);
   }
 
 /**
- * Get Collection Metadata Field.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/collections#Read-Collection-Metadata-Field Get Collection Metadata field} endpoint.
  *
  * Get the value of a single custom metadata field from an existing Collection.
  *
- * @link https://m2x.att.com/developer/documentation/v2/collections#Read-Collection-Metadata-Field
- *
- * @param string $key
- * @param array $params
- * @return HttpResponse
+ * @param string $key The metadata field to be read
+ * @param array $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return HttpResponse The API response, see M2X API docs for details
  */
   public function metadataField($key, $params = array()) {
     return $this->client->get($this->path() . '/metadata/' . $key, $params);
   }
 
 /**
- * Update Collection Metadata Field.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/collections#Update-Collection-Metadata-Field Update Collection Metadata Field} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/collections#Update-Collection-Metadata-Field
- *
- * @param string $key
- * @param string $value
- * @return HttpResponse
+ * @param string $key The metadata field to be updated
+ * @param string $value The value to update
+ * @return HttpResponse The API response, see M2X API docs for details
  */
   public function updateMetadataField($key, $value) {
       return $this->client->put($this->path() . '/metadata/' . $key , array('value' => $value));

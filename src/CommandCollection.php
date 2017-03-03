@@ -38,7 +38,9 @@ class CommandCollection extends ResourceCollection {
 /**
  * Resource collection constructor
  *
- * @param M2X $client
+ * @param M2X $client client api
+ * @param array $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @param resource $parent Parent resource that this collection belongs to
  */
   public function __construct(M2X $client, $params = array(), $parent = null) {
     if ($parent) {

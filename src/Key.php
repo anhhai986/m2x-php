@@ -2,6 +2,9 @@
 
 namespace Att\M2X;
 
+/**
+ * Wrapper for {@link https://m2x.att.com/developer/documentation/v2/keys M2X Keys} API.
+ */
 class Key extends Resource {
 
 /**
@@ -31,11 +34,9 @@ class Key extends Resource {
   }
 
 /**
- * Regenerate an existing key
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/keys#Regenerate-Key Regenerate Key} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/keys#Regenerate-Key
- *
- * @return Key
+ * @return Key The regenrated Key
  */
   public function regenerate() {
     $response = $this->client->post(self::$path . '/' . $this->key . '/regenerate');

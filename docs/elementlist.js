@@ -1,0 +1,3 @@
+
+var ApiGen = ApiGen || {};
+ApiGen.elements = [["c","Att\\M2X\\Collection"],["c","Att\\M2X\\CollectionCollection"],["c","Att\\M2X\\Command"],["c","Att\\M2X\\CommandCollection"],["c","Att\\M2X\\Device"],["c","Att\\M2X\\DeviceCollection"],["c","Att\\M2X\\Distribution"],["c","Att\\M2X\\DistributionCollection"],["c","Att\\M2X\\Error\\M2XException"],["c","Att\\M2X\\HttpRequest"],["c","Att\\M2X\\HttpResponse"],["c","Att\\M2X\\Job"],["c","Att\\M2X\\JobCollection"],["c","Att\\M2X\\Key"],["c","Att\\M2X\\M2X"],["c","Att\\M2X\\Resource"],["c","Att\\M2X\\ResourceCollection"],["c","Att\\M2X\\Stream"],["c","Att\\M2X\\StreamCollection"]];

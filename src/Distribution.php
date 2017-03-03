@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Method for Wrapper for {@link https://m2x.att.com/developer/documentation/v2/distribution M2X Distribution} API 
+ */
 namespace Att\M2X;
 
 class Distribution extends Resource {
@@ -12,7 +14,7 @@ class Distribution extends Resource {
   public static $path = '/distributions';
 
 /**
- * The Key resource properties
+ * Method for The Key resource properties
  *
  * @var array
  */
@@ -30,23 +32,19 @@ class Distribution extends Resource {
   }
 
 /**
- * Retrieve a list of devices associated with the distribution.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/distribution#list-devices-from-an-existing-distribution List Devices from a Distribution} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/distribution#list-devices-from-an-existing-distribution
- *
- * @return DeviceCollection
+ * @return DeviceCollection List of Devices associated with this Distribution.
  */
   public function devices() {
     return new DeviceCollection($this->client, array(), false, $this);
   }
 
 /**
- * Add a new device to an existing distribution.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/distribution#add-device-to-an-existing-distribution Add Device to a Distribution} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/distribution#add-device-to-an-existing-distribution
- *
- * @param string $serial
- * @return Device
+ * @param string $serial The unique (account-wide) serial for the DistributionDevice being added to the Distribution
+ * @return Device The newly created DistributionDevice
  */
   public function addDevice($serial) {
     $data = array('serial' => $serial);
@@ -55,82 +53,72 @@ class Distribution extends Resource {
   }
 
 /**
- * Retrieve list of data streams associated with the distribution
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#List-Data-Streams} endpoint.
  *
- * @return StreamCollection
+ * @return StreamCollection List of data streams associated with the distribution
  */
   public function streams() {
     return new StreamCollection($this->client, $this);
   }
 
 /**
- * Get details of a specific data Stream associated with the
- * distribution.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#View-Data-Stream View Data Stream} endpoint.
  *
- * @param string $name
- * @return Stream
+ * @param string $name Name of the stream for its data
+ * @return Stream The data associated with the stream
  */
   public function stream($name) {
     return Stream::getStream($this->client, $this, $name);
   }
 
 /**
- * Update a data stream associated with the Distribution, if a
- * stream with this name does not exist it gets created.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#Create-Update-Data-Stream Create/Update Data Stream} endpoint.
  *
- * @param string $name
- * @param array $data
- * @return Stream
+ * @param string $name Name of the the stream
+ * @param array $data Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return Stream The Stream being updated
  */
   public function updateStream($name, $data = array()) {
     return Stream::createStream($this->client, $this, $name, $data);
   }
 
 /**
- * Get custom metadata of an existing Distribution Device.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/distribution#Read-Distribution-Metadata Read Distribution Metadata} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/distribution#Read-Distribution-Metadata
- *
- * @param array $params
- * @return HttpResponse
+ * @param array $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return HttpResponse The API response, see M2X API docs for details
  */
   public function metadata($params = array()) {
     return $this->client->get($this->path() . '/metadata', $params);
   }
 
 /**
- * Get the value of a single custom metadata field from an existing Distribution Device.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/distribution#Read-Distribution-Metadata-Field Read Distribution Metadata Field} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/distribution#Read-Distribution-Metadata-Field
- *
- * @param string $key
- * @param array $params
- * @return HttpResponse
+ * @param string $key The metadata field to be read
+ * @param array $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return HttpResponse The API response, see M2X API docs for details
  */
   public function metadataField($key, $params = array()) {
     return $this->client->get($this->path() . '/metadata/' . $key, $params);
   }
 
 /**
- * Update metadata of a distribution device.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/distribution#Update-Distribution-Metadata Update Distribution Metadata} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/distribution#Update-Distribution-Metadata
- *
- * @param array $params
- * @return HttpResponse
+ * @param array $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return HttpResponse The API response, see M2X API docs for details
  */
   public function updateMetadata($params = array()) {
     return $this->client->put($this->path() . '/metadata', $params);
   }
 
 /**
- * Update distribution device metadata field.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/distribution#Update-Distribution-Metadata-Field Update Distribution Metadata Field} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/distribution#Update-Distribution-Metadata-Field
- *
- * @param string $key
- * @param string $value
- * @return HttpResponse
+ * @param string $key The metadata field to be updated
+ * @param string $value The value to be updated
+ * @return HttpResponse The API response, see M2X API docs for details
  */
   public function updateMetadataField($key, $value) {
       return $this->client->put($this->path() . '/metadata/' . $key , array('value' => $value));

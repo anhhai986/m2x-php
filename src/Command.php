@@ -4,6 +4,9 @@ namespace Att\M2X;
 
 use Att\M2X\M2X;
 
+/**
+ * Wrapper for {@link https://m2x.att.com/developer/documentation/v2/commands M2X Commands} API
+ */
 class Command extends Resource {
 
 /**
@@ -25,7 +28,7 @@ class Command extends Resource {
 /**
  * The resource id for the REST URL
  *
- * @return string
+ * @return string Command ID
  */
   public function id() {
     return $this->id;

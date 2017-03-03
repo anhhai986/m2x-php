@@ -5,6 +5,9 @@ namespace Att\M2X;
 use Att\M2X\Stream;
 use Att\M2X\StreamCollection;
 
+/**
+ * Wrapper for {@link https://m2x.att.com/developer/documentation/v2/device M2X Device} API
+ */
 class Device extends Resource {
 
 /**
@@ -26,20 +29,19 @@ class Device extends Resource {
 /**
  * The resource id for the REST URL
  *
- * @return string
+ * @return string Device ID
  */
   public function id() {
     return $this->id;
   }
 
 /**
- * Get location details of the device, will return False if no
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#Read-Device-Location Read Device Location} endpoint.
+ * It will get location details of the device, will return False if no
  * location details are available. Otherwise it will return
  * an array with the details.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#Read-Device-Location
- *
- * @return array|boolean
+ * @return array|boolean Most recently logged location of the Device, see M2X API docs for details
  */
   public function location() {
     $response = $this->client->get(self::$path . '/' . $this->id . '/location');
@@ -52,12 +54,10 @@ class Device extends Resource {
   }
 
 /**
- * Update the current location of the specified device.
+ * Method for{@link https://m2x.att.com/developer/documentation/v2/device#Update-Device-Location Update Device Location} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#Update-Device-Location
- *
- * @param array $data
- * @return Device
+ * @param array $data Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return Device The API response, see M2X API docs for details
  */
   public function updateLocation($data) {
     $response = $this->client->put(self::$path . '/' . $this->id . '/location', $data);
@@ -65,12 +65,10 @@ class Device extends Resource {
   }
 
 /**
- * Read the location history of the specified device.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#Read-Device-Location-History Read location history} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#Read-Device-Location-History
- *
- * @param  $data optional
- * @return array
+ * @param  $data optional Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return array Location history of the Device
  */
   public function locationHistory($data) {
     $response = $this->client->get(self::$path . '/' . $this->id . '/location/waypoints', $data);
@@ -78,12 +76,10 @@ class Device extends Resource {
   }
 
 /**
- * Delete the location history of the specified device.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#Delete-Location-History Delete location history} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#Delete-Location-History
- *
- * @param array $data
- * @return Device
+ * @param array $data Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return Device The API response, see M2X API docs for details
  */
   public function deleteLocationHistory($data) {
     $response = $this->client->delete(self::$path . '/' . $this->id . '/location/waypoints', $data);
@@ -91,44 +87,37 @@ class Device extends Resource {
   }
 
 /**
- * Retrieve list of data streams associated with the device
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#List-Data-Streams List Data Streams} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#List-Data-Streams
- *
- * @return StreamCollection
+ * @return StreamCollection List of data streams associated with this device as StreamCollection objects
  */
   public function streams() {
     return new StreamCollection($this->client, $this);
   }
 
 /**
- * Get details of a specific data Stream associated with the device
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#View-Data-Stream View Data Stream} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#View-Data-Stream
- *
- * @param string $name
- * @return Stream
+ * @param string $name The name of the Stream being retrieved
+ * @return Stream The matching Stream
  */
   public function stream($name) {
     return Stream::getStream($this->client, $this, $name);
   }
 
 /**
- * Update a data stream associated with the Device, if a
- * stream with this name does not exist it gets created.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#Create-Update-Data-Stream Create/Update data stream} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#Create-Update-Data-Stream
- *
- * @param string $name
- * @param array $data
- * @return Stream
+ * @param string $name Name of the stream to be updated
+ * @param array $data Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return Stream The Stream being updated
  */
   public function updateStream($name, $data = array()) {
     return Stream::createStream($this->client, $this, $name, $data);
   }
 
 /**
- * Post Device Updates (Multiple Values to Multiple Streams)
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#Post-Device-Updates--Multiple-Values-to-Multiple-Streams Post Device Updates (Multiple Values to Multiple Streams)} endpoint.
  *
  * This method allows posting multiple values to multiple streams
  * belonging to a device and optionally, the device location.
@@ -147,17 +136,16 @@ class Device extends Resource {
  *   )
  * )
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#Post-Device-Updates--Multiple-Values-to-Multiple-Streams
- *
- * @param array $values
- * @return HttpResponse
+ * @param array $values The values being posted, formatted according to the API docs
+ * @return HttpResponse The API response, see M2X API docs for details
  */
   public function postUpdates($values) {
     $data = array('values' => $values);
     return $this->client->post($this->path() . '/updates', $data);
   }
 
-/** Post Device Update (Single Value to Multiple Streams)
+/**
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#Post-Device-Update--Single-Values-to-Multiple-Streams- Post Device Update (Single Value to Multiple Streams)} endpoint.
  *
  * This method allows posting a single value to multiple streams
  * belonging to a device and optionally, the device's location.
@@ -185,22 +173,18 @@ class Device extends Resource {
  *         )
  *      )
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#Post-Device-Update--Single-Values-to-Multiple-Streams-
- *
- * @param array $values
- * @return HttpResponse
+ * @param array $params The values being posted, formatted according to the API docs
+ * @return HttpResponse The API response, see M2X API docs for details
  */
   public function postUpdate($params) {
     return $this->client->post($this->path() . '/update', $params);
   }
 
 /**
- * List Values from all Data Streams of a Device
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#List-Values-from-all-Data-Streams-of-a-Device List Values from all Data Streams} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#List-Values-from-all-Data-Streams-of-a-Device
- *
- * @param array $params
- * @return array
+ * @param array $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return array The API response, see M2X API docs for details
  */
   public function values($params = array()) {
     $response = $this->client->get($this->path() . '/values', $params);
@@ -208,24 +192,20 @@ class Device extends Resource {
   }
 
 /**
- * Export Values from all Data Streams of a Device
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#Export-Values-from-all-Data-Streams-of-a-Device Export Values from all Data Streams} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#Export-Values-from-all-Data-Streams-of-a-Device
- *
- * @param array $params
- * @return HttResponse
+ * @param array $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return HttResponse The API response, see M2X API docs for details
  */
   public function valuesExport($params = array()) {
     return $this->client->get($this->path() . '/values/export.csv', $params);
   }
 
 /**
- * Search Values from all Data Streams of a Device
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#Search-Values-from-all-Data-Streams-of-a-Device Search Values from all Data Streams} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#Search-Values-from-all-Data-Streams-of-a-Device
- *
- * @param array $params
- * @return array
+ * @param array $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return array The API response, see M2X API docs for details
  */
   public function valuesSearch($params) {
     $response = $this->client->get($this->path() . '/values/search', array(), $params);
@@ -233,12 +213,9 @@ class Device extends Resource {
   }
 
 /**
- * Retrieve list of HTTP requests received lately by the specified
- * device (up to 100 entries).
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#View-Request-Log View Request Log} endpoint. (up to 100 latest entries).
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#View-Request-Log
- *
- * @return array
+ * @return array Most recent API requests made against this Device
  */
   public function log() {
     $response = $this->client->get($this->path() . '/log');
@@ -246,24 +223,20 @@ class Device extends Resource {
   }
 
 /**
- * Retrieve a list of commands associated with this device.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/commands#Device-s-List-of-Received-Commands List of Recieved Commands} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/commands#Device-s-List-of-Received-Commands
- *
- * @param array $params
- * @return CommandCollection
+ * @param array $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return CommandCollection The API response, see M2X API docs for details
  */
   public function commands($params = array()) {
   return new CommandCollection($this->client, $params, $this);
   }
 
 /**
- * Device view of command details.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/commands#Device-s-View-of-Command-Details Device view of Command Details} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/commands#Device-s-View-of-Command-Details
- *
- * @param string $id
- * @return Command
+ * @param string $id ID of the Command to retrieve
+ * @return Command The API response, see M2X API docs for details
  */
   public function command($id) {
      return Command::get($this->client , $id);
@@ -271,93 +244,77 @@ class Device extends Resource {
 
 
 /**
- * Device marks Command as rejected
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/commands#Device-Marks-a-Command-as-Rejected Device Marks Command as rejected} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/commands#Device-Marks-a-Command-as-Rejected
- *
- * @param array $data
- * @param Command $command
- * @return HttpResponse
+ * @param Command $command ID of the Command being marked as rejected
+ * @param array $data Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return HttpResponse The API response, see M2X API docs for details
  */
   public function reject($command, $data = null) {
      return $this->client->post($this->path() . $command->path() . '/reject', $data);
   }
 
 /**
- * Device marks Command as processed
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/commands#Device-Marks-a-Command-as-Processed Device marks Command as processed} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/commands#Device-Marks-a-Command-as-Processed
- *
- * @param Command $command
- * @param array $data
- * @return HttpResponse
+ * @param Command $command ID of the Command being marked as processed
+ * @param array $data Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return HttpResponse The API response, see M2X API docs for details
  */
  public function process($command, $data = null) {
      return $this->client->post($this->path() . $command->path() . '/process', $data);
  }
 
 /**
- * Read Device Metadata.
- *
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#Read-Device-Metadata Read Device Metadata} endpoint.
  * Get custom metadata of an existing Device.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#Read-Device-Metadata
- *
- * @param array $params
- * @return HttpResponse
+ * @param array $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return HttpResponse The API response, see M2X API docs for details
  */
   public function metadata($params = array()) {
     return $this->client->get($this->path() . '/metadata', $params);
   }
 
 /**
- * Read Device Metadata Field.
- *
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#Read-Device-Metadata-Field Read Device Metadata Field} endpoint.
  * Get the value of a single custom metadata field from an existing Device.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#Read-Device-Metadata-Field
- *
- * @param string $key
- * @param array $params
- * @return HttpResponse
+ * @param string $key The metadata field to be read
+ * @param array $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return HttpResponse The API response, see M2X API docs for details
  */
   public function metadataField($key, $params = array()) {
     return $this->client->get($this->path() . '/metadata/' . $key, $params);
   }
 
 /**
- * Update Device Metadata.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#Update-Device-Metadata Update Device Metadata} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#Update-Device-Metadata
- *
- * @param array $params
- * @return HttpResponse
+ * @param array $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return HttpResponse The API response, see M2X API docs for details
  */
   public function updateMetadata($params = array()) {
     return $this->client->put($this->path() . '/metadata', $params);
   }
 
 /**
- * Update Device Metadata Field.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#Update-Device-Metadata-Field Update Device Metadata Field} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#Update-Device-Metadata-Field
- *
- * @param string $key
- * @param string $value
- * @return HttpResponse
+ * @param string $key The metadata field to be updated
+ * @param string $value The value to be updated
+ * @return HttpResponse The API response, see M2X API docs for details
  */
   public function updateMetadataField($key, $value) {
       return $this->client->put($this->path() . '/metadata/' . $key , array('value' => $value));
   }
 
 /**
- * Update Single Stream API.
+ * Method for {@link https://m2x.att.com/developer/documentation/v2/device#Update-Data-Stream-Values Update Data Stream Values} endpoint.
  *
- * @link https://m2x.att.com/developer/documentation/v2/device#Update-Data-Stream-Values
- *
- * @param string $name
- * @param array  $params
- * @return HttpResponse
+ * @param string $name Stream name to be updated
+ * @param array  $params Query parameters passed as keyword arguments. View M2X API Docs for listing of available parameters.
+ * @return HttpResponse The API response, see M2X API docs for details
  */
   public function updateSingleStream($name, $params = array()) {
     return $this->client->put($this->path() . '/streams/' . $name . '/value' , $params);
